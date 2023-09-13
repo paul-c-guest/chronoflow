@@ -24,7 +24,9 @@ Even distribution of tickets.
 
 What routines will you put in place to ensure consistent communication between team members?
 
-
+Twice daily standups
+Also while we're in pair programming so there's always someone to communicate with.
+If a conversation for the whole group we will post in the HQ chat and make sure everyone sees/engages with it.
 
 When will you schedule breaks?
 
@@ -38,12 +40,23 @@ We have made a list of everyones availabilities as it stands on day one,
 and also added that there is no pressure to work outside of the school hours or on weekends.
 We again have left this to be quite flexible depending on other commitments and changing timlines for the projetc.
 
+
 How will you use Non Violent Communication (NVC) techniques? If so, please outline what these are.
+
+Making sure as a group we're keeping an open mind to these types of conversations.
+Framing the communication in  a way that will be mutually beneficial.
+Don't pitch the conversation like a "telling off" more like an opportunity to grow as a team.
 
 
 How will you incorporate regular (wellbeing) check ins? When and how will you do this?
 
+We can include this in stand-up - after tech check-in could talk about how we're feeling, how they day's going.
+Bring up any challenges or successes?
+Could also do lil check-ins with your pairs if you'd rather share in a smaller group.
+
 
 How will you share your wellbeing needs with each other?
 
-
+Blocking out availability, prioritising the things that we need for ourt wellbeing like longer breaks etc.
+We can text chat with the group if we need to voice someone
+Again could check-in the morning to voice any wellbeing concerns you might have for the day <3
