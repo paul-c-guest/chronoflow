@@ -1,5 +1,9 @@
 function Footer() {
-  return <h2>Footer component</h2>
+  return (
+    <footer>
+      <p>Developed by the Good Times Guild, 2023. All rights reserved.</p>
+    </footer>
+  )
 }
 
 export default Footer
