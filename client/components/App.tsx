@@ -1,10 +1,22 @@
+import '../styles/index.css'
+import Header from './Header.tsx'
+import Footer from './Footer.tsx'
+import Globe from './Globe.tsx'
+import Readout from './Readout.tsx'
+import Timeline from './Timeline.tsx'
+import Filters from './Filters'
+
 function App() {
   return (
     <>
-      <header className="header">
-        <h1>My Collection</h1>
-      </header>
-      <section className="main">{/* add your code here */}</section>
+      <Header />
+      <section className="main">
+        <Globe />
+        <Filters />
+        <Readout />
+        <Timeline />
+      </section>
+      <Footer />
     </>
   )
 }
