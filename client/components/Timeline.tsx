@@ -1,70 +1,59 @@
-// import { useState } from 'react'
-
 import { useState } from 'react'
 
 function Timeline() {
-  // TESTING / EXPLORATION RE MOUSE EVENTS AND INPUT RANGE SLIDER
-
-  // const [sliderX, setSliderX] = useState(0)
-
-  // const mDown = (event: React.MouseEvent<HTMLInputElement>) => {
-  //   setSliderX(event.clientX)
-  //   console.log('down', event.clientX)
-  // }
-
-  // const mMove = (event: React.MouseEvent<HTMLInputElement>) => {
-  //   if (event.buttons && event.movementX !== 0) {
-  //     console.log(event.movementX > 0 ? 'right' : 'left')
-  //   }
-  // }
-
   const MIN = 0
   const MAX = 100
-  const MODULATOR = 0.82
+  const MODULATOR = 0.835
+  // hardcoded marks for dev & testing
+  const marks: number[] = [MIN, 10, 23, 44, 78, 55, 89, MAX]
 
   const [timelinePosition, setTimelinePosition] = useState(50)
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(event)
+    setTimelinePosition(Number(event.target.value))
   }
 
-  const marks: number[] = [0, 10, 23, 45, 89, 100]
+  // maybe required to use in input if some browsers don't play nice
+  // const handleInput = (event: React.FormEvent<HTMLInputElement>) => {
+  //   // console.log('input',event.target)
+  // }
+
+  const jumpToTime = (mark: number) => {
+    setTimelinePosition(mark)
+  }
 
   const modulateMarkPosition = (mark: number): number => {
     if (mark === 50) return 50
-    return mark < 50 ? mark * (1 / MODULATOR) : mark * MODULATOR
+    return mark < 50 ? mark * (MODULATOR / 1) : mark * MODULATOR
   }
 
   return (
     <>
-      {/* <h2>Timeline component</h2> */}
       <div id="timeline-container">
         <input
           id="main-timeline"
-          // onMouseDown={mDown}
-          // onMouseMove={mMove}
+          value={timelinePosition}
           type="range"
           min={MIN}
           max={MAX}
           list="events"
-          // value={timelinePosition}
-          // onChange={handleChange}
+          onChange={handleChange}
         />
       </div>
 
       <div id="mark-container">
         {marks.map((mark) => {
           return (
-            <div
+            <button
+              onClick={() => jumpToTime(mark)}
               className="mark"
               style={{
-                position: 'fixed',
                 left: `${modulateMarkPosition(mark)}%`,
               }}
               key={mark}
             >
               {mark}
-            </div>
+            </button>
           )
         })}
       </div>
@@ -73,13 +62,3 @@ function Timeline() {
 }
 
 export default Timeline
-
-// <div id="timeline-container">
-//   {/* TODO: populate this datalist with option elements from an array of events */}
-//   <datalist id="events">
-//     {/* TODO: remove these hardcoded event positions -- note that values are between slider min/max  */}
-//     <option value="26" label="26" />
-//     <option value="45" label="45" />
-//     <option value="98" label="98" />
-//   </datalist>
-// </div>
