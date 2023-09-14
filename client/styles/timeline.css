@@ -1,0 +1,158 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+:root {
+  /* track */
+  --track-colour: #efe6eb;
+  --track-width: 85vw;
+  --track-height: 1.5em;
+
+  /* thumb */
+  --thumb-colour: rgb(237, 237, 20);
+  --thumb-width: 1em;
+  --thumb-height: 3em;
+}
+
+/* to position the timeline in center of provided space */
+#timeline-container {
+  display: flex;
+  justify-content: center;
+}
+
+/* the timeline input element itself */
+#main-timeline {
+  width: var(--track-width);
+  padding: 2em 1em;
+}
+
+/*
+what follows is from:
+
+https://css-tricks.com/styling-cross-browser-compatible-range-inputs-css/ 
+
+...and updated to use the preset :root variables above 
+
+*/
+
+/* FIRST, MAKE DEFAULT ELEMENT INVISIBLE */
+
+input[type='range'] {
+  /* Hides the slider so that custom slider can be made */
+  -webkit-appearance: none; 
+
+  /* Specific width is required for Firefox. */
+  width: var(--track-width); 
+
+  /* Otherwise white in Chrome */
+  background: transparent; 
+}
+
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+}
+
+input[type='range']:focus {
+  outline: none; /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */
+}
+
+input[type='range']::-ms-track {
+  width: var(--track-width);
+  cursor: pointer;
+
+  /* Hides the slider so custom styles can be added */
+  background: transparent;
+  border-color: transparent;
+  color: transparent;
+}
+
+/* 'THUMB' (the bit the user drags) */
+
+/* Special styling for WebKit/Blink */
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  border: 1px solid #000000;
+  height: var(--thumb-height);
+  width: var(--thumb-width);
+  border-radius: 3px;
+  background: var(--thumb-colour);
+  cursor: pointer;
+  margin-top: -14px; /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d; /* Add cool effects to your sliders! */
+}
+
+/* All the same stuff for Firefox */
+input[type='range']::-moz-range-thumb {
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  border: 1px solid #000000;
+  height: var(--thumb-height);
+  width: var(--thumb-width);
+  border-radius: 3px;
+  background: var(--thumb-colour);
+  cursor: pointer;
+}
+
+/* All the same stuff for IE */
+input[type='range']::-ms-thumb {
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  border: 1px solid #000000;
+  height: var(--thumb-height);
+  width: var(--thumb-width);
+  border-radius: 3px;
+  background: var(--thumb-colour);
+  cursor: pointer;
+}
+
+/* TRACK */
+
+input[type='range']::-webkit-slider-runnable-track {
+  /* width: 100%; */
+  height: var(--track-height);
+  cursor: pointer;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  background: var(--track-colour);
+  border-radius: 1.3px;
+  border: 0.2px solid #010101;
+}
+
+input[type='range']:focus::-webkit-slider-runnable-track {
+  background: var(--track-colour);
+}
+
+input[type='range']::-moz-range-track {
+  /* width: 100%; */
+  height: var(--track-height);
+  cursor: pointer;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  background: var(--track-colour);
+  border-radius: 1.3px;
+  border: 0.2px solid #010101;
+}
+
+input[type='range']::-ms-track {
+  /* width: 100%; */
+  height: var(--track-height);
+  cursor: pointer;
+  background: transparent;
+  border-color: transparent;
+  border-width: 16px 0;
+  color: transparent;
+}
+input[type='range']::-ms-fill-lower {
+  background: var(--track-colour);
+  border: 0.2px solid #010101;
+  border-radius: 2.6px;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+}
+input[type='range']:focus::-ms-fill-lower {
+  background: var(--track-colour);
+}
+input[type='range']::-ms-fill-upper {
+  background: var(--track-colour);
+  border: 0.2px solid #010101;
+  border-radius: 2.6px;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+}
+input[type='range']:focus::-ms-fill-upper {
+  background: var(--track-colour);
+}
