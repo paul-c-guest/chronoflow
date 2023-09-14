@@ -1,51 +1,35 @@
 /* eslint-disable react/no-unknown-property */
 
-// import { createRoot } from 'react-dom/client'
-// import { Canvas } from '@react-three/fiber'
+import { Canvas, useFrame } from '@react-three/fiber'
+import { OrbitControls, PerspectiveCamera, useGLTF } from '@react-three/drei'
 
-import { useEffect } from 'react'
-import * as THREE from 'three'
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
-import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
+function GlobeModel() {
+  const { scene } = useGLTF('/assets/globe/scene.gltf')
+
+  useFrame(({ clock }) => {
+    scene.rotation.y = clock.getElapsedTime()
+  })
+
+  return <primitive object={scene} />
+}
 
 function Globe() {
-  useEffect(() => {
-    const scene = new THREE.Scene()
-    const camera = new THREE.PerspectiveCamera(
-      75,
-      window.innerWidth / window.innerHeight,
-      0.1,
-      1000
-    )
-    camera.position.z = 20
-
-    const canvas = document.getElementById('threeJsCanvas')
-
-    const renderer = new THREE.WebGLRenderer({ canvas })
-    renderer.setSize(window.innerWidth, window.innerHeight)
-    document.body.appendChild(renderer.domElement)
-
-    new OrbitControls(camera, renderer.domElement)
-
-    const ambientLight = new THREE.AmbientLight(0xffffff, 1)
-    scene.add(ambientLight)
-
-    const loader = new GLTFLoader()
-    loader.load('/globe-2.0/scene.gltf', (gltf) => {
-      scene.add(gltf.scene)
-    })
-
-    function animate() {
-      requestAnimationFrame(animate)
-      renderer.render(scene, camera)
-    }
-    animate()
-  }, [])
-
   return (
     <div>
       <h1>globe</h1>
-      <canvas id="threeJsCanvas"></canvas>
+      <Canvas>
+        <PerspectiveCamera
+          makeDefault
+          position={[0, 0, 20]}
+          fov={75}
+          aspect={window.innerWidth / window.innerHeight}
+          near={0.1}
+          far={1000}
+        />
+        <ambientLight intensity={1} />
+        <OrbitControls />
+        <GlobeModel />
+      </Canvas>
     </div>
   )
 }

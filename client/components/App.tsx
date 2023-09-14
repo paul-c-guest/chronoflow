@@ -10,9 +10,7 @@ function App() {
     <>
       <Header />
       <section className="main">
-        <div id="root">
-          <Globe />
-        </div>
+        <Globe />
         <Filters />
         <Timeline />
       </section>
