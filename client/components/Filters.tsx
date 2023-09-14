@@ -21,7 +21,7 @@ function Filters() {
 
   return (
     <>
-      <div className="filters flex flex-row gap-7 items-baseline border-2 border-black rounded max-w-lg">
+      <div className="h-20 filters flex flex-row gap-7 items-baseline border-2 border-black rounded max-w-lg">
         <div>
           <input
             type="checkbox"

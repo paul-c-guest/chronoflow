@@ -10,8 +10,10 @@ function App() {
     <>
       <Header />
       <section className="main">
-        <Globe />
-        <Filters />
+        <div className="flex">
+          <Globe />
+          <Filters />
+        </div>
         <Timeline />
       </section>
       <Footer />
