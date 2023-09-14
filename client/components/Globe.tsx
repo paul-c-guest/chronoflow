@@ -27,31 +27,17 @@ function Globe() {
 
     new OrbitControls(camera, renderer.domElement)
 
-    const geometry = new THREE.SphereGeometry(9, 32, 16)
-    const material = new THREE.MeshNormalMaterial()
-    const sphere = new THREE.Mesh(geometry, material)
-    scene.add(sphere)
-
     const ambientLight = new THREE.AmbientLight(0xffffff, 1)
     scene.add(ambientLight)
 
-    const pointLight = new THREE.PointLight(0xffffff, 1)
-    pointLight.position.set(3, 2, 1)
-    scene.add(pointLight)
-
-    const pointLightHelper = new THREE.PointLightHelper(pointLight, 0.2)
-    scene.add(pointLightHelper)
-
-    // const loader = new GLTFLoader()
-    // loader.load('/globe-2.0/scene.gltf', (gltf) => {
-    //   scene.add(gltf.scene)
-    // })
+    const loader = new GLTFLoader()
+    loader.load('/globe-2.0/scene.gltf', (gltf) => {
+      scene.add(gltf.scene)
+    })
 
     function animate() {
       requestAnimationFrame(animate)
       renderer.render(scene, camera)
-
-      sphere.rotation.x += 0.01
     }
     animate()
   }, [])
