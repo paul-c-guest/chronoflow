@@ -8,6 +8,9 @@ input[type='checkbox'] {
   height: 50px;
   border: 1px solid black;
   border-radius: 20%;
+  margin: 0.25rem;
+  display: inline-block;
+  vertical-align: middle;
 }
 
 input[type='checkbox']:hover {

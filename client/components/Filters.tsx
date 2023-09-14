@@ -16,9 +16,8 @@ function Filters() {
   }
 
   return (
-    <div className="filters">
+    <div className="filters flex flex-row gap-7 items-baseline border-2 border-black rounded max-w-lg">
       <div>
-        <label htmlFor="inventions">Inventions</label>
         <input
           type="checkbox"
           name="inventions"
@@ -26,9 +25,9 @@ function Filters() {
           onChange={handleChange}
           checked={checkboxStatus.inventions}
         />
+        <label htmlFor="inventions">Inventions</label>
       </div>
       <div>
-        <label htmlFor="worldEvents">World events</label>
         <input
           type="checkbox"
           name="worldEvents"
@@ -36,9 +35,9 @@ function Filters() {
           onChange={handleChange}
           checked={checkboxStatus.worldEvents}
         />
+        <label htmlFor="worldEvents">World events</label>
       </div>
       <div>
-        <label htmlFor="people">People</label>
         <input
           type="checkbox"
           name="people"
@@ -46,6 +45,7 @@ function Filters() {
           onChange={handleChange}
           checked={checkboxStatus.people}
         />
+        <label htmlFor="people">People</label>
       </div>
     </div>
   )
