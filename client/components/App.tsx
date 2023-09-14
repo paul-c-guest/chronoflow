@@ -1,8 +1,7 @@
 import '../styles/index.css'
 import Header from './Header.tsx'
 import Footer from './Footer.tsx'
-import Globe from './GlobeTrial.tsx'
-import Readout from './Readout.tsx'
+import Globe from './Globe.tsx'
 import Timeline from './Timeline.tsx'
 import Filters from './Filters'
 
@@ -15,7 +14,6 @@ function App() {
           <Globe />
         </div>
         <Filters />
-        <Readout />
         <Timeline />
       </section>
       <Footer />
