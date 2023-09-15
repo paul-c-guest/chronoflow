@@ -8,17 +8,34 @@ interface Props {
 }
 
 function Timeline({ inventions }: Props) {
-  const MIN = 100
-  const MAX = 2023
+  const BUFFER = 50
+
+  // setup some global values for the timeline elements
+  const MIN =
+    inventions.reduce(
+      (min, current) => (min = current.year < min ? current.year : min),
+      inventions[0].year
+    ) - BUFFER
+
+  const MAX =
+    inventions.reduce(
+      (max, current) => (max = current.year > max ? current.year : max),
+      inventions[0].year
+    ) + BUFFER
+
+  const RANGE = MAX - MIN
+  const MID = RANGE - RANGE / 2
+
+  // assists with squeezing event positions towards centre of view, and  closely related to "--track-width" variable in timeline.css
   const MODULATOR = 0.835
 
   const [timelinePosition, setTimelinePosition] = useState(50)
 
+  const [activeEvent, setActiveEvent] = useState(0)
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTimelinePosition(Number(event.target.value))
   }
-
-  const [activeEvent, setActiveEvent] = useState(0)
 
   // console.log(inventions)
 
@@ -31,26 +48,25 @@ function Timeline({ inventions }: Props) {
   //   // console.log('input',event.target)
   // }
 
-  const jumpToTime = (invention: Invention) => {
+  const setSliderToEvent = (invention: Invention) => {
     setTimelinePosition(invention.year)
     setActiveEvent(invention.id)
-    console.log('clicked', invention.id)
-    // navigate or navigation => /event/:etc?
+    // console.log('clicked', invention.id)
   }
 
+  /**
+   * returns a value between 0 and
+   */
   const modulateMarkPosition = (year: number): number => {
-    // year is between min and max
-    const RANGE = MAX - MIN
-    // console.log('range', RANGE)
+    let result = 50
+    if (year < MID) {
+      result = (((year - MIN) * 100) / RANGE) * (MODULATOR / 1)
+    } else if (year > MID) {
+      result = (((year - MIN) * 100) / RANGE) * MODULATOR
+    }
+    console.log(year, result)
 
-    const MID = RANGE - RANGE / 2
-    // console.log('MID', MID)
-
-    if (year === MID) return 50 // midpoint = '50%'
-    else
-      return year < MID
-        ? (((year - MIN) * 100) / RANGE) * (MODULATOR / 1)
-        : (((year - MIN) * 100) / RANGE) * MODULATOR
+    return result
   }
 
   return (
@@ -71,19 +87,21 @@ function Timeline({ inventions }: Props) {
       <div id="mark-container">
         {inventions.map((invention) => {
           return (
-            <Link to={`/${invention.id}`} key={invention.id}>
-              <button
-                onClick={() => jumpToTime(invention)}
-                className={`mark ${
-                  activeEvent === invention.id ? 'clicked' : ''
-                }`}
-                style={{
-                  left: `${modulateMarkPosition(invention.year)}%`,
-                }}
-              >
-                {invention.year}
-              </button>
-            </Link>
+            invention.year && (
+              <Link to={`/${invention.id}`} key={invention.id}>
+                <button
+                  onClick={() => setSliderToEvent(invention)}
+                  className={`mark ${
+                    activeEvent === invention.id ? 'clicked' : ''
+                  }`}
+                  style={{
+                    left: `${modulateMarkPosition(invention.year)}%`,
+                  }}
+                >
+                  {invention.year}
+                </button>
+              </Link>
+            )
           )
         })}
       </div>
