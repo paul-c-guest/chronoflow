@@ -35,25 +35,29 @@
 }
 
 #mark-container {
-  margin: 2em 0 3em;
-  display: flex;
-  justify-content: center;
+  margin-bottom: 3em;
+  display: inline-block;
+  /* justify-content: center; */
 }
 
 .mark {
   /* note: position is further calculated in Timeline.tsx */
   position: absolute;
+  /* display: inline-block; */
   margin-left: 7vw;
+  /* white-space: normal; */
   padding: 0.25em 0.75em;
-  min-width: 2em;
+  /* min-width: 2em; */
   transform: rotate(65deg);
-  transition: .25s;
+  border-radius: 2em;
+  transition: 0.25s;
   /* background-color: aqua; */
 }
 
 .clicked {
   font-weight: 900;
-  background-color: rgb(205, 255, 154);
+  border-radius: 0.5em;
+  background-color: #cdff9a;
   transition: 0.5s;
 }
 

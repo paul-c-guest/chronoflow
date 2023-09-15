@@ -26,7 +26,8 @@ function Timeline({ inventions }: Props) {
   const RANGE = MAX - MIN
   const MID = RANGE - RANGE / 2
 
-  // assists with squeezing event positions towards centre of view, and  closely related to "--track-width" variable in timeline.css
+  // assists with squeezing event positions towards centre of view;
+  // closely related to "--track-width" variable in timeline.css
   const MODULATOR = 0.835
 
   const [timelinePosition, setTimelinePosition] = useState(50)
@@ -40,6 +41,20 @@ function Timeline({ inventions }: Props) {
   // console.log(inventions)
 
   // add some form of "helper" function that takes in the data array, calculates how many entries there are in an array and divides the timeline length into relative spacing for dates in relation to space on timeline?
+
+  /**
+   * // GERARDS CLUSTER FUNCTION
+   *  
+    let groups = []
+for (const date of dates) {
+  if (groups.length && Math.abs(groups.at(-1).at(-1) - date) < 2) {
+    groups.at(-1).push(date)
+  } else {
+    groups.push([ date ])
+  }
+}
+
+  */
 
   //function spacing(data[]){ const length = Number(inventions.length) const timelineLength = Number({timelineposition??????}) return timelineLength/length [this would equal how many 'segments' each specific timeline would have?] then we need to }
 
@@ -64,9 +79,8 @@ function Timeline({ inventions }: Props) {
     } else if (year > MID) {
       result = (((year - MIN) * 100) / RANGE) * MODULATOR
     }
-    console.log(year, result)
-
-    return result
+    // console.log(year, result)
+    return result 
   }
 
   return (
@@ -95,7 +109,7 @@ function Timeline({ inventions }: Props) {
                     activeEvent === invention.id ? 'clicked' : ''
                   }`}
                   style={{
-                    left: `${modulateMarkPosition(invention.year)}%`,
+                    left: `${modulateMarkPosition(invention.year)}vw`,
                   }}
                 >
                   {invention.year}
