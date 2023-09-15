@@ -5,9 +5,13 @@ import {
 } from 'react-router-dom'
 
 import App from './components/App.js'
+import Readout from './components/Readout'
 
 export const routes = createRoutesFromElements(
-  <Route path="/" element={<App />}></Route>
+  <Route path="/" element={<App />}>
+    {/* readout here gets param, goes to Outlet */}
+    <Route path="/:eventId" element={<Readout />} />
+  </Route>
 )
 
 export const router = createBrowserRouter(routes)
