@@ -1,11 +1,16 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 
-function Timeline() {
-  const MIN = 0
-  const MAX = 100
+import { Invention } from '../../models/Inventions'
+
+interface Props {
+  inventions: Invention[]
+}
+
+function Timeline({ inventions }: Props) {
+  const MIN = 100
+  const MAX = 2023
   const MODULATOR = 0.835
-  // hardcoded marks for dev & testing
-  const marks: number[] = [MIN, 10, 23, 44, 78, 55, 89, MAX]
 
   const [timelinePosition, setTimelinePosition] = useState(50)
 
@@ -13,18 +18,39 @@ function Timeline() {
     setTimelinePosition(Number(event.target.value))
   }
 
+  const [activeEvent, setActiveEvent] = useState(0)
+
+  // console.log(inventions)
+
+  // add some form of "helper" function that takes in the data array, calculates how many entries there are in an array and divides the timeline length into relative spacing for dates in relation to space on timeline?
+
+  //function spacing(data[]){ const length = Number(inventions.length) const timelineLength = Number({timelineposition??????}) return timelineLength/length [this would equal how many 'segments' each specific timeline would have?] then we need to }
+
   // maybe required to use in input if some browsers don't play nice
   // const handleInput = (event: React.FormEvent<HTMLInputElement>) => {
   //   // console.log('input',event.target)
   // }
 
-  const jumpToTime = (mark: number) => {
-    setTimelinePosition(mark)
+  const jumpToTime = (invention: Invention) => {
+    setTimelinePosition(invention.year)
+    setActiveEvent(invention.id)
+    console.log('clicked', invention.id)
+    // navigate or navigation => /event/:etc?
   }
 
-  const modulateMarkPosition = (mark: number): number => {
-    if (mark === 50) return 50
-    return mark < 50 ? mark * (MODULATOR / 1) : mark * MODULATOR
+  const modulateMarkPosition = (year: number): number => {
+    // year is between min and max
+    const RANGE = MAX - MIN
+    // console.log('range', RANGE)
+
+    const MID = RANGE - RANGE / 2
+    // console.log('MID', MID)
+
+    if (year === MID) return 50 // midpoint = '50%'
+    else
+      return year < MID
+        ? (((year - MIN) * 100) / RANGE) * (MODULATOR / 1)
+        : (((year - MIN) * 100) / RANGE) * MODULATOR
   }
 
   return (
@@ -38,22 +64,26 @@ function Timeline() {
           max={MAX}
           list="events"
           onChange={handleChange}
+          // onInput={handleInput}
         />
       </div>
 
       <div id="mark-container">
-        {marks.map((mark) => {
+        {inventions.map((invention) => {
           return (
-            <button
-              onClick={() => jumpToTime(mark)}
-              className="mark"
-              style={{
-                left: `${modulateMarkPosition(mark)}%`,
-              }}
-              key={mark}
-            >
-              {mark}
-            </button>
+            <Link to={`/${invention.id}`} key={invention.id}>
+              <button
+                onClick={() => jumpToTime(invention)}
+                className={`mark ${
+                  activeEvent === invention.id ? 'clicked' : ''
+                }`}
+                style={{
+                  left: `${modulateMarkPosition(invention.year)}%`,
+                }}
+              >
+                {invention.year}
+              </button>
+            </Link>
           )
         })}
       </div>

@@ -1,4 +1,4 @@
-export interface Inventions {
+export interface Invention {
   id: number
   invention: string
   inventor: string | null

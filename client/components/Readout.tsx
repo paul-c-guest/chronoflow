@@ -1,66 +1,81 @@
-import { useQuery } from '@tanstack/react-query'
+import { useOutletContext, useParams } from 'react-router-dom'
 
-import type { Inventions } from '../../models/Inventions.ts'
-import { getAllInventions } from '../apis/api-inventions.ts'
-import { CheckboxStatusType } from '../../models/Filters.ts'
+import type { Invention } from '../../models/Inventions.ts'
 
-interface Props {
-  checkboxStatus: CheckboxStatusType
+interface Context {
+  inventionsData: Invention[]
 }
 
-function Readout({ checkboxStatus }: Props) {
-  const { data, isLoading, isError, error } = useQuery<Inventions[], Error>(
-    ['inventions'],
-    getAllInventions
+export default function Readout() {
+  const { eventId } = useParams()
+  const {inventionsData: inventions} = useOutletContext<Context>()
+  console.log(inventions)
+  console.log(eventId)
+  // Get single invention function instead?
+  const singleInvention = inventions[Number(eventId)-1]
+  return (
+    <>
+    <div className='max-w-lg m'>
+      <h2 className="text-xl font-semibold ml-2">
+        {singleInvention.invention}
+      </h2>
+      <p className="m-2 ">
+        Credited to:{' '}
+        <span className="italic text-lg">
+          {singleInvention.inventor}, {singleInvention.year}
+        </span>
+      </p>
+      <p>{singleInvention.description}</p>
+      </div>
+      <img
+        src={singleInvention.image}
+        alt={singleInvention.invention}
+        className="shadow-md m-4"
+      />
+    </>
   )
+}
 
-  if (isLoading) {
-    return <p>Waiting for invention info....</p>
-  }
 
-  if (isError || !data) {
-    return <p>There was an error: {error?.message}</p>
-  }
 
   // Fancy function to manage what data is displayed in sync with slider
-  function selectInventionToDisplay(data: Inventions[]) {
-    // switch statement?
-    return data[0]
-  }
+  // function selectInventionToDisplay(data: Invention[]) {
+  //   // switch statement?
+  //   return data[0]
+  // }
 
-  function displayReadout() {
-    if (data) {
-      const dataToDisplay = selectInventionToDisplay(data)
-      return (
-        <>
-          <h2 className="text-xl font-semibold m-2">
-            {dataToDisplay.invention}
-          </h2>
-          <img
-            src={dataToDisplay.image}
-            alt={dataToDisplay.invention}
-            className="w-32 shadow-md m-4"
-          />
-          <p className="m-2 ">
-            Credited to:{' '}
-            <span className="italic text-lg">
-              {dataToDisplay.inventor}, {dataToDisplay.year}
-            </span>
-          </p>
-          <p>{dataToDisplay.description}</p>
-        </>
-      )
-    } else {
-      return <p>There was an error retrieving the data</p>
-    }
-  }
+//   function displayReadout() {
+//     if (data) {
+//       const dataToDisplay = selectInventionToDisplay(data)
+//       return (
+//         <>
+//           <h2 className="text-xl font-semibold m-2">
+//             {dataToDisplay.invention}
+//           </h2>
+//           <img
+//             src={dataToDisplay.image}
+//             alt={dataToDisplay.invention}
+//             className="w-32 shadow-md m-4"
+//           />
+//           <p className="m-2 ">
+//             Credited to:{' '}
+//             <span className="italic text-lg"></span>
+//               {dataToDisplay.inventor}, {dataToDisplay.year}
+//             </span>
+//           </p>
+//           <p>{dataToDisplay.description}</p>
+//         </>
+//       )
+//     } else {
+//       return <p>There was an error retrieving the data</p>
+//     }
+//   }
 
-  return (
-    <div>
-      {/* Conditional rendering of readout */}
-      {checkboxStatus.inventions && displayReadout()}
-    </div>
-  )
-}
+//   return (
+//     <div>
+//       {/* Conditional rendering of readout */}
+//       {checkboxStatus.inventions && displayReadout()}
+//     </div>
+//   )
+// }
 
-export default Readout
