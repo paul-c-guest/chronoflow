@@ -36,18 +36,8 @@ export async function seed(knex) {
     },
     {
       id: 4,
-      invention: 'Aqueducts',
-      inventor: 'Appius Claudius',
-      country: 'Italy/Greece',
-      year: null,
-      description:
-        'The Romans constructed aqueducts throughout their Republic and later Empire, to bring water from outside sources into cities and towns. Aqueduct water supplied public baths, latrines, fountains, and private households; it also supported mining operations, milling, farms, and gardens.',
-      image: '/invention-images/aqueducts.jpg',
-    },
-    {
-      id: 5,
       invention: 'Compass',
-      inventor: '',
+      inventor: 'Unknown',
       country: 'China',
       year: 1044,
       description:
@@ -55,7 +45,7 @@ export async function seed(knex) {
       image: '/invention-images/compass.jpg',
     },
     {
-      id: 6,
+      id: 5,
       invention: 'Printing Press',
       inventor: 'Johannes Gutenburg',
       country: 'Germany',
@@ -65,7 +55,7 @@ export async function seed(knex) {
       image: '/invention-images/pinting-press.jpg',
     },
     {
-      id: 7,
+      id: 6,
       invention: 'Telescope',
       inventor: 'Hans Lippershey',
       country: 'Netherlands',
@@ -75,7 +65,7 @@ export async function seed(knex) {
       image: '/invention-images/telescope.jpg',
     },
     {
-      id: 8,
+      id: 7,
       invention: 'Steam Engine',
       inventor: 'Thomas Newcomen',
       country: 'England',
@@ -85,7 +75,7 @@ export async function seed(knex) {
       image: '/invention-images/steam-engine.jpg',
     },
     {
-      id: 9,
+      id: 8,
       invention: 'Vaccination',
       inventor: 'Edward Jenner',
       country: 'England',
@@ -95,7 +85,7 @@ export async function seed(knex) {
       image: '/invention-images/vaccination.jpg',
     },
     {
-      id: 10,
+      id: 9,
       invention: 'Electricity',
       inventor: 'Michael Faraday',
       country: 'England',
@@ -105,7 +95,7 @@ export async function seed(knex) {
       image: '/invention-images/photography.jpg',
     },
     {
-      id: 11,
+      id: 10,
       invention: 'Telegraph',
       inventor: 'Samuel Morse',
       country: 'USA',
@@ -115,7 +105,7 @@ export async function seed(knex) {
       image: '/invention-images/telegraph.jpg',
     },
     {
-      id: 12,
+      id: 11,
       invention: 'Photography',
       inventor: 'Louis Daguerre',
       country: 'France',
@@ -125,7 +115,7 @@ export async function seed(knex) {
       image: '/invention-images/photography.jpg',
     },
     {
-      id: 13,
+      id: 12,
       invention: 'Automobile',
       inventor: 'Karl Benz',
       country: 'Germany',
@@ -135,7 +125,7 @@ export async function seed(knex) {
       image: '/invention-images/automobile.jpg',
     },
     {
-      id: 14,
+      id: 13,
       invention: 'Radio',
       inventor: 'Guilielmo Marconi',
       country: 'Italy',
@@ -145,7 +135,7 @@ export async function seed(knex) {
       image: '/invention-images/radio.jpg',
     },
     {
-      id: 15,
+      id: 14,
       invention: 'Penicillin',
       inventor: 'Alexander Fleming',
       country: 'Scotland',

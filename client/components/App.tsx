@@ -33,21 +33,23 @@ function App() {
   }
 
   return (
-    <>
+    <div className="h-screen">
       <Header />
       <section className="main">
-        <div className="flex">
+        <div className="flex w-screen">
           <Globe />
-          <Filters
-            setCheckboxStatus={setCheckboxStatus}
-            checkboxStatus={checkboxStatus}
-          />
-          <Outlet context={{ inventionsData }} />
+          <div className="flex w-1/2 flex-col h-[36rem]">
+            <Filters
+              setCheckboxStatus={setCheckboxStatus}
+              checkboxStatus={checkboxStatus}
+            />
+            <Outlet context={{ inventionsData }} />
+          </div>
         </div>
         <Timeline inventions={inventionsData} />
       </section>
       <Footer />
-    </>
+    </div>
   )
 }
 

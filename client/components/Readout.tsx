@@ -8,41 +8,39 @@ interface Context {
 
 export default function Readout() {
   const { eventId } = useParams()
-  const {inventionsData: inventions} = useOutletContext<Context>()
+  const { inventionsData: inventions } = useOutletContext<Context>()
   console.log(inventions)
   console.log(eventId)
   // Get single invention function instead?
-  const singleInvention = inventions[Number(eventId)-1]
+  const singleInvention = inventions[Number(eventId) - 1]
   return (
-    <>
-    <div className='max-w-lg m'>
-      <h2 className="text-xl font-semibold ml-2">
-        {singleInvention.invention}
-      </h2>
-      <p className="m-2 ">
-        Credited to:{' '}
-        <span className="italic text-lg">
-          {singleInvention.inventor}, {singleInvention.year}
-        </span>
-      </p>
-      <p>{singleInvention.description}</p>
+    <div className="flex mt-12">
+      <div className="max-w-lg">
+        <h2 className="text-xl font-semibold ml-2">
+          {singleInvention.invention}
+        </h2>
+        <p className="m-2 ">
+          Credited to:{' '}
+          <span className="italic text-lg">
+            {singleInvention.inventor}, {singleInvention.year}
+          </span>
+        </p>
+        <p>{singleInvention.description}</p>
       </div>
       <img
         src={singleInvention.image}
         alt={singleInvention.invention}
-        className="shadow-md m-4"
+        className="shadow-md m-4 h-1/2"
       />
-    </>
+    </div>
   )
 }
 
-
-
-  // Fancy function to manage what data is displayed in sync with slider
-  // function selectInventionToDisplay(data: Invention[]) {
-  //   // switch statement?
-  //   return data[0]
-  // }
+// Fancy function to manage what data is displayed in sync with slider
+// function selectInventionToDisplay(data: Invention[]) {
+//   // switch statement?
+//   return data[0]
+// }
 
 //   function displayReadout() {
 //     if (data) {
@@ -78,4 +76,3 @@ export default function Readout() {
 //     </div>
 //   )
 // }
-
