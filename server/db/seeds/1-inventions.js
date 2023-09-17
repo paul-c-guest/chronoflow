@@ -12,7 +12,7 @@ export async function seed(knex) {
       year: 105,
       description:
         'About the year 105 Cai conceived the idea of forming sheets of paper from the macerated bark of trees, hemp waste, old rags, and fishnets',
-      image: '/invention-images/paper.jpg',
+      image: '/images/paper.png',
     },
     {
       id: 2,
@@ -22,7 +22,7 @@ export async function seed(knex) {
       year: 142,
       description:
         'Gunpowder was invented in China sometime during the first millennium AD. The earliest possible reference to gunpowder appeared in 142 AD during the Eastern Han dynasty when the alchemist Wei Boyang, also known as the "father of alchemy", wrote about a substance with gunpowder-like properties..',
-      image: '/invention-images/gunpowder.jpg',
+      image: '/images/gunpowder.png',
     },
     {
       id: 3,
@@ -32,7 +32,7 @@ export async function seed(knex) {
       year: 231,
       description:
         'When was the wheelbarrow first invented? The common wheelbarrow has far flung and exotic roots, as it can be traced back to third century ancient Asia. In 231 A.D, Zhuge Liang of Shu Han in China created a single wheel cart for an efficient way of transporting food and supplies to the front lines of battle',
-      image: '/invention-images/wheelbarrow.jpg',
+      image: '/images/wheelbarrow.png',
     },
     {
       id: 4,
@@ -42,7 +42,7 @@ export async function seed(knex) {
       year: 1044,
       description:
         'Historians think China may have been the first civilization to develop a magnetic compass that could be used for navigation. Chinese scientists may have developed navigational compasses as early as the 11th or 12th century. Western Europeans soon followed at the end of the 12th century.',
-      image: '/invention-images/compass.jpg',
+      image: '/images/compass.png',
     },
     {
       id: 5,
@@ -52,7 +52,7 @@ export async function seed(knex) {
       year: 1440,
       description:
         'Historians think China may have been the first civilization to develop a magnetic compass that could be used for navigation. Chinese scientists may have developed navigational compasses as early as the 11th or 12th century. Western Europeans soon followed at the end of the 12th century.',
-      image: '/invention-images/pinting-press.jpg',
+      image: '/images/printing-press.png',
     },
     {
       id: 6,
@@ -62,7 +62,7 @@ export async function seed(knex) {
       year: 1608,
       description:
         'In 1608, Lippershey laid claim to a device that could magnify objects three times. His telescope had a concave eyepiece aligned with a convex objective lens. One story goes that he got the idea for his design after observing two children in his shop holding up two lenses that made a distant weather vane appear close.',
-      image: '/invention-images/telescope.jpg',
+      image: '/images/telescope.png',
     },
     {
       id: 7,
@@ -72,7 +72,7 @@ export async function seed(knex) {
       year: 1712,
       description:
         'In 1712, Thomas Newcomens atmospheric engine became the first commercially successful engine using the principle of the piston and cylinder, which was the fundamental type of steam engine used until the early 20th century. The steam engine was used to pump water out of coal mines',
-      image: '/invention-images/steam-engine.jpg',
+      image: '/images/steam-engine.png',
     },
     {
       id: 8,
@@ -82,7 +82,7 @@ export async function seed(knex) {
       year: 1712,
       description:
         'Edward Jenner is well known around the world for his innovative contribution to immunization and the ultimate eradication of smallpox. Jenners work is widely regarded as the foundation of immunology—despite the fact that he was neither the first to suggest that infection with cowpox conferred specific immunity to smallpox nor the first to attempt cowpox inoculation for this purpose',
-      image: '/invention-images/vaccination.jpg',
+      image: '/images/vaccination.png',
     },
     {
       id: 9,
@@ -92,7 +92,7 @@ export async function seed(knex) {
       year: 1831,
       description:
         'In 1821 Michael Faraday succeeded in producing mechanical motion by means of a permanent magnet and an electric current—an ancestor of the electric motor. Ten years later he converted magnetic force into electrical force, thus inventing the worlds first electrical generator.',
-      image: '/invention-images/photography.jpg',
+      image: '/images/photography.png',
     },
     {
       id: 10,
@@ -102,7 +102,7 @@ export async function seed(knex) {
       year: 1837,
       description:
         'In 1832, while returning by ship from studying art in Europe, Morse conceived the idea of an electric telegraph as the result of hearing a conversation about the newly discovered electromagnet. Although the idea of an electric telegraph had been put forward in 1753 and electric telegraphs had been used to send messages over short distances as early as 1774, Morse believed that his was the first such proposal.',
-      image: '/invention-images/telegraph.jpg',
+      image: '/images/telegraph.png',
     },
     {
       id: 11,
@@ -112,7 +112,7 @@ export async function seed(knex) {
       year: 1839,
       description:
         'On January 7, 1839, members of the French Académie des Sciences were shown products of an invention that would forever change the nature of visual representation: photography. The astonishingly precise pictures they saw were the work of Louis-Jacques-Mandé Daguerre, a Romantic painter and printmaker most famous until then as the proprietor of the Diorama, a popular Parisian spectacle featuring theatrical painting and lighting effects. Each daguerreotype (as Daguerre dubbed his invention) was a one-of-a-kind image on a highly polished, silver-plated sheet of copper.',
-      image: '/invention-images/photography.jpg',
+      image: '/images/photography.png',
     },
     {
       id: 12,
@@ -122,7 +122,7 @@ export async function seed(knex) {
       year: 1886,
       description:
         'On January 29, 1886, Carl Benz applied for a patent for his “vehicle powered by a gas engine.” The patent number 37435 may be regarded as the birth certificate of the automobile. In July 1886 the newspapers reported on the first public outing of the three-wheeled Benz Patent Motor Car',
-      image: '/invention-images/automobile.jpg',
+      image: '/images/automobile.png',
     },
     {
       id: 13,
@@ -132,7 +132,7 @@ export async function seed(knex) {
       year: 1895,
       description:
         'In 1895, Guglielmo Marconi used radio waves to transmit signals over a distance of several kilometers. He developed the technology in subsequent years to achieve greater range. The foundation for both wireless telegraphy and radio had been laid.',
-      image: '/invention-images/radio.jpg',
+      image: '/images/radio.png',
     },
     {
       id: 14,
@@ -142,7 +142,7 @@ export async function seed(knex) {
       year: 1928,
       description:
         'Returning from holiday on September 3, 1928, Fleming began to sort through petri dishes containing colonies of Staphylococcus, bacteria that cause boils, sore throats and abscesses. He noticed something unusual on one dish. It was dotted with colonies, save for one area where a blob of mold was growing. The zone immediately around the mold—later identified as a rare strain of Penicillium notatum—was clear, as if the mold had secreted something that inhibited bacterial growth.',
-      image: '/invention-images/penicillin.jpg',
+      image: '/images/penicillin.png',
     },
   ])
 }

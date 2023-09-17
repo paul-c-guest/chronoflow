@@ -14,23 +14,28 @@ export default function Readout() {
   // Get single invention function instead?
   const singleInvention = inventions[Number(eventId) - 1]
   return (
-    <div className="flex mt-12">
-      <div className="max-w-lg">
-        <h2 className="text-xl font-semibold ml-2">
+    <div className=" max-h-[28rem] flex mt-12 bg-white rounded-md p-4 border-orange-300 border-t-2 border-r-2 border-l-4 border-b-4">
+      <div className="max-w-lg ml-4 self-start">
+        <h2 className="my-2 text-xl font-semibold">
           {singleInvention.invention}
         </h2>
-        <p className="m-2 ">
-          Credited to:{' '}
-          <span className="italic text-lg">
-            {singleInvention.inventor}, {singleInvention.year}
-          </span>
+        {singleInvention.inventor ? (
+          <p className="">
+            Credited to:{' '}
+            <span className="italic text-lg">{singleInvention.inventor}</span>
+          </p>
+        ) : null}
+        <p className="mb-2">
+          Year: <span className="italic text-lg">{singleInvention.year}</span>
         </p>
-        <p>{singleInvention.description}</p>
+        <div className="max-h-72 overflow-auto">
+          <p>{singleInvention.description}</p>
+        </div>
       </div>
       <img
         src={singleInvention.image}
         alt={singleInvention.invention}
-        className="shadow-md m-4 h-1/2"
+        className="shadow-md m-4 h-1/2 self-center"
       />
     </div>
   )

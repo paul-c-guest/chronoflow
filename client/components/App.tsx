@@ -33,7 +33,7 @@ function App() {
   }
 
   return (
-    <div className="h-screen">
+    <div className="h-screen bg-[url('/space-background.jpg')] bg-cover">
       <Header />
       <section className="main">
         <div className="flex w-screen">

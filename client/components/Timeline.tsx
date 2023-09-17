@@ -74,7 +74,7 @@ function Timeline({ inventions }: Props) {
             <Link to={`/${invention.id}`} key={invention.id}>
               <button
                 onClick={() => jumpToTime(invention)}
-                className={`mark ${
+                className={`text-white mark ${
                   activeEvent === invention.id ? 'clicked' : ''
                 }`}
                 style={{

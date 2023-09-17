@@ -47,14 +47,15 @@
   padding: 0.25em 0.75em;
   min-width: 2em;
   transform: rotate(65deg);
-  transition: .25s;
+  transition: 0.25s;
   /* background-color: aqua; */
 }
 
 .clicked {
   font-weight: 900;
-  background-color: rgb(205, 255, 154);
+  background-color: rgba(254, 226, 171, 0.502);
   transition: 0.5s;
+  border-radius: 5px;
 }
 
 /*
