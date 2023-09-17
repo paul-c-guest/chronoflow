@@ -22,7 +22,7 @@ describe('getAllFamousPeople', () => {
   it('should get a list of famous people', async () => {
     const famous_people = await db.getAllFamousPeople()
 
-    expect(famous_people).toHaveLength(15)
+    expect(famous_people).toHaveLength(16)
     expect(famous_people[0].name).toBe('Augustus Caesar')
     expect(famous_people[3].country).toBe('Mongol Empire')
   })
