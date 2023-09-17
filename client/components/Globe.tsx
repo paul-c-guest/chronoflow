@@ -1,6 +1,5 @@
 /* eslint-disable react/no-unknown-property */
 
-import { Canvas, useFrame } from '@react-three/fiber'
 import {
   Html,
   OrbitControls,
@@ -8,6 +7,7 @@ import {
   useGLTF,
   useProgress,
 } from '@react-three/drei'
+import { Canvas, useFrame } from '@react-three/fiber'
 import { Suspense } from 'react'
 
 function Loader() {

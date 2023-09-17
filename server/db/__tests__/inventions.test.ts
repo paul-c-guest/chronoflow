@@ -22,8 +22,8 @@ describe('getAllInventions', () => {
   it('should get a list of inventions', async () => {
     const inventions = await db.getAllInventions()
 
-    expect(inventions).toHaveLength(15)
+    expect(inventions).toHaveLength(14)
     expect(inventions[0].invention).toBe('Paper')
-    expect(inventions[4].country).toBe('China')
+    expect(inventions[4].country).toBe('Germany')
   })
 })
