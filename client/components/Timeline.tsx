@@ -80,7 +80,7 @@ for (const date of dates) {
       result = (((year - MIN) * 100) / RANGE) * MODULATOR
     }
     // console.log(year, result)
-    return result 
+    return result
   }
 
   return (
@@ -105,7 +105,7 @@ for (const date of dates) {
               <Link to={`/${invention.id}`} key={invention.id}>
                 <button
                   onClick={() => setSliderToEvent(invention)}
-                  className={`mark ${
+                  className={`mark text-white ${
                     activeEvent === invention.id ? 'clicked' : ''
                   }`}
                   style={{

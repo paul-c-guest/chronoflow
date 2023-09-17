@@ -56,9 +56,9 @@
 
 .clicked {
   font-weight: 900;
-  border-radius: 0.5em;
-  background-color: #cdff9a;
+  background-color: rgba(254, 226, 171, 0.502);
   transition: 0.5s;
+  border-radius: 5px;
 }
 
 /*

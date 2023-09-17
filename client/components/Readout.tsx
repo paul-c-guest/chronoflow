@@ -8,41 +8,44 @@ interface Context {
 
 export default function Readout() {
   const { eventId } = useParams()
-  const {inventionsData: inventions} = useOutletContext<Context>()
+  const { inventionsData: inventions } = useOutletContext<Context>()
   console.log(inventions)
   console.log(eventId)
   // Get single invention function instead?
-  const singleInvention = inventions[Number(eventId)-1]
+  const singleInvention = inventions[Number(eventId) - 1]
   return (
-    <>
-    <div className='max-w-lg m'>
-      <h2 className="text-xl font-semibold ml-2">
-        {singleInvention.invention}
-      </h2>
-      <p className="m-2 ">
-        Credited to:{' '}
-        <span className="italic text-lg">
-          {singleInvention.inventor}, {singleInvention.year}
-        </span>
-      </p>
-      <p>{singleInvention.description}</p>
+    <div className=" max-h-[28rem] flex mt-12 bg-white rounded-md p-4 border-orange-300 border-t-2 border-r-2 border-l-4 border-b-4">
+      <div className="max-w-lg ml-4 self-start">
+        <h2 className="my-2 text-xl font-semibold">
+          {singleInvention.invention}
+        </h2>
+        {singleInvention.inventor ? (
+          <p className="">
+            Credited to:{' '}
+            <span className="italic text-lg">{singleInvention.inventor}</span>
+          </p>
+        ) : null}
+        <p className="mb-2">
+          Year: <span className="italic text-lg">{singleInvention.year}</span>
+        </p>
+        <div className="max-h-72 overflow-auto">
+          <p>{singleInvention.description}</p>
+        </div>
       </div>
       <img
         src={singleInvention.image}
         alt={singleInvention.invention}
-        className="shadow-md m-4"
+        className="shadow-md m-4 h-1/2 self-center"
       />
-    </>
+    </div>
   )
 }
 
-
-
-  // Fancy function to manage what data is displayed in sync with slider
-  // function selectInventionToDisplay(data: Invention[]) {
-  //   // switch statement?
-  //   return data[0]
-  // }
+// Fancy function to manage what data is displayed in sync with slider
+// function selectInventionToDisplay(data: Invention[]) {
+//   // switch statement?
+//   return data[0]
+// }
 
 //   function displayReadout() {
 //     if (data) {
@@ -78,4 +81,3 @@ export default function Readout() {
 //     </div>
 //   )
 // }
-
