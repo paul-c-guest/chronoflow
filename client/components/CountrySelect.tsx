@@ -54,7 +54,7 @@ function CountrySelect({
         value={selectedOption}
         onChange={handleChange}
 
-        className="mt-3 bg-black
+        className="mt-3 bg-black"
 
       >
         <option value="disabledOption" disabled>
