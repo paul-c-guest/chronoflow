@@ -21,6 +21,7 @@ function App() {
     error,
   } = useQuery<Invention[], Error>(['inventions'], getAllInventions)
   const [checkboxStatus, setCheckboxStatus] = useState('inventions')
+  const [selectedOption, setSelectedOption] = useState('disabledOption')
 
   const {
     data: peopleData,
@@ -48,7 +49,12 @@ function App() {
                 setCheckboxStatus={setCheckboxStatus}
                 checkboxStatus={checkboxStatus}
               />
-              <CountrySelect inventions={inventionsData} people={peopleData} />
+              <CountrySelect
+                inventions={inventionsData}
+                people={peopleData}
+                setSelectedOption={setSelectedOption}
+                selectedOption={selectedOption}
+              />
             </div>
             <Outlet context={{ inventionsData }} />
           </div>
