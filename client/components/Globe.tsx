@@ -17,16 +17,19 @@ import {
 } from 'react'
 import ThreeGlobe from 'three-globe'
 
-function GlobeModel({ countriesData }) {
+function GlobeModel({ countryData }) {
+
+  const [altitude, setAltitude] = useState(0)
   const globe = new ThreeGlobe({ animateIn: true })
 
   globe
     .globeImageUrl('/assets/earth-blue-marble.jpg')
     .bumpImageUrl('/assets/earth-topology.png')
-    .polygonsData(countriesData)
+    .polygonsData(countryData)
     .polygonCapColor(() => 'rgba(200, 0, 0, 0.7)')
     .polygonSideColor(() => 'rgba(0, 200, 0, 0.1)')
     .polygonStrokeColor(() => '#111')
+    .polygonAltitude(0.05)
 
   useFrame(({ clock }) => {
     globe.rotation.y = clock.getElapsedTime() * 0.5
@@ -39,6 +42,7 @@ function GlobeModel({ countriesData }) {
 
 function Globe() {
   const [countriesData, setCountriesData] = useState(null)
+  const [countryCode, setCountryCode] = useState('US')
 
   useEffect(() => {
     // Load and parse the GeoJSON file
@@ -47,13 +51,13 @@ function Globe() {
       .then((data) => {
         // Store the countries' data in state
         setCountriesData(
-          data.features.filter((d) => d.properties.ISO_A2 !== 'AQ')
+          data.features.filter((d) => d.properties.ISO_A2 == countryCode)
         )
       })
       .catch((error) => {
         console.error('Error loading GeoJSON:', error)
       })
-  }, [])
+  }, [countryCode])
 
   return (
     <div className="w-[45%] h-[36rem]">
@@ -70,7 +74,7 @@ function Globe() {
           <ambientLight intensity={1} />
           <directionalLight color="white" position={[0, 0, 5]} />
           <group position={[0, 0, 0]}>
-            countriesData && <GlobeModel countriesData={countriesData} />
+          { countriesData && <GlobeModel countryData={countriesData} />}
           </group>
         </Suspense>
       </Canvas>
@@ -80,6 +84,30 @@ function Globe() {
 
 export default Globe
 
-{
+
+// .polygonCapColor(() => rgba(128, 0, 128, 0.7))
+// .polygonSideColor(() => rgba(255, 255, 255, 0.5))
+// .polygonStrokeColor(() =>  '#111')
+
+
   /* <OrbitControls enableZoom={false} /> */
-}
+
+
+  // const [selectedCountryData, setSelectedCountryData] = useState(null)
+  // function filterCountryPolygon() {
+  //   if (!countriesData) return;
+  
+  //   const countryData = countriesData.filter(
+  //     (country) => country.properties.ISO_A2 === countryCode
+  //   );
+  
+  //   setSelectedCountryData(countryData[0] || null);
+  // }
+
+    // useEffect(() => {
+  //   filterCountryPolygon();
+  // }, [countriesData, countryCode])
+
+    // useEffect(() => {
+  //   setTimeout(() => globe.polygonAltitude(() => 0.6), 4000)
+  // }, []);
