@@ -7,7 +7,8 @@ import Header from './Header.tsx'
 import Footer from './Footer.tsx'
 import Globe from './Globe.tsx'
 import Timeline from './Timeline.tsx'
-import Filters from './Filters'
+import Filters from './Filters.tsx'
+import CountrySelect from './CountrySelect.tsx'
 import { getAllInventions } from '../apis/api-inventions.ts'
 import { Invention } from '../../models/Inventions.ts'
 
@@ -43,6 +44,7 @@ function App() {
               setCheckboxStatus={setCheckboxStatus}
               checkboxStatus={checkboxStatus}
             />
+            <CountrySelect inventions={inventionsData} />
             <Outlet context={{ inventionsData }} />
           </div>
         </div>
