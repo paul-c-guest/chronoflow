@@ -6,8 +6,8 @@ input[type='checkbox'] {
   appearance: none;
   width: 50px;
   height: 50px;
-  border: 1px solid black;
-  border-radius: 40%;
+  border: 1px solid #181818;
+  border-radius: 5%;
   margin-left: 1rem;
   margin-right: 1rem;
   display: inline-block;
@@ -16,21 +16,29 @@ input[type='checkbox'] {
 }
 
 input[type='checkbox']:hover {
-  border: 2px solid rgb(253, 186, 116);
-  content: '✔';
+  border-width: 4px;
+  border-style: solid;
+  border-image: linear-gradient(84deg, #864449, #291e77) 1;
 }
 
 input[type='checkbox']:checked {
-  background-color: rgb(253, 186, 116);
+  background-color: black;
 }
 
 input[type='checkbox']:checked::after {
-  content: '✔';
+  content: 'x';
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: white;
+  color: #191b1e;
   font-size: 24px;
   font-weight: bold;
+}
+
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-indent: 1px;
+  text-overflow: '';
 }

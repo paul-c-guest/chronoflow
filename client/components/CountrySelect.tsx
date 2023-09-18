@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { Dispatch, SetStateAction } from 'react'
+import { Link } from 'react-router-dom'
 
 import type { Invention } from '../../models/Inventions'
 import type { Person } from '../../models/People'
@@ -6,11 +7,16 @@ import type { Person } from '../../models/People'
 interface Props {
   inventions: Invention[]
   people: Person[]
+  setSelectedOption: Dispatch<SetStateAction<string>>
+  selectedOption: string
 }
 
-function CountrySelect({ inventions, people }: Props) {
-  const [selectedOption, setSelectedOption] = useState('disabledOption')
-
+function CountrySelect({
+  inventions,
+  people,
+  setSelectedOption,
+  selectedOption,
+}: Props) {
   function handleChange(event: React.ChangeEvent<HTMLSelectElement>) {
     setSelectedOption(event.target.value)
   }
@@ -25,31 +31,34 @@ function CountrySelect({ inventions, people }: Props) {
     ...listOfPeopleCountries,
   ]
 
-  // Add new data sets to the Set to remove duplicates
   const setOfCountries = new Set(combinedCountriesArray)
 
   const countriesArray = Array.from(setOfCountries)
 
+  // TODO: update link tag
   const listOfOptions = countriesArray.map((country) => (
     <option value={country} key={country}>
-      {country}
+      <Link to="">{country}</Link>
     </option>
   ))
 
   return (
-    <div className="w-[25%] text-center border-orange-300 border-t-2 border-r-2 border-l-4 border-b-4 bg-white py-2 rounded-md h-28">
-      <label htmlFor="countries" className="font-semibold text-xl ">
-        Country List
+    <div className="w-[25%] text-left border-zinc-800 border-2 bg-black text-white  py-2 h-28">
+      <label htmlFor="countries" className="text-xl uppercase bg-zinc-800 ">
+        Filter By Country
+
       </label>
       <select
         name="countries"
         id="countries"
         value={selectedOption}
         onChange={handleChange}
-        className="mt-3"
+
+        className="mt-3 bg-black"
+
       >
         <option value="disabledOption" disabled>
-          Choose a country
+          ----------------------
         </option>
         {listOfOptions}
       </select>

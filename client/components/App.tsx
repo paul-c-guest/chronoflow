@@ -21,6 +21,7 @@ function App() {
     error,
   } = useQuery<Invention[], Error>(['inventions'], getAllInventions)
   const [checkboxStatus, setCheckboxStatus] = useState('inventions')
+  const [selectedOption, setSelectedOption] = useState('disabledOption')
 
   const {
     data: peopleData,
@@ -37,23 +38,27 @@ function App() {
   }
 
   return (
-    <div className="h-screen bg-[url('/space-background.jpg')] bg-cover flex flex-col">
+    <div className="h-screen bg-black bg-cover flex flex-col">
       <Header />
       <section className="main">
         <div className="flex w-screen">
           <Globe />
           <div className="flex w-1/2 flex-col h-[36rem]">
-            <div className="flex flex-row gap-2 justify-between">
-              <Filters
-                setCheckboxStatus={setCheckboxStatus}
-                checkboxStatus={checkboxStatus}
-              />
-              <CountrySelect inventions={inventionsData} people={peopleData} />
-            </div>
-            <Outlet context={{ inventionsData }} />
+            <Filters
+              setCheckboxStatus={setCheckboxStatus}
+              checkboxStatus={checkboxStatus}
+            />
+            <CountrySelect
+              inventions={inventionsData}
+              people={peopleData}
+              setSelectedOption={setSelectedOption}
+              selectedOption={selectedOption}
+            />
+
+            <Outlet context={{ inventionsData, peopleData }} />
           </div>
         </div>
-        <Timeline inventions={inventionsData} />
+        <Timeline inventions={inventionsData} people={peopleData}/>
       </section>
       <div className="mt-auto">
         <Footer />
