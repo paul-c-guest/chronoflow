@@ -22,7 +22,7 @@ export async function seed(knex) {
       country: 'Carolingian Empire',
       known_for:
         'Also known as Charles the Great, he was the King of the Franks and Lombards and later became the first Holy Roman Emperor. He expanded the Carolingian Empire',
-      image: 'images/charlemagne.png',
+      image: '/images/charlemagne.png',
     },
     {
       id: 3,
@@ -32,7 +32,7 @@ export async function seed(knex) {
       country: 'England',
       known_for:
         'Conquered England in 1066 at the Battle of Hastings, becoming King of England and initiating Norman rule.',
-      image: 'images/william-the-conqueror.png',
+      image: '/images/william-the-conqueror.png',
     },
     {
       id: 4,
@@ -42,7 +42,7 @@ export async function seed(knex) {
       country: 'Mongol Empire',
       known_for:
         'Founder and leader of the Mongol Empire, one of the largest empires in history. He established a vast empire through conquest',
-      image: 'images/genghis-khan.png',
+      image: '/images/genghis-khan.png',
     },
     {
       id: 5,
@@ -52,7 +52,7 @@ export async function seed(knex) {
       country: 'France',
       known_for:
         'Known as the Maid of Orleans; played a pivotal role in the Hundred Years War, leading French troops to important victories before her capture and execution',
-      image: 'images/joan-of-arc.png',
+      image: '/images/joan-of-arc.png',
     },
     {
       id: 6,
@@ -62,7 +62,7 @@ export async function seed(knex) {
       country: 'Italy',
       known_for:
         'Venetian merchant, explorer, and writer; famous for his travels to Asia along the Silk Road and his book "The Travels of Marco Polo."',
-      image: 'images/marco-polo.png',
+      image: '/images/marco-polo.png',
     },
     {
       id: 7,
@@ -72,7 +72,7 @@ export async function seed(knex) {
       country: 'Italy',
       known_for:
         'Renaissance polymath; contributions to art, science, and invention, including the Mona Lisa and Vitruvian Man',
-      image: 'images/leonardo-da-vinci.png',
+      image: '/images/leonardo-da-vinci.png',
     },
     {
       id: 8,
@@ -82,7 +82,7 @@ export async function seed(knex) {
       country: 'England',
       known_for:
         'King of England known for his six marriages, the English Reformation, and his role in establishing the Church of England',
-      image: 'images/henry-viii.png',
+      image: '/images/henry-viii.png',
     },
     {
       id: 9,
@@ -92,7 +92,7 @@ export async function seed(knex) {
       country: 'England',
       known_for:
         'English playwright and poet; influential works like "Romeo and Juliet" and "Hamlet."',
-      image: 'images/william-shakespeare.png',
+      image: '/images/william-shakespeare.png',
     },
     {
       id: 10,
@@ -102,7 +102,7 @@ export async function seed(knex) {
       country: 'Italy',
       known_for:
         'Italian astronomer, physicist, and mathematician; telescopic discoveries and support for heliocentrism',
-      image: 'images/galileo-galilei.png',
+      image: '/images/galileo-galilei.png',
     },
     {
       id: 11,
@@ -112,7 +112,7 @@ export async function seed(knex) {
       country: 'England',
       known_for:
         'English mathematician, physicist, and astronomer; laws of motion and universal gravitation.',
-      image: 'images/isaac-newton.png',
+      image: '/images/isaac-newton.png',
     },
     {
       id: 12,
@@ -122,7 +122,7 @@ export async function seed(knex) {
       country: 'England',
       known_for:
         'English naturalist and biologist; theory of evolution by natural selection.',
-      image: 'images/charles-darwin.png',
+      image: '/images/charles-darwin.png',
     },
     {
       id: 13,
@@ -132,7 +132,7 @@ export async function seed(knex) {
       country: 'England',
       known_for:
         'Queen of the United Kingdom; the Victorian era, British imperial expansion, and cultural advancements',
-      image: 'images/queen-victoria.png',
+      image: '/images/queen-victoria.png',
     },
     {
       id: 14,
@@ -142,7 +142,7 @@ export async function seed(knex) {
       country: 'Russia',
       known_for:
         'The last Emperor of Russia, his reign marked by the fall of the Russian Empire and the Russian Revolution of 1917, which led to the establishment of the Russian Soviet Federative Socialist Republic',
-      image: 'images/tsar-nicolas.png',
+      image: '/images/tsar-nicolas.png',
     },
     {
       id: 15,
@@ -152,7 +152,7 @@ export async function seed(knex) {
       country: 'Poland',
       known_for:
         'Polish-born physicist and chemist; pioneer in the field of radioactivity and the first person to win Nobel Prizes in two different scientific fields (Physics and Chemistry)',
-      image: 'images/marie-curie.png',
+      image: '/images/marie-curie.png',
     },
     {
       id: 16,
@@ -162,7 +162,7 @@ export async function seed(knex) {
       country: 'Germany',
       known_for:
         'German-born theoretical physicist; theory of relativity and the equation E=mc^2',
-      image: 'images/albert-einstein.png',
+      image: '/images/albert-einstein.png',
     },
   ])
 }
