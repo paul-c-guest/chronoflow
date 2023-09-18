@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
 import type { Invention } from '../../models/Inventions'
+import { label } from 'three/examples/jsm/nodes/Nodes.js'
 
 interface Props {
   inventions: Invention[]
@@ -26,17 +27,20 @@ function CountrySelect({ inventions }: Props) {
   ))
 
   return (
-    <select
-      name="countries"
-      id="countries"
-      value={selectedOption}
-      onChange={handleChange}
-    >
-      <option value="disabledOption" disabled>
-        Choose a country
-      </option>
-      {listOfOptions}
-    </select>
+    <>
+      <label htmlFor="countries">Country List:</label>
+      <select
+        name="countries"
+        id="countries"
+        value={selectedOption}
+        onChange={handleChange}
+      >
+        <option value="disabledOption" disabled>
+          Choose a country
+        </option>
+        {listOfOptions}
+      </select>
+    </>
   )
 }
 
