@@ -1,23 +1,33 @@
 import { useState } from 'react'
 
 import type { Invention } from '../../models/Inventions'
-import { label } from 'three/examples/jsm/nodes/Nodes.js'
+import type { Person } from '../../models/People'
 
 interface Props {
   inventions: Invention[]
+  people: Person[]
 }
 
-function CountrySelect({ inventions }: Props) {
+function CountrySelect({ inventions, people }: Props) {
   const [selectedOption, setSelectedOption] = useState('disabledOption')
 
   function handleChange(event: React.ChangeEvent<HTMLSelectElement>) {
     setSelectedOption(event.target.value)
   }
 
-  const listOfCountries = inventions.map((invention) => invention.country)
+  const listOfInventionCountries = inventions.map(
+    (invention) => invention.country
+  )
+  const listOfPeopleCountries = people.map((person) => person.country)
+
+  const combinedCountriesArray = [
+    ...listOfInventionCountries,
+    ...listOfPeopleCountries,
+  ]
 
   // Add new data sets to the Set to remove duplicates
-  const setOfCountries = new Set(listOfCountries)
+  const setOfCountries = new Set(combinedCountriesArray)
+
   const countriesArray = Array.from(setOfCountries)
 
   const listOfOptions = countriesArray.map((country) => (
