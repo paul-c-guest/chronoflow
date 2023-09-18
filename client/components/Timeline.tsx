@@ -48,11 +48,12 @@ function Timeline({ inventions, people }: Props) {
 
   // assists with squeezing event positions towards centre of view;
   // closely related to "--track-width" variable in timeline.css
-  const squeezeFactor = 0.835
+  const squeezeFactor = 0.84
 
   const [timelinePosition, setTimelinePosition] = useState(midway)
 
   const [activeEvent, setActiveEvent] = useState(0)
+  const [hoverPerson, setHoverPerson] = useState(0)
   const [activePerson, setActivePerson] = useState(0)
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -85,14 +86,13 @@ for (const date of dates) {
   const setSliderToEvent = (invention: Invention) => {
     setTimelinePosition(invention.year)
     setActiveEvent(invention.id)
+    setActivePerson(0)
   }
 
   const setSliderToPerson = (person: Person) => {
-    setTimelinePosition(
-      person.yearBorn + (person.yearDied - person.yearBorn) / 2
-    )
-    setActiveEvent(0)
+    setTimelinePosition(person.yearBorn)
     setActivePerson(person.id)
+    setActiveEvent(0)
   }
 
   // returns a value to use as the number of 'vw' from the left edge
@@ -124,19 +124,19 @@ for (const date of dates) {
                   style={{
                     left: `${getPositionForYear(person.yearBorn || 0)}vw`,
                     width:
-                      activePerson !== person.id
+                      hoverPerson !== person.id
                         ? `${getWidthForLifeSpan(person)}vw`
                         : 'fit-content',
                   }}
                   className={`person ${
                     activePerson === person.id ? 'active-person' : ''
                   }`}
-                  onMouseOver={() => setActivePerson(person.id)}
-                  onFocus={() => setActivePerson(person.id)}
-                  onMouseOut={() => setActivePerson(0)}
-                  onBlur={() => setActivePerson(0)}
+                  onMouseOver={() => setHoverPerson(person.id)}
+                  onFocus={() => setHoverPerson(person.id)}
+                  onMouseOut={() => setHoverPerson(0)}
+                  onBlur={() => setHoverPerson(0)}
                 >
-                  {activePerson === person.id ? person.name : ''}
+                  {hoverPerson === person.id ? person.name : ''}
                 </button>
               </Link>
             )

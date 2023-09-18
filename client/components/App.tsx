@@ -50,7 +50,7 @@ function App() {
               />
               <CountrySelect inventions={inventionsData} people={peopleData} />
             </div>
-            <Outlet context={{ inventionsData }} />
+            <Outlet context={{ inventionsData, peopleData }} />
           </div>
         </div>
         <Timeline inventions={inventionsData} people={peopleData}/>
