@@ -10,7 +10,7 @@ import Readout from './components/Readout'
 export const routes = createRoutesFromElements(
   <Route path="/" element={<App />}>
     {/* readout here gets param, goes to Outlet */}
-    <Route path="/:eventId" element={<Readout />} />
+    <Route path="/:category/:id" element={<Readout />} />
   </Route>
 )
 

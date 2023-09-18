@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 
@@ -11,30 +11,32 @@ import Filters from './Filters.tsx'
 import CountrySelect from './CountrySelect.tsx'
 import { getAllInventions } from '../apis/api-inventions.ts'
 import { Invention } from '../../models/Inventions.ts'
+import { getAllPeople } from '../apis/api-people.ts'
 
 function App() {
   const {
     data: inventionsData,
     isLoading,
-    isError,
     error,
   } = useQuery<Invention[], Error>(['inventions'], getAllInventions)
   const [checkboxStatus, setCheckboxStatus] = useState('inventions')
 
-  useEffect(() => {
-    console.log('App:', checkboxStatus)
-  }, [checkboxStatus])
+  const {
+    data: peopleData,
+    isLoading: peopleLoading,
+    error: peopleError,
+  } = useQuery(['people'], getAllPeople)
 
-  if (isLoading) {
+  if (isLoading || peopleLoading) {
     return <p>Loading....</p>
   }
 
-  if (isError || !inventionsData) {
+  if (error || peopleError) {
     return <p>There was an error: {error?.message}</p>
   }
 
   return (
-    <div className="h-screen bg-[url('/space-background.jpg')] bg-cover">
+    <div className="h-screen bg-[url('/space-background.jpg')] bg-cover flex flex-col">
       <Header />
       <section className="main">
         <div className="flex w-screen">
@@ -52,7 +54,9 @@ function App() {
         </div>
         <Timeline inventions={inventionsData} />
       </section>
-      <Footer />
+      <div className="mt-auto">
+        <Footer />
+      </div>
     </div>
   )
 }
