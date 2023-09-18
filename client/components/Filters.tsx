@@ -14,7 +14,7 @@ function Filters({ checkboxStatus, setCheckboxStatus }: Props) {
   const categories = ['inventions', 'worldEvents', 'people']
 
   return (
-    <div className="w-[75%] border-orange-300 border-t-2 border-r-2 border-l-4 border-b-4 bg-white px-12 py-2 align-center justify-between rounded-md h-28">
+    <div className=" border-orange-300 border-t-2 border-r-2 border-l-4 border-b-4 bg-white px-12 py-2 align-center justify-between rounded-md h-28">
       <div>
         <h2 className="font-semibold text-xl text-center mb-2">
           Filter your events
