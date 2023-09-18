@@ -44,18 +44,17 @@ function App() {
         <div className="flex w-screen">
           <Globe />
           <div className="flex w-1/2 flex-col h-[36rem]">
-            <div className="flex flex-row gap-2 justify-between">
-              <Filters
-                setCheckboxStatus={setCheckboxStatus}
-                checkboxStatus={checkboxStatus}
-              />
-              <CountrySelect
-                inventions={inventionsData}
-                people={peopleData}
-                setSelectedOption={setSelectedOption}
-                selectedOption={selectedOption}
-              />
-            </div>
+            <Filters
+              setCheckboxStatus={setCheckboxStatus}
+              checkboxStatus={checkboxStatus}
+            />
+            <CountrySelect
+              inventions={inventionsData}
+              people={peopleData}
+              setSelectedOption={setSelectedOption}
+              selectedOption={selectedOption}
+            />
+
             <Outlet context={{ inventionsData }} />
           </div>
         </div>

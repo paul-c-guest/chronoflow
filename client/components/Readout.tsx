@@ -43,7 +43,7 @@ export default function Readout() {
       const inventionData = data as Invention
       setCategoryData({
         title: inventionData.invention,
-        yearLabel: 'Year:',
+        yearLabel: 'Year: ',
         year: `${inventionData.year}`,
         description: inventionData.description,
         altText: inventionData.invention,
@@ -53,7 +53,7 @@ export default function Readout() {
   }, [category, data])
 
   return (
-    <div className=" max-h-[28rem] flex mt-12 bg-white rounded-md p-4 border-orange-300 border-t-2 border-r-2 border-l-4 border-b-4">
+    <div className=" max-h-[25rem] flex bg-white rounded-md p-4 border-orange-300 border-t-2 border-r-2 border-l-4 border-b-4">
       <div className="max-w-lg ml-4 self-start">
         <h2 className="my-2 text-xl font-semibold">{categoryData.title}</h2>
         {categoryData.inventor ? (
@@ -64,7 +64,7 @@ export default function Readout() {
         ) : null}
         <p className="mb-2">
           {categoryData.yearLabel}
-          <span className="italic text-lg">{categoryData.year}</span>
+          <span className="text-lg">{categoryData.year}</span>
         </p>
         <p className="mb-2">Country: {data.country}</p>
         <div className="max-h-72 overflow-auto">
