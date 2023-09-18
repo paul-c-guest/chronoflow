@@ -40,11 +40,13 @@ function App() {
         <div className="flex w-screen">
           <Globe />
           <div className="flex w-1/2 flex-col h-[36rem]">
-            <Filters
-              setCheckboxStatus={setCheckboxStatus}
-              checkboxStatus={checkboxStatus}
-            />
-            <CountrySelect inventions={inventionsData} />
+            <div className="flex flex-row gap-2 justify-between">
+              <Filters
+                setCheckboxStatus={setCheckboxStatus}
+                checkboxStatus={checkboxStatus}
+              />
+              <CountrySelect inventions={inventionsData} />
+            </div>
             <Outlet context={{ inventionsData }} />
           </div>
         </div>

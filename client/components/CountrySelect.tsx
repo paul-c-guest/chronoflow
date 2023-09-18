@@ -27,20 +27,23 @@ function CountrySelect({ inventions }: Props) {
   ))
 
   return (
-    <>
-      <label htmlFor="countries">Country List:</label>
+    <div className="w-[25%] text-center border-orange-300 border-t-2 border-r-2 border-l-4 border-b-4 bg-white py-2 rounded-md h-28">
+      <label htmlFor="countries" className="font-semibold text-xl ">
+        Country List
+      </label>
       <select
         name="countries"
         id="countries"
         value={selectedOption}
         onChange={handleChange}
+        className="mt-3"
       >
         <option value="disabledOption" disabled>
           Choose a country
         </option>
         {listOfOptions}
       </select>
-    </>
+    </div>
   )
 }
 
