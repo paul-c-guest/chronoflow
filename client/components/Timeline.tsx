@@ -80,11 +80,15 @@ for (const date of dates) {
       result = (((year - MIN) * 100) / RANGE) * MODULATOR
     }
     // console.log(year, result)
-    return result 
+    return result
   }
 
   return (
     <>
+      <div id="person-container">
+        <div className="person" style={{left: '8%', width: '7%'}}>Cleopatra</div>
+      </div>
+
       <div id="timeline-container">
         <input
           id="main-timeline"
