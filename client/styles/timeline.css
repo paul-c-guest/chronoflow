@@ -34,19 +34,19 @@
   /* padding: 4em 5px; */
 }
 
-#mark-container {
+#event-container {
   margin-bottom: 3em;
   display: inline-block;
   /* justify-content: center; */
 }
 
-.mark {
+.event {
   /* note: position is further calculated in Timeline.tsx */
   position: absolute;
   /* display: inline-block; */
   margin-left: 7vw;
   /* white-space: normal; */
-  padding: 0.25em 0.75em;
+  padding: 0.5em 1em;
   /* min-width: 2em; */
   transform: rotate(65deg);
   border-radius: 2em;
@@ -54,25 +54,38 @@
   /* background-color: aqua; */
 }
 
-.person-container {
-  
+.event:hover {
+  background-color: #00ffff88;
 }
 
-.person {
-  position: absolute;
-  margin-left: 7vw;
-  background-color: aqua;
-  border-radius: 1em 1em 0 0;
-  margin-top: 0.5em;
-  padding: 0.5em 0;
-  text-align: center;
-}
-
-.clicked {
+.active-event {
   font-weight: 900;
   background-color: rgba(254, 226, 171, 0.502);
   transition: 0.5s;
-  border-radius: 5px;
+  border-radius: 0.5em;
+}
+
+.person-container {
+  margin: 0;
+  padding: 0;
+}
+
+.person {
+  /* note: position is further calculated in Timeline.tsx */
+  position: absolute;
+  margin-left: 7vw;
+  background-color: #00ffff88;
+  border-radius: 1em 1em 0 0;
+  /* margin-top: 0.5em; */
+  padding: 1em 0.75em;
+  text-align: center;
+  z-index: 2;
+  transition: 0.25s;
+}
+
+.person:hover {
+  background-color: aqua;
+  border-radius: 0.5em 0.5em 0 0;
 }
 
 /*
@@ -89,6 +102,7 @@ https://css-tricks.com/styling-cross-browser-compatible-range-inputs-css/
 input[type='range'] {
   /* Hides the slider so that custom slider can be made */
   -webkit-appearance: none;
+  z-index: 3;
 
   /* Specific width is required for Firefox. */
   width: var(--track-width);
@@ -99,6 +113,7 @@ input[type='range'] {
 
 input[type='range']::-webkit-slider-thumb {
   -webkit-appearance: none;
+  z-index: 1;
 }
 
 input[type='range']:focus {

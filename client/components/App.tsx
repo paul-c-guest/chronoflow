@@ -53,7 +53,7 @@ function App() {
             <Outlet context={{ inventionsData }} />
           </div>
         </div>
-        <Timeline inventions={inventionsData} />
+        <Timeline inventions={inventionsData} people={peopleData}/>
       </section>
       <div className="mt-auto">
         <Footer />
