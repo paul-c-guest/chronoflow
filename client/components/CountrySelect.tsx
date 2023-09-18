@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { Dispatch, SetStateAction } from 'react'
+import { Link } from 'react-router-dom'
 
 import type { Invention } from '../../models/Inventions'
 import type { Person } from '../../models/People'
@@ -6,11 +7,16 @@ import type { Person } from '../../models/People'
 interface Props {
   inventions: Invention[]
   people: Person[]
+  setSelectedOption: Dispatch<SetStateAction<string>>
+  selectedOption: string
 }
 
-function CountrySelect({ inventions, people }: Props) {
-  const [selectedOption, setSelectedOption] = useState('disabledOption')
-
+function CountrySelect({
+  inventions,
+  people,
+  setSelectedOption,
+  selectedOption,
+}: Props) {
   function handleChange(event: React.ChangeEvent<HTMLSelectElement>) {
     setSelectedOption(event.target.value)
   }
@@ -25,14 +31,14 @@ function CountrySelect({ inventions, people }: Props) {
     ...listOfPeopleCountries,
   ]
 
-  // Add new data sets to the Set to remove duplicates
   const setOfCountries = new Set(combinedCountriesArray)
 
   const countriesArray = Array.from(setOfCountries)
 
+  // TODO: update link tag
   const listOfOptions = countriesArray.map((country) => (
     <option value={country} key={country}>
-      {country}
+      <Link to="">{country}</Link>
     </option>
   ))
 
