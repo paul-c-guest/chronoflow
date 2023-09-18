@@ -34,6 +34,7 @@
     "@react-three/drei": "^9.83.9",
     "@react-three/fiber": "^8.14.1",
     "express": "^4.17.2",
+    "i18next": "^23.5.1",
     "knex": "^2.5.1",
     "sqlite3": "^5.1.6",
     "superagent": "7.1.1",
