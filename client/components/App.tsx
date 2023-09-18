@@ -10,25 +10,29 @@ import Timeline from './Timeline.tsx'
 import Filters from './Filters'
 import { getAllInventions } from '../apis/api-inventions.ts'
 import { Invention } from '../../models/Inventions.ts'
+import { getAllPeople } from '../apis/api-people.ts'
 
 function App() {
   const {
     data: inventionsData,
     isLoading,
-    isError,
     error,
   } = useQuery<Invention[], Error>(['inventions'], getAllInventions)
   const [checkboxStatus, setCheckboxStatus] = useState('inventions')
 
-  useEffect(() => {
-    console.log('App:', checkboxStatus)
-  }, [checkboxStatus])
+  const {
+    data: peopleData,
+    isLoading: peopleLoading,
+    error: peopleError,
+  } = useQuery(['people'], getAllPeople)
 
-  if (isLoading) {
+  // useEffect(() => {}, [checkboxStatus])
+
+  if (isLoading || peopleLoading) {
     return <p>Loading....</p>
   }
 
-  if (isError || !inventionsData) {
+  if (error || peopleError) {
     return <p>There was an error: {error?.message}</p>
   }
 
@@ -43,7 +47,7 @@ function App() {
               setCheckboxStatus={setCheckboxStatus}
               checkboxStatus={checkboxStatus}
             />
-            <Outlet context={{ inventionsData }} />
+            <Outlet context={{ inventionsData, peopleData }} />
           </div>
         </div>
         <Timeline inventions={inventionsData} />

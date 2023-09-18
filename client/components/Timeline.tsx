@@ -102,7 +102,7 @@ for (const date of dates) {
         {inventions.map((invention) => {
           return (
             invention.year && (
-              <Link to={`/${invention.id}`} key={invention.id}>
+              <Link to={`/invention/${invention.id}`} key={invention.id}>
                 <button
                   onClick={() => setSliderToEvent(invention)}
                   className={`mark text-white ${
