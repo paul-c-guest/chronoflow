@@ -52,7 +52,6 @@ export default function Readout() {
     }
   }, [category, data])
 
-
   return (
     <div className=" max-h-[28rem] flex mt-12 bg-black p-4 border-zinc-800 border-2">
       <div className="max-w-lg ml-4 self-start">
