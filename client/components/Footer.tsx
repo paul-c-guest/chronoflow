@@ -1,7 +1,9 @@
 function Footer() {
   return (
     <footer>
-      <p>Developed by the Good Times Guild, 2023. All rights reserved.</p>
+      <p className="bg-white py-8 text-center">
+        Developed by the Good Times Guild, 2023. All rights reserved.
+      </p>
     </footer>
   )
 }

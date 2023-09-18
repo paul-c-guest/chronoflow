@@ -38,7 +38,7 @@ function Timeline({ inventions }: Props) {
     setTimelinePosition(Number(event.target.value))
   }
 
-  // console.log(inventions)
+  console.log(inventions)
 
   // add some form of "helper" function that takes in the data array, calculates how many entries there are in an array and divides the timeline length into relative spacing for dates in relation to space on timeline?
 
@@ -102,7 +102,7 @@ for (const date of dates) {
         {inventions.map((invention) => {
           return (
             invention.year && (
-              <Link to={`/invention/${invention.id}`} key={invention.id}>
+              <Link to={`/inventions/${invention.id}`} key={invention.id}>
                 <button
                   onClick={() => setSliderToEvent(invention)}
                   className={`mark text-white ${

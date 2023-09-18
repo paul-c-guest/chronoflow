@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 
@@ -26,8 +26,6 @@ function App() {
     error: peopleError,
   } = useQuery(['people'], getAllPeople)
 
-  // useEffect(() => {}, [checkboxStatus])
-
   if (isLoading || peopleLoading) {
     return <p>Loading....</p>
   }
@@ -37,7 +35,7 @@ function App() {
   }
 
   return (
-    <div className="h-screen bg-[url('/space-background.jpg')] bg-cover">
+    <div className="h-screen bg-[url('/space-background.jpg')] bg-cover flex flex-col">
       <Header />
       <section className="main">
         <div className="flex w-screen">
@@ -52,7 +50,9 @@ function App() {
         </div>
         <Timeline inventions={inventionsData} />
       </section>
-      <Footer />
+      <div className="mt-auto">
+        <Footer />
+      </div>
     </div>
   )
 }
