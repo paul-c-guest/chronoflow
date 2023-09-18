@@ -11,6 +11,7 @@ import Filters from './Filters.tsx'
 import CountrySelect from './CountrySelect.tsx'
 import { getAllInventions } from '../apis/api-inventions.ts'
 import { Invention } from '../../models/Inventions.ts'
+import { Person } from '../../models/People.ts'
 import { getAllPeople } from '../apis/api-people.ts'
 
 function App() {
@@ -25,7 +26,7 @@ function App() {
     data: peopleData,
     isLoading: peopleLoading,
     error: peopleError,
-  } = useQuery(['people'], getAllPeople)
+  } = useQuery<Person[], Error>(['people'], getAllPeople)
 
   if (isLoading || peopleLoading) {
     return <p>Loading....</p>
@@ -42,12 +43,14 @@ function App() {
         <div className="flex w-screen">
           <Globe />
           <div className="flex w-1/2 flex-col h-[36rem]">
-            <Filters
-              setCheckboxStatus={setCheckboxStatus}
-              checkboxStatus={checkboxStatus}
-            />
-            <CountrySelect inventions={inventionsData} />
-            <Outlet context={{ inventionsData, peopleData }} />
+            <div className="flex flex-row gap-2 justify-between">
+              <Filters
+                setCheckboxStatus={setCheckboxStatus}
+                checkboxStatus={checkboxStatus}
+              />
+              <CountrySelect inventions={inventionsData} people={peopleData} />
+            </div>
+            <Outlet context={{ inventionsData }} />
           </div>
         </div>
         <Timeline inventions={inventionsData} />
