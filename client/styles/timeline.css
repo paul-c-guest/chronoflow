@@ -12,11 +12,16 @@
   --thumb-colour: rgb(237, 237, 20);
   --thumb-width: 1em;
   --thumb-height: 3em;
+
+  /* people and events */
+  --blue: #00ffff;
+  --opaque-blue: #00ffff88;
+  --opaque-tan: #fee2ab80;
 }
 
 /* to position the timeline in center of provided space */
 #timeline-container {
-  margin: 3em 0 2em;
+  margin: 2.5em 0 1.5em;
   display: flex;
   justify-content: center;
 }
@@ -24,6 +29,12 @@
 /* the timeline input element itself */
 #main-timeline {
   width: var(--track-width);
+}
+
+#event-container {
+  margin-bottom: 3em;
+  display: inline-block;
+  /* justify-content: center; */
 }
 
 #events {
@@ -34,31 +45,64 @@
   /* padding: 4em 5px; */
 }
 
-#mark-container {
-  margin-bottom: 3em;
-  display: inline-block;
-  /* justify-content: center; */
-}
-
-.mark {
+.event {
   /* note: position is further calculated in Timeline.tsx */
   position: absolute;
   /* display: inline-block; */
-  margin-left: 7vw;
+  margin-left: 6.75vw;
   /* white-space: normal; */
-  padding: 0.25em 0.75em;
+  padding: 0.5em 1em;
   /* min-width: 2em; */
   transform: rotate(65deg);
   border-radius: 2em;
   transition: 0.25s;
+  z-index: 1;
   /* background-color: aqua; */
 }
 
-.clicked {
+.event:hover {
+  z-index: 2;
+  background-color: var(--opaque-blue);
+}
+
+.active-event {
+  z-index: 2;
   font-weight: 900;
-  background-color: rgba(254, 226, 171, 0.502);
+  background-color: var(--opaque-tan);
   transition: 0.5s;
-  border-radius: 5px;
+  border-radius: 0.5em;
+}
+
+.person-container {
+  margin: 0;
+  padding: 0;
+}
+
+.person {
+  /* note: position is further calculated in Timeline.tsx */
+  position: absolute;
+  margin-left: 7.5vw;
+  font-variant: all-small-caps;
+  min-height: 2.5em;
+  vertical-align: bottom;
+  background-color: var(--opaque-blue);
+  border-top-left-radius: 0.5em;
+  border-top-right-radius: 0.5em;
+  /* margin-top: 0.5em; */
+  padding: 0.5em 0.35em;
+  text-align: center;
+  z-index: 2;
+  transition: 0.25s;
+}
+
+.person:hover {
+  background-color: var(--blue);
+  z-index: 3;
+  padding: 0.5em 0.75em;
+}
+
+.active-person {
+  background-color: var(--opaque-tan);
 }
 
 /*
@@ -75,6 +119,7 @@ https://css-tricks.com/styling-cross-browser-compatible-range-inputs-css/
 input[type='range'] {
   /* Hides the slider so that custom slider can be made */
   -webkit-appearance: none;
+  z-index: 4;
 
   /* Specific width is required for Firefox. */
   width: var(--track-width);
@@ -85,6 +130,7 @@ input[type='range'] {
 
 input[type='range']::-webkit-slider-thumb {
   -webkit-appearance: none;
+  z-index: 1;
 }
 
 input[type='range']:focus {

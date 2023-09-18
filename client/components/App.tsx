@@ -55,10 +55,10 @@ function App() {
               selectedOption={selectedOption}
             />
 
-            <Outlet context={{ inventionsData }} />
+            <Outlet context={{ inventionsData, peopleData }} />
           </div>
         </div>
-        <Timeline inventions={inventionsData} />
+        <Timeline inventions={inventionsData} people={peopleData}/>
       </section>
       <div className="mt-auto">
         <Footer />
