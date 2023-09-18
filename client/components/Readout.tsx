@@ -43,7 +43,7 @@ export default function Readout() {
       const inventionData = data as Invention
       setCategoryData({
         title: inventionData.invention,
-        yearLabel: 'Year:',
+        yearLabel: 'Year: ',
         year: `${inventionData.year}`,
         description: inventionData.description,
         altText: inventionData.invention,
@@ -52,8 +52,9 @@ export default function Readout() {
     }
   }, [category, data])
 
-  return (
+  return 
     <div className=" max-h-[28rem] flex mt-12 bg-black p-4 border-zinc-800 border-2">
+
       <div className="max-w-lg ml-4 self-start">
         <h2 className="my-2 text-5xl font-sans text-white bg-zinc-800">
           {categoryData.title}

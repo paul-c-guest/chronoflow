@@ -2,43 +2,63 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import { Invention } from '../../models/Inventions'
+import { Person } from '../../models/People'
 
 interface Props {
   inventions: Invention[]
+  people: Person[]
 }
 
-function Timeline({ inventions }: Props) {
-  const BUFFER = 50
+function Timeline({ inventions, people }: Props) {
+  const buffer = 50
 
   // setup some global values for the timeline elements
-  const MIN =
-    inventions.reduce(
-      (min, current) => (min = current.year < min ? current.year : min),
-      inventions[0].year
-    ) - BUFFER
+  const rangeMin =
+    Math.min(
+      inventions.reduce(
+        (earliestYear, invention) =>
+          (earliestYear = Math.min(invention.year, earliestYear)),
+        inventions[0].year
+      ),
+      people.reduce(
+        (earliestBorn, person) =>
+          (earliestBorn = Math.min(earliestBorn, person.yearBorn)),
+        people[0].yearBorn
+      )
+    ) - buffer
 
-  const MAX =
-    inventions.reduce(
-      (max, current) => (max = current.year > max ? current.year : max),
-      inventions[0].year
-    ) + BUFFER
+  const rangeMax =
+    Math.max(
+      people.reduce(
+        (latestDeath, person) =>
+          (latestDeath = Math.max(latestDeath, person.yearBorn)),
+        people[0].yearBorn
+      ),
+      inventions.reduce(
+        (latestYear, invention) =>
+          (latestYear = Math.max(invention.year, latestYear)),
+        inventions[0].year
+      )
+    ) + buffer
 
-  const RANGE = MAX - MIN
-  const MID = RANGE - RANGE / 2
+  // console.log('total range is', rangeMin, 'to', rangeMax)
+
+  const range = rangeMax - rangeMin
+  const midway = range - range / 2
 
   // assists with squeezing event positions towards centre of view;
   // closely related to "--track-width" variable in timeline.css
-  const MODULATOR = 0.835
+  const squeezeFactor = 0.84
 
-  const [timelinePosition, setTimelinePosition] = useState(50)
+  const [timelinePosition, setTimelinePosition] = useState(midway)
 
   const [activeEvent, setActiveEvent] = useState(0)
+  const [hoverPerson, setHoverPerson] = useState(0)
+  const [activePerson, setActivePerson] = useState(0)
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTimelinePosition(Number(event.target.value))
   }
-
-  console.log(inventions)
 
   // add some form of "helper" function that takes in the data array, calculates how many entries there are in an array and divides the timeline length into relative spacing for dates in relation to space on timeline?
 
@@ -66,39 +86,78 @@ for (const date of dates) {
   const setSliderToEvent = (invention: Invention) => {
     setTimelinePosition(invention.year)
     setActiveEvent(invention.id)
-    // console.log('clicked', invention.id)
+    setActivePerson(0)
   }
 
-  /**
-   * returns a value between 0 and
-   */
-  const modulateMarkPosition = (year: number): number => {
+  const setSliderToPerson = (person: Person) => {
+    setTimelinePosition(person.yearBorn)
+    setActivePerson(person.id)
+    setActiveEvent(0)
+  }
+
+  // returns a value to use as the number of 'vw' from the left edge
+  const getPositionForYear = (year: number): number => {
     let result = 50
-    if (year < MID) {
-      result = (((year - MIN) * 100) / RANGE) * (MODULATOR / 1)
-    } else if (year > MID) {
-      result = (((year - MIN) * 100) / RANGE) * MODULATOR
+    if (year < midway) {
+      result = (((year - rangeMin) * 100) / range) * (squeezeFactor / 1)
+    } else if (year > midway) {
+      result = (((year - rangeMin) * 100) / range) * squeezeFactor
     }
-    // console.log(year, result)
     return result
+  }
+
+  // returns a value to use as the width of a person, in 'vw'
+  const getWidthForLifeSpan = (person: Person): number => {
+    return ((person.yearDied - person.yearBorn) * squeezeFactor) / 100
   }
 
   return (
     <>
+      <div id="person-container">
+        {people.map((person: Person) => {
+          return (
+            isFinite(person.yearBorn) &&
+            isFinite(person.yearDied) && (
+              <Link to={`/people/${person.id}`} key={person.id}>
+                <button
+                  onClick={() => setSliderToPerson(person)}
+                  style={{
+                    left: `${getPositionForYear(person.yearBorn || 0)}vw`,
+                    width:
+                      hoverPerson !== person.id
+                        ? `${getWidthForLifeSpan(person)}vw`
+                        : 'fit-content',
+                  }}
+                  className={`person ${
+                    activePerson === person.id ? 'active-person' : ''
+                  }`}
+                  onMouseOver={() => setHoverPerson(person.id)}
+                  onFocus={() => setHoverPerson(person.id)}
+                  onMouseOut={() => setHoverPerson(0)}
+                  onBlur={() => setHoverPerson(0)}
+                >
+                  {hoverPerson === person.id ? person.name : ''}
+                </button>
+              </Link>
+            )
+          )
+        })}
+      </div>
+
       <div id="timeline-container">
         <input
           id="main-timeline"
           value={timelinePosition}
           type="range"
-          min={MIN}
-          max={MAX}
+          min={rangeMin}
+          max={rangeMax}
           list="events"
           onChange={handleChange}
           // onInput={handleInput}
         />
       </div>
 
-      <div id="mark-container">
+      <div id="event-container">
         {inventions.map((invention) => {
           return (
             invention.year && (
@@ -106,10 +165,11 @@ for (const date of dates) {
                 <button
                   onClick={() => setSliderToEvent(invention)}
                   className={`mark text-white font-label font-extralight ${
-                    activeEvent === invention.id ? 'clicked' : ''
+                    activeEvent === invention.id ? 'active-event' : ''
+
                   }`}
                   style={{
-                    left: `${modulateMarkPosition(invention.year)}vw`,
+                    left: `${getPositionForYear(invention.year)}vw`,
                   }}
                 >
                   {invention.year}
