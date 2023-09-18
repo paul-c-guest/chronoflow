@@ -46,20 +46,15 @@ function CountrySelect({
     <div className="w-[25%] text-left border-zinc-800 border-2 bg-black text-white  py-2 h-28">
       <label htmlFor="countries" className="text-xl uppercase bg-zinc-800 ">
         Filter By Country
-
       </label>
       <select
         name="countries"
         id="countries"
         value={selectedOption}
         onChange={handleChange}
-
-        className="mt-3 bg-black
-
+        className="mt-3 bg-black"
       >
-        <option value="disabledOption" disabled>
-          ----------------------
-        </option>
+        <option value="disabledOption" disabled></option>
         {listOfOptions}
       </select>
     </div>
