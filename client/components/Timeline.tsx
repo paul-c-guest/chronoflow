@@ -128,9 +128,15 @@ for (const date of dates) {
                   className={`person ${activePerson ? 'active-person' : ''}`}
                   style={{
                     left: `${getPositionForYear(person.yearBorn)}vw`,
-                    width: `${getWidthForLifeSpan(person)}vw`,
+                    // width: `${getWidthForLifeSpan(person)}vw`,
                   }}
-                ></button>
+                  onMouseOver={() => setActivePerson(person.id)}
+                  onFocus={() => setActivePerson(person.id)}
+                  onMouseOut={() => setActivePerson(0)}
+                  onBlur={() => setActivePerson(0)}
+                >
+                  {activePerson === person.id ? person.name : ''}
+                </button>
               </Link>
             )
           )
