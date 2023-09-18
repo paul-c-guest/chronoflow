@@ -26,8 +26,8 @@ function GlobeModel({ countryData }) {
     .globeImageUrl('/assets/earth-blue-marble.jpg')
     .bumpImageUrl('/assets/earth-topology.png')
     .polygonsData(countryData)
-    .polygonCapColor(() => 'rgba(200, 0, 0, 0.7)')
-    .polygonSideColor(() => 'rgba(0, 200, 0, 0.1)')
+    .polygonCapColor(() => 'rgba(236, 3, 252, 0.6)')
+    .polygonSideColor(() => 'rgba(236, 3, 252, 0.1)')
     .polygonStrokeColor(() => '#111')
     .polygonAltitude(0.05)
 
@@ -42,14 +42,14 @@ function GlobeModel({ countryData }) {
 
 function Globe() {
   const [countriesData, setCountriesData] = useState(null)
-  const [countryCode, setCountryCode] = useState('US')
+  const [countryCode, setCountryCode] = useState('NZ')
 
   useEffect(() => {
     // Load and parse the GeoJSON file
     fetch('/assets/ne_110m_admin_0_countries.geojson')
       .then((response) => response.json())
       .then((data) => {
-        // Store the countries' data in state
+        // Store the country/ies data in state
         setCountriesData(
           data.features.filter((d) => d.properties.ISO_A2 == countryCode)
         )
@@ -83,31 +83,3 @@ function Globe() {
 }
 
 export default Globe
-
-
-// .polygonCapColor(() => rgba(128, 0, 128, 0.7))
-// .polygonSideColor(() => rgba(255, 255, 255, 0.5))
-// .polygonStrokeColor(() =>  '#111')
-
-
-  /* <OrbitControls enableZoom={false} /> */
-
-
-  // const [selectedCountryData, setSelectedCountryData] = useState(null)
-  // function filterCountryPolygon() {
-  //   if (!countriesData) return;
-  
-  //   const countryData = countriesData.filter(
-  //     (country) => country.properties.ISO_A2 === countryCode
-  //   );
-  
-  //   setSelectedCountryData(countryData[0] || null);
-  // }
-
-    // useEffect(() => {
-  //   filterCountryPolygon();
-  // }, [countriesData, countryCode])
-
-    // useEffect(() => {
-  //   setTimeout(() => globe.polygonAltitude(() => 0.6), 4000)
-  // }, []);
