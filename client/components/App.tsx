@@ -38,7 +38,7 @@ function App() {
   }
 
   return (
-    <div className="h-screen bg-[url('/space-background.jpg')] bg-cover flex flex-col">
+    <div className="h-screen bg-black bg-cover flex flex-col">
       <Header />
       <section className="main">
         <div className="flex w-screen">

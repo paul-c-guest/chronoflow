@@ -14,9 +14,9 @@ function Filters({ checkboxStatus, setCheckboxStatus }: Props) {
   const categories = ['inventions', 'worldEvents', 'people']
 
   return (
-    <div className="w-[75%] border-orange-300 border-t-2 border-r-2 border-l-4 border-b-4 bg-white px-12 py-2 align-center justify-between rounded-md h-28">
+    <div className="w-[75%] border-zinc-800 border-2 bg-black px-12 py-2 align-center justify-between h-28">
       <div>
-        <h2 className="font-semibold text-xl text-center mb-2">
+        <h2 className="font-semibold font-sans bg-zinc-800 text-xl text-left text-white mb-2 ">
           Filter your events
         </h2>
       </div>
@@ -31,7 +31,10 @@ function Filters({ checkboxStatus, setCheckboxStatus }: Props) {
               onChange={handleChange}
               checked={checkboxStatus === category ? true : false}
             />
-            <label className="" htmlFor={category}>
+            <label
+              className="text-white uppercase font-label"
+              htmlFor={category}
+            >
               {category}
             </label>
           </div>
