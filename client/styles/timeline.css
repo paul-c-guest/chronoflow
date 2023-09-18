@@ -105,6 +105,12 @@
   background-color: var(--opaque-tan);
 }
 
+datalist {
+  display: none;
+  margin: -4em;
+  padding: 0;
+}
+
 /*
 what follows is from:
 

@@ -10,9 +10,10 @@ interface Props {
 }
 
 function Timeline({ inventions, people }: Props) {
+  // some extra years to add on either side
   const buffer = 50
 
-  // setup some global values for the timeline elements
+  // get the earliest year from all events / people
   const rangeMin =
     Math.min(
       inventions.reduce(
@@ -27,6 +28,7 @@ function Timeline({ inventions, people }: Props) {
       )
     ) - buffer
 
+  // get the latest year from all events / people
   const rangeMax =
     Math.max(
       people.reduce(
@@ -50,8 +52,10 @@ function Timeline({ inventions, people }: Props) {
   // closely related to "--track-width" variable in timeline.css
   const squeezeFactor = 0.84
 
+  // the position of the thumb element of the input range slider
   const [timelinePosition, setTimelinePosition] = useState(midway)
 
+  // for controlling UX/UI
   const [activeEvent, setActiveEvent] = useState(0)
   const [hoverPerson, setHoverPerson] = useState(0)
   const [activePerson, setActivePerson] = useState(0)
@@ -77,11 +81,6 @@ for (const date of dates) {
   */
 
   //function spacing(data[]){ const length = Number(inventions.length) const timelineLength = Number({timelineposition??????}) return timelineLength/length [this would equal how many 'segments' each specific timeline would have?] then we need to }
-
-  // maybe required to use in input if some browsers don't play nice
-  // const handleInput = (event: React.FormEvent<HTMLInputElement>) => {
-  //   // console.log('input',event.target)
-  // }
 
   const setSliderToEvent = (invention: Invention) => {
     setTimelinePosition(invention.year)
@@ -116,6 +115,7 @@ for (const date of dates) {
       <div id="person-container">
         {people.map((person: Person) => {
           return (
+            // use isFinite to check for numbers (avoid problem if year = 0, returns false)
             isFinite(person.yearBorn) &&
             isFinite(person.yearDied) && (
               <Link to={`/people/${person.id}`} key={person.id}>
@@ -131,6 +131,7 @@ for (const date of dates) {
                   className={`person ${
                     activePerson === person.id ? 'active-person' : ''
                   }`}
+                  // lots of double-ups here to appease the linter:
                   onMouseOver={() => setHoverPerson(person.id)}
                   onFocus={() => setHoverPerson(person.id)}
                   onMouseOut={() => setHoverPerson(0)}
@@ -151,16 +152,27 @@ for (const date of dates) {
           type="range"
           min={rangeMin}
           max={rangeMax}
+          step={1}
           list="events"
           onChange={handleChange}
-          // onInput={handleInput}
         />
       </div>
+
+      <datalist id="events">
+        {people.map((person) => {
+          return <option value={person.yearBorn} key={person.name}></option>
+        })}
+        {inventions.map((invention) => {
+          return (
+            <option value={invention.year} key={invention.invention}></option>
+          )
+        })}
+      </datalist>
 
       <div id="event-container">
         {inventions.map((invention) => {
           return (
-            invention.year && (
+            isFinite(invention.year) && (
               <Link to={`/inventions/${invention.id}`} key={invention.id}>
                 <button
                   onClick={() => setSliderToEvent(invention)}
