@@ -2,7 +2,15 @@
 export default {
   content: ['./index.html', './client/**/*.{js,ts,jsx,tsx}'],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: ['Bebas Neue'],
+        label: ['Roboto'],
+      },
+      fontSize: {
+        '6xl': ['112px'],
+      },
+    },
   },
   plugins: [],
 }

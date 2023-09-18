@@ -43,22 +43,22 @@ function CountrySelect({
   ))
 
   return (
-    <div
-      className=" border-orange-300 border-t-2 border-r-2 
-    border-l-4 border-b-4 bg-white py-2 rounded-md my-3 p-8"
-    >
-      <label htmlFor="countries" className="font-semibold text-xl mr-6">
-        Filter Your Country
+    <div className="w-[25%] text-left border-zinc-800 border-2 bg-black text-white  py-2 h-28">
+      <label htmlFor="countries" className="text-xl uppercase bg-zinc-800 ">
+        Filter By Country
+
       </label>
       <select
         name="countries"
         id="countries"
         value={selectedOption}
         onChange={handleChange}
-        className="text-center w-96 border-orange-300 border-2"
+
+        className="mt-3 bg-black
+
       >
         <option value="disabledOption" disabled>
-          Choose a country
+          ----------------------
         </option>
         {listOfOptions}
       </select>
