@@ -18,12 +18,12 @@ afterAll(async () => {
 })
 
 //TEST
-describe('getAllInventions', () => {
-  it('should get a list of inventions', async () => {
-    const inventions = await db.getAllInventions()
+describe('getAllFamousPeople', () => {
+  it('should get a list of famous people', async () => {
+    const famous_people = await db.getAllFamousPeople()
 
-    expect(inventions).toHaveLength(14)
-    expect(inventions[0].invention).toBe('Paper')
-    expect(inventions[4].country).toBe('Germany')
+    expect(famous_people).toHaveLength(16)
+    expect(famous_people[0].name).toBe('Augustus Caesar')
+    expect(famous_people[3].country).toBe('Mongol Empire')
   })
 })

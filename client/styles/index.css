@@ -7,18 +7,30 @@ input[type='checkbox'] {
   width: 50px;
   height: 50px;
   border: 1px solid black;
-  border-radius: 20%;
-  margin: 0.25rem;
+  border-radius: 40%;
+  margin-left: 1rem;
+  margin-right: 1rem;
   display: inline-block;
   vertical-align: middle;
+  position: relative;
 }
 
 input[type='checkbox']:hover {
-  appearance: none;
-  border: 2px solid yellow;
+  border: 2px solid rgb(253, 186, 116);
+  content: '✔';
 }
 
 input[type='checkbox']:checked {
-  appearance: none;
-  background-color: yellow;
+  background-color: rgb(253, 186, 116);
+}
+
+input[type='checkbox']:checked::after {
+  content: '✔';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
 }

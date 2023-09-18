@@ -18,12 +18,12 @@ afterAll(async () => {
 })
 
 //TEST
-describe('getAllInventions', () => {
+describe('getAllWorldEvents', () => {
   it('should get a list of inventions', async () => {
-    const inventions = await db.getAllInventions()
+    const events = await db.getAllWorldEvents()
 
-    expect(inventions).toHaveLength(14)
-    expect(inventions[0].invention).toBe('Paper')
-    expect(inventions[4].country).toBe('Germany')
+    expect(events).toHaveLength(10)
+    expect(events[0].name).toBe('Construction of the Colosseum')
+    expect(events[4].country).toBe('Guatemala')
   })
 })

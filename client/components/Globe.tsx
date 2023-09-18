@@ -1,6 +1,5 @@
 /* eslint-disable react/no-unknown-property */
 
-import { Canvas, useFrame } from '@react-three/fiber'
 import {
   Html,
   OrbitControls,
@@ -8,6 +7,7 @@ import {
   useGLTF,
   useProgress,
 } from '@react-three/drei'
+import { Canvas, useFrame } from '@react-three/fiber'
 import { Suspense } from 'react'
 
 function Loader() {
@@ -22,12 +22,12 @@ function GlobeModel() {
     scene.rotation.y = clock.getElapsedTime() * 0.5
   })
 
-  return <primitive object={scene} scale={[1.5, 1.5, 1.5]} />
+  return <primitive object={scene} scale={[2, 2, 2]} />
 }
 
 function Globe() {
   return (
-    <div className="w-1/2 h-[36rem]">
+    <div className="w-[45%] h-[36rem]">
       <Canvas>
         <Suspense fallback={<Loader />}>
           <PerspectiveCamera
@@ -39,12 +39,8 @@ function Globe() {
             far={1000}
           />
           <ambientLight intensity={1} />
-          <OrbitControls
-            enableZoom={false}
-            // maxPolarAngle={0.5}
-            // minPolarAngle={0}
-          />
-          <group position={[0, 15, 0]}>
+          <OrbitControls enableZoom={false} />
+          <group position={[0, 20, -5]}>
             <GlobeModel />
           </group>
         </Suspense>
@@ -54,3 +50,6 @@ function Globe() {
 }
 
 export default Globe
+
+// maxPolarAngle={0.1}
+// minPolarAngle={0}
