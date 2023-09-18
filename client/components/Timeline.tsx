@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 
 import { Invention } from '../../models/Inventions'
 import { Person } from '../../models/People'
-import { text } from 'express'
 
 interface Props {
   inventions: Invention[]
@@ -41,7 +40,8 @@ function Timeline({ inventions, people }: Props) {
         inventions[0].year
       )
     ) + buffer
-  console.log('total range is', rangeMin, 'to', rangeMax)
+
+  // console.log('total range is', rangeMin, 'to', rangeMax)
 
   const range = rangeMax - rangeMin
   const midway = range - range / 2
@@ -50,7 +50,7 @@ function Timeline({ inventions, people }: Props) {
   // closely related to "--track-width" variable in timeline.css
   const squeezeFactor = 0.835
 
-  const [timelinePosition, setTimelinePosition] = useState(50)
+  const [timelinePosition, setTimelinePosition] = useState(midway)
 
   const [activeEvent, setActiveEvent] = useState(0)
   const [activePerson, setActivePerson] = useState(0)
@@ -58,8 +58,6 @@ function Timeline({ inventions, people }: Props) {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTimelinePosition(Number(event.target.value))
   }
-
-  // console.log(inventions)
 
   // add some form of "helper" function that takes in the data array, calculates how many entries there are in an array and divides the timeline length into relative spacing for dates in relation to space on timeline?
 
@@ -87,7 +85,6 @@ for (const date of dates) {
   const setSliderToEvent = (invention: Invention) => {
     setTimelinePosition(invention.year)
     setActiveEvent(invention.id)
-    // console.log('clicked', invention.id)
   }
 
   const setSliderToPerson = (person: Person) => {
@@ -100,15 +97,12 @@ for (const date of dates) {
 
   // returns a value to use as the number of 'vw' from the left edge
   const getPositionForYear = (year: number): number => {
-    console.log(year)
-
     let result = 50
     if (year < midway) {
       result = (((year - rangeMin) * 100) / range) * (squeezeFactor / 1)
     } else if (year > midway) {
       result = (((year - rangeMin) * 100) / range) * squeezeFactor
     }
-    // console.log(year, result)
     return result
   }
 
@@ -127,13 +121,16 @@ for (const date of dates) {
               <Link to={`/people/${person.id}`} key={person.id}>
                 <button
                   onClick={() => setSliderToPerson(person)}
+                  style={{
+                    left: `${getPositionForYear(person.yearBorn || 0)}vw`,
+                    width:
+                      activePerson !== person.id
+                        ? `${getWidthForLifeSpan(person)}vw`
+                        : 'fit-content',
+                  }}
                   className={`person ${
                     activePerson === person.id ? 'active-person' : ''
                   }`}
-                  style={{
-                    left: `${getPositionForYear(person.yearBorn || 0)}vw`,
-                    // width: `${getWidthForLifeSpan(person)}vw`,
-                  }}
                   onMouseOver={() => setActivePerson(person.id)}
                   onFocus={() => setActivePerson(person.id)}
                   onMouseOut={() => setActivePerson(0)}
