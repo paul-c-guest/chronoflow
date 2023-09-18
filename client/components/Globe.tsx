@@ -7,41 +7,26 @@ import {
   useProgress,
 } from '@react-three/drei'
 import { Canvas, useFrame } from '@react-three/fiber'
-import { Suspense, useRef, useLayoutEffect, useEffect, useMemo } from 'react'
+import {
+  Suspense,
+  useRef,
+  useLayoutEffect,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react'
 import ThreeGlobe from 'three-globe'
 
-function GlobeModel() {
-  // const N = 300
-  // const gData = [...Array(N).keys()].map(() => ({
-  //   lat: (Math.random() - 0.5) * 180,
-  //   lng: (Math.random() - 0.5) * 360,
-  //   size: Math.random() / 3,
-  //   color: ['red', 'white', 'blue', 'green'][Math.round(Math.random() * 3)],
-  // }))
-
-  const gData = [
-    {
-      lat: 37.0902,
-      lng: -95.7129,
-      size: Math.random() / 3,
-      color: 'red',
-    },
-    {
-      lat: -40.9006,
-      lng: 174.886,
-      size: Math.random() / 3,
-      color: 'green',
-    },
-  ]
-
+function GlobeModel({ countriesData }) {
   const globe = new ThreeGlobe({ animateIn: true })
 
   globe
     .globeImageUrl('/assets/earth-blue-marble.jpg')
     .bumpImageUrl('/assets/earth-topology.png')
-    .pointsData(gData)
-    .pointAltitude('size')
-    .pointColor('color')
+    .polygonsData(countriesData)
+    .polygonCapColor(() => 'rgba(200, 0, 0, 0.7)')
+    .polygonSideColor(() => 'rgba(0, 200, 0, 0.1)')
+    .polygonStrokeColor(() => '#111')
 
   useFrame(({ clock }) => {
     globe.rotation.y = clock.getElapsedTime() * 0.5
@@ -53,6 +38,23 @@ function GlobeModel() {
 }
 
 function Globe() {
+  const [countriesData, setCountriesData] = useState(null)
+
+  useEffect(() => {
+    // Load and parse the GeoJSON file
+    fetch('/assets/ne_110m_admin_0_countries.geojson')
+      .then((response) => response.json())
+      .then((data) => {
+        // Store the countries' data in state
+        setCountriesData(
+          data.features.filter((d) => d.properties.ISO_A2 !== 'AQ')
+        )
+      })
+      .catch((error) => {
+        console.error('Error loading GeoJSON:', error)
+      })
+  }, [])
+
   return (
     <div className="w-[45%] h-[36rem]">
       <Canvas>
@@ -68,7 +70,7 @@ function Globe() {
           <ambientLight intensity={1} />
           <directionalLight color="white" position={[0, 0, 5]} />
           <group position={[0, 0, 0]}>
-            <GlobeModel />
+            countriesData && <GlobeModel countriesData={countriesData} />
           </group>
         </Suspense>
       </Canvas>
