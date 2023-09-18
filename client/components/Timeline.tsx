@@ -100,6 +100,8 @@ for (const date of dates) {
 
   // returns a value to use as the number of 'vw' from the left edge
   const getPositionForYear = (year: number): number => {
+    console.log(year)
+
     let result = 50
     if (year < midway) {
       result = (((year - rangeMin) * 100) / range) * (squeezeFactor / 1)
@@ -120,14 +122,16 @@ for (const date of dates) {
       <div id="person-container">
         {people.map((person: Person) => {
           return (
-            person.yearBorn &&
-            person.yearDied && (
+            isFinite(person.yearBorn) &&
+            isFinite(person.yearDied) && (
               <Link to={`/people/${person.id}`} key={person.id}>
                 <button
                   onClick={() => setSliderToPerson(person)}
-                  className={`person ${activePerson ? 'active-person' : ''}`}
+                  className={`person ${
+                    activePerson === person.id ? 'active-person' : ''
+                  }`}
                   style={{
-                    left: `${getPositionForYear(person.yearBorn)}vw`,
+                    left: `${getPositionForYear(person.yearBorn || 0)}vw`,
                     // width: `${getWidthForLifeSpan(person)}vw`,
                   }}
                   onMouseOver={() => setActivePerson(person.id)}
