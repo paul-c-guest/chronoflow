@@ -37,14 +37,6 @@
   /* justify-content: center; */
 }
 
-#events {
-  display: flex;
-  justify-content: space-between;
-  width: var(--track-width);
-  margin-top: 70px;
-  /* padding: 4em 5px; */
-}
-
 .event {
   /* note: position is further calculated in Timeline.tsx */
   position: absolute;
