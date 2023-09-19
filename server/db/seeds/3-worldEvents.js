@@ -10,8 +10,8 @@ export async function seed(knex) {
       year: 70,
       country: 'Italy',
       description:
-        'The construction of the Colosseum in Rome, Italy, one of the most iconic amphitheaters of the ancient world, for public spectacles and entertainment',
-      image: 'image goes here',
+        'The construction of the Colosseum in Rome, Italy, one of the most iconic amphitheaters of the ancient world, for  spectacles and entertainment',
+      image: '/images/colosseum.png',
     },
     {
       id: 2,
@@ -20,7 +20,7 @@ export async function seed(knex) {
       country: 'Guatemala',
       description:
         'The Maya civilisation developed a complex calendar system known as the Long Count, which allowed precise tracking of time and astronomical events',
-      image: 'image goes here',
+      image: '/images/mayan-long-calendar.png',
     },
     {
       id: 3,
@@ -29,16 +29,16 @@ export async function seed(knex) {
       country: 'Morocco',
       description:
         'Al-Qarawiyyin University in Fez, Morocco, founded by Fatima al-Fihri, is recognised as the oldest existing educational institution in the world',
-      image: 'image goes here',
+      image: '/images/al-qarawiyyin.png',
     },
     {
       id: 4,
       name: 'Founding of Timbuktu',
       year: 1100,
-      country: 'Africa',
+      country: 'Mali',
       description:
         'The city of Timbuktu in Mali became a major centre for trade and scholarship in West Africa',
-      image: 'image goes here',
+      image: '/images/timbuktu.png',
     },
     {
       id: 5,
@@ -47,7 +47,7 @@ export async function seed(knex) {
       country: 'Guatemala',
       description:
         'The Aztec Calendar Stone, or Sun Stone, is an intricate representation of time and cosmology',
-      image: 'image goes here',
+      image: '/images/mayan-calendar.png',
     },
     {
       id: 6,
@@ -56,7 +56,7 @@ export async function seed(knex) {
       country: 'USA',
       description:
         'Christopher Columbas embarked on voyages that expanded geographical knowledge and global trade and bumped into America',
-      image: 'image goes here',
+      image: '/images/christopher-columbus.png',
     },
     {
       id: 7,
@@ -65,7 +65,7 @@ export async function seed(knex) {
       country: 'England',
       description:
         'Abraham Darby set in motion the knock on events that would later be referred to as the industrial revolution, starting with his ironmongery production and ending in 1912 - the peak of Industrial England',
-      image: 'image goes here',
+      image: '/images/industrial-revolution.png',
     },
     {
       id: 8,
@@ -74,7 +74,7 @@ export async function seed(knex) {
       country: 'USA',
       description:
         'The founding of the United Nations as an international organisation aimed at promoting peace, cooperation, and diplomacy among nations',
-      image: 'image goes here',
+      image: '/images/united-nations.png',
     },
     {
       id: 9,
@@ -83,7 +83,7 @@ export async function seed(knex) {
       country: 'United States',
       description:
         'A period of intense competition between the United States and the Soviet Union to achieve milestones in space exploration',
-      image: 'image goes here',
+      image: '/images/space-race.png',
     },
     {
       id: 10,
@@ -92,7 +92,7 @@ export async function seed(knex) {
       country: 'France',
       description:
         'A global accord to combat climate change by reducing greenhouse gas emissions, signed by numerous countries to address environmental challenges',
-      image: 'image goes here',
+      image: '/images/paris-agreement.png',
     },
   ])
 }
