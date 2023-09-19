@@ -3,13 +3,14 @@ import { Link } from 'react-router-dom'
 
 import { Invention } from '../../models/Inventions'
 import { Person } from '../../models/People'
+import { Event } from '../../models/Events'
 
 interface Props {
-  inventions: Invention[]
+  data: Invention[] | Event[]
   people: Person[]
 }
 
-function Timeline({ inventions, people }: Props) {
+function Timeline({ data: inventions, people }: Props) {
   // some extra years to add on either side
   const buffer = 50
 
