@@ -227,8 +227,9 @@ for (const date of dates) {
               <Link to={`/inventions/${invention.id}`} key={invention.id}>
                 <button
                   onClick={() => setSliderToEvent(invention)}
-                  className={`event text-white ${
+                  className={`mark text-white font-label font-extralight ${
                     activeEvent === invention.id ? 'active-event' : ''
+
                   }`}
                   style={{
                     left: `${getPositionForYear(invention.year)}vw`,
