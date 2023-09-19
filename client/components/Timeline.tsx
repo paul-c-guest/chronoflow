@@ -10,6 +10,7 @@ interface Props {
 }
 
 function Timeline({ inventions, people }: Props) {
+  // some extra years to add on either side
   const buffer = 50
 
   people.sort((a, b) => a.yearBorn - b.yearBorn)
@@ -30,6 +31,7 @@ function Timeline({ inventions, people }: Props) {
       )
     ) - buffer
 
+  // get the latest year from all events / people
   const rangeMax =
     Math.max(
       people.reduce(
@@ -51,8 +53,10 @@ function Timeline({ inventions, people }: Props) {
   // closely related to "--track-width" variable in timeline.css
   const squeezeFactor = 0.84
 
+  // the position of the thumb element of the input range slider
   const [timelinePosition, setTimelinePosition] = useState(midway)
 
+  // for controlling UX/UI
   const [activeEvent, setActiveEvent] = useState(0)
   const [hoverPerson, setHoverPerson] = useState(0)
   const [activePerson, setActivePerson] = useState(0)
@@ -180,6 +184,7 @@ for (const date of dates) {
                   className={`person ${
                     activePerson === person.id ? 'active-person' : ''
                   }`}
+                  // lots of double-ups here to appease the linter:
                   onMouseOver={() => setHoverPerson(person.id)}
                   onFocus={() => setHoverPerson(person.id)}
                   onMouseOut={() => setHoverPerson(0)}
@@ -200,10 +205,22 @@ for (const date of dates) {
           type="range"
           min={rangeMin}
           max={rangeMax}
+          step={1}
           list="events"
           onChange={handleChange}
         />
       </div>
+
+      <datalist id="events">
+        {people.map((person) => {
+          return <option value={person.yearBorn} key={person.name}></option>
+        })}
+        {inventions.map((invention) => {
+          return (
+            <option value={invention.year} key={invention.invention}></option>
+          )
+        })}
+      </datalist>
 
       <div id="event-container">
         {inventionIdClusters.map((cluster: number[]) =>
