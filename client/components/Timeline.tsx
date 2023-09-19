@@ -259,7 +259,7 @@ for (const date of dates) {
         {inventionIdClusters.map((cluster: number[]) =>
           cluster.map((id: number, index: number) => {
             const event = getEvent(id)
-            const lineLength = 17 + (cluster.length - index) * 32
+            const lineLength = 19 + (cluster.length - index) * 32
             return (
               isFinite(event.year) && (
                 <Link to={`/${category}/${event.id}`} key={event.id}>

@@ -43,25 +43,23 @@
   position: absolute;
   margin-left: 6vw;
   padding: 0.5em 1em;
-  /* min-width: 2em; */
   transform: rotate(90deg);
   width: 4.5em;
   border-radius: 2em;
   transition: 0.25s;
   justify-content: left;
   z-index: 1;
-  /* background-color: aqua; */
 }
 
+/* the line from the event title to the timeline, is given a width in timeline.tsx */
 .event::before {
   content: '';
   display: block;
   position: absolute;
-  /* width: 30px;  */
   height: 2px;
   top: 20px;
-  right: 50px;
-  background-color: #eeeeeedd;
+  right: 60px;
+  background-color: #ddddddcc;
 }
 
 .event:hover {
@@ -90,13 +88,10 @@
   min-height: 2.5em;
   vertical-align: bottom;
   background-color: var(--opaque-blue);
-  /* border-top-left-radius: 0.5em;
-  border-top-right-radius: 0.5em; */
-  margin-top: 4.5em;
-  padding: 0.5em 0.5em 0.5em 1.5em;
+  margin-top: 4.45em;
+  padding: 0.5em 0.5em 0.5em 1.4em;
   text-align: center;
   z-index: 1;
-  /* transition: 0.25s; */
   transform: rotate(-90deg);
   transform-origin: top left;
 }
