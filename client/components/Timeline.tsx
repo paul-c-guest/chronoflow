@@ -12,6 +12,9 @@ interface Props {
 function Timeline({ inventions, people }: Props) {
   const buffer = 50
 
+  people.sort((a, b) => a.yearBorn - b.yearBorn)
+  inventions.sort((a, b) => a.year - b.year)
+
   // setup some global values for the timeline elements
   const rangeMin =
     Math.min(
@@ -76,6 +79,26 @@ for (const date of dates) {
 
   */
 
+  // our magic elbow space value
+  const THRESHOLD = 20
+
+  const personIdClusters: number[][] = []
+  const personYearClusters: number[][] = []
+  for (const person of people) {
+    if (
+      personYearClusters.length &&
+      Math.abs(personYearClusters.at(-1).at(-1) - person.yearBorn) < THRESHOLD
+    ) {
+      personYearClusters.at(-1).push(person.yearBorn)
+      personIdClusters.at(-1)?.push(person.id)
+    } else {
+      personYearClusters.push([person.yearBorn])
+      personIdClusters.push([person.id])
+    }
+  }
+  console.log(personYearClusters)
+  console.log(personIdClusters)
+
   //function spacing(data[]){ const length = Number(inventions.length) const timelineLength = Number({timelineposition??????}) return timelineLength/length [this would equal how many 'segments' each specific timeline would have?] then we need to }
 
   // maybe required to use in input if some browsers don't play nice
@@ -106,23 +129,63 @@ for (const date of dates) {
     return result
   }
 
+  const getPositionForYearInCluster = (
+    person: Person,
+    clusterPosition: number,
+    clusterLength: number
+  ): number => {
+    let result = 50
+    const year = person.yearBorn
+
+    if (year < midway) {
+      result = (((year - rangeMin) * 100) / range) * (squeezeFactor / 1)
+    } else if (year > midway) {
+      result = (((year - rangeMin) * 100) / range) * squeezeFactor
+    }
+
+    const clusterSpace = clusterLength * 0.75 // a magic number to play with
+    const shifter = clusterPosition / clusterLength - 0.5
+
+    console.log(
+      'space',
+      clusterSpace,
+      'shift',
+      shifter,
+      'result',
+      clusterSpace * shifter
+    )
+
+    result += shifter * clusterSpace
+
+    return result
+  }
+
   // returns a value to use as the width of a person, in 'vw'
   const getWidthForLifeSpan = (person: Person): number => {
     return ((person.yearDied - person.yearBorn) * squeezeFactor) / 100
   }
 
+  const getPerson = (id: number): Person => {
+    return people.find((person) => person.id === id) as Person
+  }
+
   return (
     <>
       <div id="person-container">
-        {people.map((person: Person) => {
-          return (
-            isFinite(person.yearBorn) &&
-            isFinite(person.yearDied) && (
+        {personIdClusters.map((cluster: number[]) =>
+          cluster.map((id: number, index) => {
+            const person = getPerson(id)
+            return (
               <Link to={`/people/${person.id}`} key={person.id}>
                 <button
                   onClick={() => setSliderToPerson(person)}
                   style={{
-                    left: `${getPositionForYear(person.yearBorn || 0)}vw`,
+                    left: `${getPositionForYearInCluster(
+                      person,
+                      index + 1,
+                      cluster.length
+                    )}vw`,
+                    // left: `${getPositionForYear(person.yearBorn || 0)}vw`,
                     width:
                       hoverPerson !== person.id
                         ? `${getWidthForLifeSpan(person)}vw`
@@ -140,8 +203,8 @@ for (const date of dates) {
                 </button>
               </Link>
             )
-          )
-        })}
+          })
+        )}
       </div>
 
       <div id="timeline-container">
@@ -183,3 +246,34 @@ for (const date of dates) {
 }
 
 export default Timeline
+
+{
+  /* {people.map((person: Person) => {
+          return (
+            isFinite(person.yearBorn) &&
+            isFinite(person.yearDied) && (
+              <Link to={`/people/${person.id}`} key={person.id}>
+                <button
+                  onClick={() => setSliderToPerson(person)}
+                  style={{
+                    left: `${getPositionForYear(person.yearBorn || 0)}vw`,
+                    width:
+                      hoverPerson !== person.id
+                        ? `${getWidthForLifeSpan(person)}vw`
+                        : 'fit-content',
+                  }}
+                  className={`person ${
+                    activePerson === person.id ? 'active-person' : ''
+                  }`}
+                  onMouseOver={() => setHoverPerson(person.id)}
+                  onFocus={() => setHoverPerson(person.id)}
+                  onMouseOut={() => setHoverPerson(0)}
+                  onBlur={() => setHoverPerson(0)}
+                >
+                  {hoverPerson === person.id ? person.name : ''}
+                </button>
+              </Link>
+            )
+          )
+        })} */
+}
