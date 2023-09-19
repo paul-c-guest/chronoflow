@@ -25,18 +25,21 @@ function GlobeModel({ countryData }) {
   globe
     .globeImageUrl('/assets/earth-blue-marble.jpg')
     .bumpImageUrl('/assets/earth-topology.png')
-    .polygonsData(countryData)
-    .polygonCapColor(() => 'rgba(236, 3, 252, 0.6)')
-    .polygonSideColor(() => 'rgba(236, 3, 252, 0.1)')
-    .polygonStrokeColor(() => '#111')
-    .polygonAltitude(0.05)
+  if (countryData) {
+    globe
+      .polygonsData(countryData)
+      .polygonCapColor(() => 'rgba(236, 3, 252, 0.6)')
+      .polygonSideColor(() => 'rgba(236, 3, 252, 0.1)')
+      .polygonStrokeColor(() => '#111')
+      .polygonAltitude(0.05)
+  }
 
   useFrame(({ clock }) => {
     globe.rotation.y = clock.getElapsedTime() * 0.5
   })
 
   return (
-    <primitive object={globe} position={[0, 0, 0]} scale={[0.2, 0.2, 0.2]} />
+    <primitive object={globe} position={[0, 0, 0]} scale={[0.15, 0.15, 0.15]} />
   )
 }
 
@@ -64,6 +67,9 @@ function Globe({ selectedCountry }) {
         .catch((error) => {
           console.error('Error loading GeoJSON:', error)
         })
+    } else {
+      // Clear the countriesData when countryCode is null
+      setCountriesData(null)
     }
   }, [countryCode])
 
@@ -79,11 +85,11 @@ function Globe({ selectedCountry }) {
             near={0.1}
             far={1000}
           />
-          <OrbitControls></OrbitControls>
+          <OrbitControls enableZoom={false} />
           <ambientLight intensity={1} />
           <directionalLight color="white" position={[0, 0, 5]} />
           <group position={[0, 0, 0]}>
-            {countriesData && <GlobeModel countryData={countriesData} />}
+            {<GlobeModel countryData={countriesData} />}
           </group>
         </Suspense>
       </Canvas>
