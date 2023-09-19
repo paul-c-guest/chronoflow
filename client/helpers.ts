@@ -3,11 +3,11 @@ export function getCountryCode(countryName) {
     China: 'CN',
     Germany: 'DE',
     Netherlands: 'NL',
-    England: 'EN',
+    England: 'GB',
     USA: 'US',
     France: 'FR',
     Italy: 'IT',
-    Scotland: 'SC',
+    Scotland: 'GB',
     Russia: 'RU',
     Poland: 'PL',
   }

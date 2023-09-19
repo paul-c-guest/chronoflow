@@ -89,7 +89,7 @@ function Globe({ selectedCountry }) {
           <ambientLight intensity={1} />
           <directionalLight color="white" position={[0, 0, 5]} />
           <group position={[0, 0, 0]}>
-            {<GlobeModel countryData={countriesData} />}
+            <GlobeModel countryData={countriesData} />
           </group>
         </Suspense>
       </Canvas>
