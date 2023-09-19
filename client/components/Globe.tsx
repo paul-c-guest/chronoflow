@@ -16,47 +16,61 @@ import {
   useState,
 } from 'react'
 import ThreeGlobe from 'three-globe'
+import { getCountryCode } from '../helpers'
 
 function GlobeModel({ countryData }) {
-
   const [altitude, setAltitude] = useState(0)
   const globe = new ThreeGlobe({ animateIn: true })
 
   globe
     .globeImageUrl('/assets/earth-blue-marble.jpg')
     .bumpImageUrl('/assets/earth-topology.png')
-    .polygonsData(countryData)
-    .polygonCapColor(() => 'rgba(236, 3, 252, 0.6)')
-    .polygonSideColor(() => 'rgba(236, 3, 252, 0.1)')
-    .polygonStrokeColor(() => '#111')
-    .polygonAltitude(0.05)
+  if (countryData) {
+    globe
+      .polygonsData(countryData)
+      .polygonCapColor(() => 'rgba(236, 3, 252, 0.6)')
+      .polygonSideColor(() => 'rgba(236, 3, 252, 0.1)')
+      .polygonStrokeColor(() => '#111')
+      .polygonAltitude(0.05)
+  }
 
   useFrame(({ clock }) => {
     globe.rotation.y = clock.getElapsedTime() * 0.5
   })
 
   return (
-    <primitive object={globe} position={[0, 0, 0]} scale={[0.2, 0.2, 0.2]} />
+    <primitive object={globe} position={[0, 0, 0]} scale={[0.15, 0.15, 0.15]} />
   )
 }
 
-function Globe() {
+function Globe({ selectedCountry }) {
   const [countriesData, setCountriesData] = useState(null)
-  const [countryCode, setCountryCode] = useState('NZ')
+  const [countryCode, setCountryCode] = useState(null)
 
   useEffect(() => {
-    // Load and parse the GeoJSON file
-    fetch('/assets/ne_110m_admin_0_countries.geojson')
-      .then((response) => response.json())
-      .then((data) => {
-        // Store the country/ies data in state
-        setCountriesData(
-          data.features.filter((d) => d.properties.ISO_A2 == countryCode)
-        )
-      })
-      .catch((error) => {
-        console.error('Error loading GeoJSON:', error)
-      })
+    const code = getCountryCode(selectedCountry)
+    console.log(code)
+    setCountryCode(code)
+  }, [selectedCountry])
+
+  useEffect(() => {
+    if (countryCode !== null) {
+      // Load and parse the GeoJSON file
+      fetch('/assets/ne_110m_admin_0_countries.geojson')
+        .then((response) => response.json())
+        .then((data) => {
+          // Store the country/ies data in state
+          setCountriesData(
+            data.features.filter((d) => d.properties.ISO_A2 == countryCode)
+          )
+        })
+        .catch((error) => {
+          console.error('Error loading GeoJSON:', error)
+        })
+    } else {
+      // Clear the countriesData when countryCode is null
+      setCountriesData(null)
+    }
   }, [countryCode])
 
   return (
@@ -71,10 +85,11 @@ function Globe() {
             near={0.1}
             far={1000}
           />
+          <OrbitControls enableZoom={false} />
           <ambientLight intensity={1} />
           <directionalLight color="white" position={[0, 0, 5]} />
           <group position={[0, 0, 0]}>
-          { countriesData && <GlobeModel countryData={countriesData} />}
+            <GlobeModel countryData={countriesData} />
           </group>
         </Suspense>
       </Canvas>
