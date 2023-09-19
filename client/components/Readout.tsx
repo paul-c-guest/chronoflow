@@ -19,6 +19,8 @@ export default function Readout() {
     worldEventsData: worldEvents,
   } = useOutletContext<Context>()
 
+  
+
   console.log('worldstuff', worldEvents)
 
   const dataArray =
