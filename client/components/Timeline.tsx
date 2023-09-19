@@ -44,8 +44,6 @@ function Timeline({ inventions, people }: Props) {
       )
     ) + buffer
 
-  // console.log('total range is', rangeMin, 'to', rangeMax)
-
   const range = rangeMax - rangeMin
   const midway = range - range / 2
 
@@ -63,8 +61,6 @@ function Timeline({ inventions, people }: Props) {
     setTimelinePosition(Number(event.target.value))
   }
 
-  // add some form of "helper" function that takes in the data array, calculates how many entries there are in an array and divides the timeline length into relative spacing for dates in relation to space on timeline?
-
   /**
    * // GERARDS CLUSTER FUNCTION
    *  
@@ -76,35 +72,40 @@ for (const date of dates) {
     groups.push([ date ])
   }
 }
-
   */
 
-  // our magic elbow space value
-  const THRESHOLD = 20
+  // the magic elbow space value
+  const threshold = 35
 
   const personIdClusters: number[][] = []
   const personYearClusters: number[][] = []
   for (const person of people) {
     if (
       personYearClusters.length &&
-      Math.abs(personYearClusters.at(-1).at(-1) - person.yearBorn) < THRESHOLD
+      Math.abs(personYearClusters.at(-1).at(-1) - person.yearBorn) < threshold
     ) {
       personYearClusters.at(-1).push(person.yearBorn)
-      personIdClusters.at(-1)?.push(person.id)
+      personIdClusters.at(-1).push(person.id)
     } else {
       personYearClusters.push([person.yearBorn])
       personIdClusters.push([person.id])
     }
   }
-  console.log(personYearClusters)
-  console.log(personIdClusters)
 
-  //function spacing(data[]){ const length = Number(inventions.length) const timelineLength = Number({timelineposition??????}) return timelineLength/length [this would equal how many 'segments' each specific timeline would have?] then we need to }
-
-  // maybe required to use in input if some browsers don't play nice
-  // const handleInput = (event: React.FormEvent<HTMLInputElement>) => {
-  //   // console.log('input',event.target)
-  // }
+  const inventionIdClusters: number[][] = []
+  const inventionYearClusters: number[][] = []
+  for (const invention of inventions) {
+    if (
+      inventionYearClusters.length &&
+      Math.abs(inventionYearClusters.at(-1).at(-1) - invention.year) < threshold
+    ) {
+      inventionYearClusters.at(-1).push(invention.year)
+      inventionIdClusters.at(-1).push(invention.id)
+    } else {
+      inventionYearClusters.push([invention.year])
+      inventionIdClusters.push([invention.id])
+    }
+  }
 
   const setSliderToEvent = (invention: Invention) => {
     setTimelinePosition(invention.year)
@@ -118,24 +119,13 @@ for (const date of dates) {
     setActiveEvent(0)
   }
 
-  // returns a value to use as the number of 'vw' from the left edge
-  const getPositionForYear = (year: number): number => {
-    let result = 50
-    if (year < midway) {
-      result = (((year - rangeMin) * 100) / range) * (squeezeFactor / 1)
-    } else if (year > midway) {
-      result = (((year - rangeMin) * 100) / range) * squeezeFactor
-    }
-    return result
-  }
-
   const getPositionForYearInCluster = (
-    person: Person,
+    year: number,
     clusterPosition: number,
     clusterLength: number
   ): number => {
     let result = 50
-    const year = person.yearBorn
+    clusterPosition = clusterPosition++
 
     if (year < midway) {
       result = (((year - rangeMin) * 100) / range) * (squeezeFactor / 1)
@@ -143,37 +133,38 @@ for (const date of dates) {
       result = (((year - rangeMin) * 100) / range) * squeezeFactor
     }
 
-    const clusterSpace = clusterLength * 0.75 // a magic number to play with
-    const shifter = clusterPosition / clusterLength - 0.5
+    // a magic number to assist with grouping/overlapping
+    const magicValue = 0.5
 
-    console.log(
-      'space',
-      clusterSpace,
-      'shift',
-      shifter,
-      'result',
-      clusterSpace * shifter
-    )
+    const totalClusterWidth = clusterLength * magicValue
+    const spacer = clusterLength > 1 ? clusterPosition / clusterLength - 0.5 : 0
 
-    result += shifter * clusterSpace
+    result += spacer * totalClusterWidth
 
     return result
   }
 
-  // returns a value to use as the width of a person, in 'vw'
-  const getWidthForLifeSpan = (person: Person): number => {
-    return ((person.yearDied - person.yearBorn) * squeezeFactor) / 100
+  // return a value to use as an offset, in 'em'
+  const getOffsetForClusterPosition = (
+    position: number,
+    clusterLength: number
+  ): number => {
+    return clusterLength > 1 ? 2 * clusterLength - 2 * position - 2 : 0
   }
 
   const getPerson = (id: number): Person => {
     return people.find((person) => person.id === id) as Person
   }
 
+  const getInvention = (id: number): Invention => {
+    return inventions.find((invention) => invention.id === id) as Invention
+  }
+
   return (
     <>
       <div id="person-container">
         {personIdClusters.map((cluster: number[]) =>
-          cluster.map((id: number, index) => {
+          cluster.map((id: number, index: number) => {
             const person = getPerson(id)
             return (
               <Link to={`/people/${person.id}`} key={person.id}>
@@ -181,15 +172,10 @@ for (const date of dates) {
                   onClick={() => setSliderToPerson(person)}
                   style={{
                     left: `${getPositionForYearInCluster(
-                      person,
-                      index + 1,
+                      person.yearBorn,
+                      index,
                       cluster.length
                     )}vw`,
-                    // left: `${getPositionForYear(person.yearBorn || 0)}vw`,
-                    width:
-                      hoverPerson !== person.id
-                        ? `${getWidthForLifeSpan(person)}vw`
-                        : 'fit-content',
                   }}
                   className={`person ${
                     activePerson === person.id ? 'active-person' : ''
@@ -216,65 +202,43 @@ for (const date of dates) {
           max={rangeMax}
           list="events"
           onChange={handleChange}
-          // onInput={handleInput}
         />
       </div>
 
       <div id="event-container">
-        {inventions.map((invention) => {
-          return (
-            invention.year && (
-              <Link to={`/inventions/${invention.id}`} key={invention.id}>
-                <button
-                  onClick={() => setSliderToEvent(invention)}
-                  className={`mark text-white font-label font-extralight ${
-                    activeEvent === invention.id ? 'active-event' : ''
-
-                  }`}
-                  style={{
-                    left: `${getPositionForYear(invention.year)}vw`,
-                  }}
-                >
-                  {invention.year}
-                </button>
-              </Link>
+        {inventionIdClusters.map((cluster: number[]) =>
+          cluster.map((id: number, index: number) => {
+            const invention = getInvention(id)
+            return (
+              isFinite(invention.year) && (
+                <Link to={`/inventions/${invention.id}`} key={invention.id}>
+                  <button
+                    onClick={() => setSliderToEvent(invention)}
+                    className={`event text-white font-label font-extralight ${
+                      activeEvent === invention.id ? 'active-event' : ''
+                    }`}
+                    style={{
+                      left: `${getPositionForYearInCluster(
+                        invention.year,
+                        index,
+                        cluster.length
+                      )}vw`,
+                      marginTop: `${getOffsetForClusterPosition(
+                        index,
+                        cluster.length
+                      )}em`,
+                    }}
+                  >
+                    {invention.year}
+                  </button>
+                </Link>
+              )
             )
-          )
-        })}
+          })
+        )}
       </div>
     </>
   )
 }
 
 export default Timeline
-
-{
-  /* {people.map((person: Person) => {
-          return (
-            isFinite(person.yearBorn) &&
-            isFinite(person.yearDied) && (
-              <Link to={`/people/${person.id}`} key={person.id}>
-                <button
-                  onClick={() => setSliderToPerson(person)}
-                  style={{
-                    left: `${getPositionForYear(person.yearBorn || 0)}vw`,
-                    width:
-                      hoverPerson !== person.id
-                        ? `${getWidthForLifeSpan(person)}vw`
-                        : 'fit-content',
-                  }}
-                  className={`person ${
-                    activePerson === person.id ? 'active-person' : ''
-                  }`}
-                  onMouseOver={() => setHoverPerson(person.id)}
-                  onFocus={() => setHoverPerson(person.id)}
-                  onMouseOut={() => setHoverPerson(0)}
-                  onBlur={() => setHoverPerson(0)}
-                >
-                  {hoverPerson === person.id ? person.name : ''}
-                </button>
-              </Link>
-            )
-          )
-        })} */
-}

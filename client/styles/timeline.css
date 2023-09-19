@@ -83,7 +83,6 @@
   /* note: position is further calculated in Timeline.tsx */
   position: absolute;
   margin-left: 7.5vw;
-  font-variant: all-small-caps;
   min-height: 2.5em;
   vertical-align: bottom;
   background-color: var(--opaque-blue);
