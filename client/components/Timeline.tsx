@@ -12,9 +12,6 @@ interface Props {
 }
 
 function Timeline({ data, people, category }: Props) {
-  // console.log(data)
-  // console.log(people);
-
   // some extra years to add on either side
   const buffer = 50
 
@@ -93,13 +90,14 @@ for (const date of dates) {
   // use gerard's algorithm with the year values to find the clusters, but make an id array at the same time. the id array will get used to make the onscreen items.
   const personIdClusters: number[][] = []
   const personYearClusters: number[][] = []
+
   for (const person of people) {
     if (
       personYearClusters.length &&
-      Math.abs(personYearClusters.at(-1).at(-1) - person.yearBorn) < threshold
+      Math.abs(personYearClusters.at(-1)!.at(-1)! - person.yearBorn) < threshold
     ) {
-      personYearClusters.at(-1).push(person.yearBorn)
-      personIdClusters.at(-1).push(person.id)
+      personYearClusters.at(-1)!.push(person.yearBorn)
+      personIdClusters.at(-1)!.push(person.id)
     } else {
       personYearClusters.push([person.yearBorn])
       personIdClusters.push([person.id])
@@ -112,10 +110,10 @@ for (const date of dates) {
   for (const event of data) {
     if (
       inventionYearClusters.length &&
-      Math.abs(inventionYearClusters.at(-1).at(-1) - event.year) < threshold
+      Math.abs(inventionYearClusters.at(-1)!.at(-1)! - event.year) < threshold
     ) {
-      inventionYearClusters.at(-1).push(event.year)
-      inventionIdClusters.at(-1).push(event.id)
+      inventionYearClusters.at(-1)!.push(event.year)
+      inventionIdClusters.at(-1)!.push(event.id)
     } else {
       inventionYearClusters.push([event.year])
       inventionIdClusters.push([event.id])
@@ -126,6 +124,7 @@ for (const date of dates) {
     setTimelinePosition(event.year)
     setActiveEvent(event.id)
     setActivePerson(0)
+    setHoverPerson(0)
   }
 
   const setSliderToPerson = (person: Person) => {
@@ -219,11 +218,13 @@ for (const date of dates) {
                   }`}
                   // lots of double-ups here to appease the linter:
                   onMouseOver={() => setHoverPerson(person.id)}
-                  onFocus={() => setHoverPerson(person.id)}
                   onMouseOut={() => setHoverPerson(0)}
+                  onFocus={() => setHoverPerson(person.id)}
                   onBlur={() => setHoverPerson(0)}
                 >
-                  {hoverPerson === person.id ? person.name : ''}
+                  {hoverPerson === person.id || activePerson === person.id
+                    ? person.name
+                    : ''}
                 </button>
               </Link>
             )
