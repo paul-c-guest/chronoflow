@@ -60,7 +60,7 @@ function App() {
       <Header />
       <section className="main">
         <div className="flex w-screen">
-          <Globe />
+          <Globe selectedCountry={selectedCountry} />
           <div className="flex w-1/2 flex-col h-[36rem]">
             <Filters
               setCheckboxStatus={setCheckboxStatus}

@@ -35,6 +35,8 @@ function CountrySelect({
 
   const countriesArray = Array.from(setOfCountries)
 
+  console.log(countriesArray)
+
   // TODO: update link tag
   const listOfOptions = countriesArray.map((country) => (
     <option value={country} key={country}>
