@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
+import { redirect } from "react-router-dom"
 
 import '../styles/index.css'
 import Header from './Header.tsx'
@@ -17,7 +18,17 @@ import { getAllPeople } from '../apis/api-people.ts'
 import { getAllEvents } from '../apis/api-world-events.ts'
 import { Category } from '../../models/Types.ts'
 
+interface FilterStatus {
+  event: string
+  people: boolean
+}
+
 function App() {
+  const defaultStatus = {
+    event: 'worldEvents',
+    people: true,
+  }
+
   const {
     data: inventionsData,
     isLoading,
@@ -36,9 +47,9 @@ function App() {
 
   const [inventions, setInventions] = useState<Invention[]>([])
   const [people, setPeople] = useState<Person[]>([])
-  const [checkboxStatus, setCheckboxStatus] = useState<Category>('inventions')
-  const [selectedCountry, setSelectedCountry] = useState('')
-  const [data, setData] = useState<Event[] | Invention[] | Person[]>([])
+  const [filterStatus, setFilterStatus] = useState<FilterStatus>(defaultStatus)
+  const [selectedCountry, setSelectedCountry] = useState<string | null>(null)
+  const [data, setData] = useState<Event[] | Invention[]>([])
 
   useEffect(() => {
     if (inventionsData && peopleData) {
@@ -53,14 +64,17 @@ function App() {
   }, [selectedCountry, inventionsData, peopleData])
 
   useEffect(() => {
-    if (checkboxStatus === 'worldEvents') {
+    if (filterStatus.event === 'worldEvents') {
       setData(worldEventsData as Event[])
+      redirect("/")
       console.log(data)
-    } else if (checkboxStatus === 'inventions') {
+    } else if (filterStatus.event === 'inventions') {
       setData(inventionsData as Invention[])
+      redirect("/")
       console.log(data)
     }
-  }, [checkboxStatus])
+  }, [filterStatus])
+
 
   if (isLoading || peopleLoading || worldEventsLoading) {
     return <p>Loading....</p>
@@ -74,7 +88,7 @@ function App() {
     return data.filter((item) => item.country === country)
   }
 
-  function getDataForCategory(category: Category): Event[] | Invention[] {
+  function getDataForCategory(category: string): Event[] | Invention[] {
     switch (category) {
       case 'inventions':
         return inventionsData as Invention[]
@@ -94,23 +108,25 @@ function App() {
         <div className="flex w-screen">
           <Globe selectedCountry={selectedCountry} />
           <div className="flex w-1/2 flex-col h-[36rem]">
-            <Filters
-              setCheckboxStatus={setCheckboxStatus}
-              checkboxStatus={checkboxStatus}
-            />
-            <CountrySelect
-              inventions={inventionsData}
-              people={peopleData}
-              setSelectedCountry={setSelectedCountry}
-              selectedCountry={selectedCountry}
-            />
-            <Outlet context={{ inventionsData, peopleData }} />
+            <div className="flex flex-row">
+              <Filters
+                setFilterStatus={setFilterStatus}
+                filterStatus={filterStatus}
+              />
+              <CountrySelect
+                inventions={inventionsData}
+                people={peopleData}
+                setSelectedCountry={setSelectedCountry}
+                selectedCountry={selectedCountry}
+              />
+            </div>
+            <Outlet context={{ inventionsData, peopleData, worldEventsData }} />
           </div>
         </div>
         <Timeline
-          data={getDataForCategory(checkboxStatus)}
-          people={peopleData}
-          category={checkboxStatus}
+          data={getDataForCategory(filterStatus.event)}
+          people={filterStatus.people ? peopleData : null}
+          category={filterStatus.event}
         />
       </section>
       <div className="mt-auto"></div>
