@@ -47,8 +47,8 @@ function App() {
   const [inventions, setInventions] = useState<Invention[]>([])
   const [people, setPeople] = useState<Person[]>([])
   const [filterStatus, setFilterStatus] = useState<FilterStatus>(defaultStatus)
-  const [selectedCountry, setSelectedCountry] = useState('')
-  const [data, setData] = useState<Event[] | Invention[] | Person[]>([])
+  const [selectedCountry, setSelectedCountry] = useState<string | null>(null)
+  const [data, setData] = useState<Event[] | Invention[]>([])
 
   useEffect(() => {
     if (inventionsData && peopleData) {
@@ -116,7 +116,7 @@ function App() {
                 selectedCountry={selectedCountry}
               />
             </div>
-            <Outlet context={{ inventionsData, peopleData }} />
+            <Outlet context={{ inventionsData, peopleData, worldEventsData }} />
           </div>
         </div>
         <Timeline

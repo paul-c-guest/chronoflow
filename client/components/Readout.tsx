@@ -1,24 +1,37 @@
 import { useOutletContext, useParams } from 'react-router-dom'
-
 import type { Invention } from '../../models/Inventions.ts'
 import type { Person } from '../../models/People.ts'
+import type { Event } from '../../models/Events.ts'
 import { useEffect, useState } from 'react'
 
 interface Context {
   inventionsData: Invention[]
   peopleData: Person[]
+  worldEventsData: Event[]
 }
-
-// go to link '/people/1' etc to see people in readout (not yet linking from home page)
 
 export default function Readout() {
   const { id, category } = useParams()
 
-  const { inventionsData: inventions, peopleData: people } =
-    useOutletContext<Context>()
-  const dataArray = category === 'people' ? people : inventions 
+  const {
+    inventionsData: inventions,
+    peopleData: people,
+    worldEventsData: worldEvents,
+  } = useOutletContext<Context>()
 
-  const data = dataArray.filter((item) => item.id === Number(id))[0] as Invention | Person 
+  console.log('worldstuff', worldEvents)
+
+  const dataArray =
+    category === 'people'
+      ? people
+      : category === 'inventions'
+      ? inventions
+      : worldEvents
+
+  const data = dataArray.filter((item) => item.id === Number(id))[0] as
+    | Invention
+    | Person
+    | Event
 
   const [categoryData, setCategoryData] = useState({
     title: '',
@@ -40,7 +53,7 @@ export default function Readout() {
         altText: personData.name,
         inventor: null,
       })
-    } else {
+    } else if (category === 'inventions') {
       const inventionData = data as Invention
       setCategoryData({
         title: inventionData.invention,
@@ -50,8 +63,18 @@ export default function Readout() {
         altText: inventionData.invention,
         inventor: inventionData.inventor || null,
       })
+    } else {
+      const worldEventsData = data as Event
+      setCategoryData({
+        title: worldEventsData.name,
+        yearLabel: 'Year: ',
+        year: `${worldEventsData.year}`,
+        description: worldEventsData.description,
+        altText: worldEventsData.name,
+        inventor: null,
+      })
     }
-  }, [category, data])
+  }, [category, data]) // Based on what the category is
 
   return (
     <div className=" max-h-[28rem] flex mt-12 bg-black p-4 border-zinc-800 border-2">

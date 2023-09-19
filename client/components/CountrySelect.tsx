@@ -7,7 +7,7 @@ import type { Person } from '../../models/People'
 interface Props {
   inventions: Invention[]
   people: Person[]
-  setSelectedCountry: Dispatch<SetStateAction<string>>
+  setSelectedCountry: Dispatch<SetStateAction<string | null>>
   selectedCountry: string | null
 }
 
