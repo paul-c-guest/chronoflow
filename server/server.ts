@@ -10,7 +10,7 @@ server.use(express.json())
 
 server.use('/api/v1/inventions', inventionRoutes)
 server.use('/api/v1/famousPeople', famousPeopleRoutes)
-server.use('api/v1/worldEvents', worldEventRoutes)
+server.use('/api/v1/worldEvents', worldEventRoutes)
 
 if (process.env.NODE_ENV === 'production') {
   server.use(express.static(Path.resolve('public')))
