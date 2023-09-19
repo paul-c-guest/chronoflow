@@ -15,6 +15,7 @@ import type { Person } from '../../models/People.ts'
 import type { Event } from '../../models/Events.ts'
 import { getAllPeople } from '../apis/api-people.ts'
 import { getAllEvents } from '../apis/api-world-events.ts'
+import { category } from '../../models/Types.ts'
 
 function App() {
   const {
@@ -35,8 +36,8 @@ function App() {
 
   const [inventions, setInventions] = useState<Invention[]>([])
   const [people, setPeople] = useState<Person[]>([])
-  const [checkboxStatus, setCheckboxStatus] = useState('inventions')
-  const [selectedCountry, setSelectedCountry] = useState(null)
+  const [checkboxStatus, setCheckboxStatus] = useState<category>('inventions')
+  const [selectedCountry, setSelectedCountry] = useState('')
   const [data, setData] = useState<Event[] | Invention[] | Person[]>([])
 
   useEffect(() => {
@@ -52,7 +53,7 @@ function App() {
   }, [selectedCountry, inventionsData, peopleData])
 
   useEffect(() => {
-    if (checkboxStatus === 'world-event') {
+    if (checkboxStatus === 'worldEvents') {
       setData(worldEventsData)
       console.log(data)
     } else if (checkboxStatus === 'inventions') {
@@ -71,6 +72,19 @@ function App() {
 
   function filterByCountry(data, country) {
     return data.filter((item) => item.country === country)
+  }
+
+  function getDataForCategory(category: category): Event[] | Invention[] {
+    switch (category) {
+      case 'inventions':
+        return inventionsData
+
+      case 'worldEvents':
+        return worldEventsData
+
+      default:
+        return []
+    }
   }
 
   return (
@@ -93,7 +107,11 @@ function App() {
             <Outlet context={{ inventionsData, peopleData }} />
           </div>
         </div>
-        <Timeline inventions={inventionsData} people={peopleData} />
+        <Timeline
+          data={getDataForCategory(checkboxStatus)}
+          people={peopleData}
+          category={checkboxStatus}
+        />
       </section>
       <div className="mt-auto"></div>
       <Footer />
