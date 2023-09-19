@@ -6,7 +6,7 @@
   /* track */
   --track-colour: #efe6eb;
   --track-width: 85vw;
-  --track-height: 1.5em;
+  --track-height: 2em;
 
   /* thumb */
   --thumb-colour: white;
@@ -14,8 +14,9 @@
   --thumb-height: 3em;
 
   /* people and events */
-  --blue: #00ffff;
-  --opaque-blue: #00ffff88;
+  --blue: #00ffffee;
+  --half-opaque-blue: #00ffffbb;
+  --opaque-blue: #00ffff66;
   --opaque-tan: #fee2ab80;
 }
 
@@ -52,8 +53,19 @@
   /* background-color: aqua; */
 }
 
+.event::before {
+  content: '';
+  display: block;
+  position: absolute;
+  width: 30px;
+  height: 1px;
+  top: 20px;
+  right: 50px;
+  background-color: white;
+}
+
 .event:hover {
-  z-index: 2;
+  z-index: 3;
   background-color: var(--opaque-blue);
 }
 
@@ -80,24 +92,29 @@
   background-color: var(--opaque-blue);
   /* border-top-left-radius: 0.5em;
   border-top-right-radius: 0.5em; */
-  margin-top: 4em;
-  padding: 0.5em 0.5em 0.5em 2em;
+  margin-top: 4.5em;
+  padding: 0.5em 0.5em 0.5em 1.5em;
   text-align: center;
-  z-index: 2;
+  z-index: 1;
   /* transition: 0.25s; */
   transform: rotate(-90deg);
   transform-origin: top left;
 }
 
-.person:hover,
+.person:hover {
+  background-color: var(--half-opaque-blue);
+}
+
 .active-person {
   background-color: var(--blue);
-  z-index: 3;
+  z-index: 2;
   /* padding: 0.5em 0.75em; */
   /* transform: rotate(-90deg); */
 }
 
 .active-person {
+  padding: 0.5em 0.5em 0.5em 2.5em;
+  transition: 0.25s;
   /* background-color: var(--opaque-tan); */
 }
 
@@ -121,7 +138,7 @@ https://css-tricks.com/styling-cross-browser-compatible-range-inputs-css/
 input[type='range'] {
   /* Hides the slider so that custom slider can be made */
   -webkit-appearance: none;
-  z-index: 4;
+  /* z-index: 4; */
 
   /* Specific width is required for Firefox. */
   width: var(--track-width);
@@ -132,7 +149,7 @@ input[type='range'] {
 
 input[type='range']::-webkit-slider-thumb {
   -webkit-appearance: none;
-  z-index: 1;
+  /* z-index: 1; */
 }
 
 input[type='range']:focus {
@@ -178,13 +195,14 @@ input[type='range']::-moz-range-thumb {
 
 /* All the same stuff for IE */
 input[type='range']::-ms-thumb {
-  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  /* box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
   border: 1px solid #000000;
   height: var(--thumb-height);
   width: var(--thumb-width);
   border-radius: 3px;
   background: var(--thumb-colour);
-  cursor: pointer;
+  cursor: pointer; */
+  display: none;
 }
 
 /* TRACK */
@@ -192,10 +210,10 @@ input[type='range']::-ms-thumb {
 input[type='range']::-webkit-slider-runnable-track {
   /* width: 100%; */
   height: var(--track-height);
-  cursor: pointer;
+  cursor: default;
   box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
   /* background: var(--track-colour); */
-  background: -webkit-linear-gradient(84deg, #864449cc, #291e77cc);
+  background: -webkit-linear-gradient(84deg, #864449, #291e77);
   border-radius: 1.3px;
   border: 0.2px solid #010101;
 }
@@ -207,7 +225,7 @@ input[type='range']:focus::-webkit-slider-runnable-track {
 input[type='range']::-moz-range-track {
   /* width: 100%; */
   height: var(--track-height);
-  cursor: pointer;
+  cursor: default;
   box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
   background: -webkit-linear-gradient(84deg, #864449, #291e77);
   border-radius: 1.3px;
@@ -217,7 +235,7 @@ input[type='range']::-moz-range-track {
 input[type='range']::-ms-track {
   /* width: 100%; */
   height: var(--track-height);
-  cursor: pointer;
+  cursor: default;
   background: transparent;
   border-color: transparent;
   border-width: 16px 0;
