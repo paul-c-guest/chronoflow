@@ -13,7 +13,10 @@ function Timeline({ inventions, people }: Props) {
   // some extra years to add on either side
   const buffer = 50
 
-  // get the earliest year from all events / people
+  people.sort((a, b) => a.yearBorn - b.yearBorn)
+  inventions.sort((a, b) => a.year - b.year)
+
+  // setup some global values for the timeline elements
   const rangeMin =
     Math.min(
       inventions.reduce(
@@ -43,8 +46,6 @@ function Timeline({ inventions, people }: Props) {
       )
     ) + buffer
 
-  // console.log('total range is', rangeMin, 'to', rangeMax)
-
   const range = rangeMax - rangeMin
   const midway = range - range / 2
 
@@ -64,8 +65,6 @@ function Timeline({ inventions, people }: Props) {
     setTimelinePosition(Number(event.target.value))
   }
 
-  // add some form of "helper" function that takes in the data array, calculates how many entries there are in an array and divides the timeline length into relative spacing for dates in relation to space on timeline?
-
   /**
    * // GERARDS CLUSTER FUNCTION
    *  
@@ -77,10 +76,40 @@ for (const date of dates) {
     groups.push([ date ])
   }
 }
-
   */
 
-  //function spacing(data[]){ const length = Number(inventions.length) const timelineLength = Number({timelineposition??????}) return timelineLength/length [this would equal how many 'segments' each specific timeline would have?] then we need to }
+  // the magic elbow space value
+  const threshold = 35
+
+  const personIdClusters: number[][] = []
+  const personYearClusters: number[][] = []
+  for (const person of people) {
+    if (
+      personYearClusters.length &&
+      Math.abs(personYearClusters.at(-1).at(-1) - person.yearBorn) < threshold
+    ) {
+      personYearClusters.at(-1).push(person.yearBorn)
+      personIdClusters.at(-1).push(person.id)
+    } else {
+      personYearClusters.push([person.yearBorn])
+      personIdClusters.push([person.id])
+    }
+  }
+
+  const inventionIdClusters: number[][] = []
+  const inventionYearClusters: number[][] = []
+  for (const invention of inventions) {
+    if (
+      inventionYearClusters.length &&
+      Math.abs(inventionYearClusters.at(-1).at(-1) - invention.year) < threshold
+    ) {
+      inventionYearClusters.at(-1).push(invention.year)
+      inventionIdClusters.at(-1).push(invention.id)
+    } else {
+      inventionYearClusters.push([invention.year])
+      inventionIdClusters.push([invention.id])
+    }
+  }
 
   const setSliderToEvent = (invention: Invention) => {
     setTimelinePosition(invention.year)
@@ -94,39 +123,63 @@ for (const date of dates) {
     setActiveEvent(0)
   }
 
-  // returns a value to use as the number of 'vw' from the left edge
-  const getPositionForYear = (year: number): number => {
+  const getPositionForYearInCluster = (
+    year: number,
+    clusterPosition: number,
+    clusterLength: number
+  ): number => {
     let result = 50
+    clusterPosition = clusterPosition++
+
     if (year < midway) {
       result = (((year - rangeMin) * 100) / range) * (squeezeFactor / 1)
     } else if (year > midway) {
       result = (((year - rangeMin) * 100) / range) * squeezeFactor
     }
+
+    // a magic number to assist with grouping/overlapping
+    const magicValue = 0.5
+
+    const totalClusterWidth = clusterLength * magicValue
+    const spacer = clusterLength > 1 ? clusterPosition / clusterLength - 0.5 : 0
+
+    result += spacer * totalClusterWidth
+
     return result
   }
 
-  // returns a value to use as the width of a person, in 'vw'
-  const getWidthForLifeSpan = (person: Person): number => {
-    return ((person.yearDied - person.yearBorn) * squeezeFactor) / 100
+  // return a value to use as an offset, in 'em'
+  const getOffsetForClusterPosition = (
+    position: number,
+    clusterLength: number
+  ): number => {
+    return clusterLength > 1 ? 2 * clusterLength - 2 * position - 2 : 0
+  }
+
+  const getPerson = (id: number): Person => {
+    return people.find((person) => person.id === id) as Person
+  }
+
+  const getInvention = (id: number): Invention => {
+    return inventions.find((invention) => invention.id === id) as Invention
   }
 
   return (
     <>
       <div id="person-container">
-        {people.map((person: Person) => {
-          return (
-            // use isFinite to check for numbers (avoid problem if year = 0, returns false)
-            isFinite(person.yearBorn) &&
-            isFinite(person.yearDied) && (
+        {personIdClusters.map((cluster: number[]) =>
+          cluster.map((id: number, index: number) => {
+            const person = getPerson(id)
+            return (
               <Link to={`/people/${person.id}`} key={person.id}>
                 <button
                   onClick={() => setSliderToPerson(person)}
                   style={{
-                    left: `${getPositionForYear(person.yearBorn || 0)}vw`,
-                    width:
-                      hoverPerson !== person.id
-                        ? `${getWidthForLifeSpan(person)}vw`
-                        : 'fit-content',
+                    left: `${getPositionForYearInCluster(
+                      person.yearBorn,
+                      index,
+                      cluster.length
+                    )}vw`,
                   }}
                   className={`person ${
                     activePerson === person.id ? 'active-person' : ''
@@ -141,8 +194,8 @@ for (const date of dates) {
                 </button>
               </Link>
             )
-          )
-        })}
+          })
+        )}
       </div>
 
       <div id="timeline-container">
@@ -170,25 +223,36 @@ for (const date of dates) {
       </datalist>
 
       <div id="event-container">
-        {inventions.map((invention) => {
-          return (
-            isFinite(invention.year) && (
-              <Link to={`/inventions/${invention.id}`} key={invention.id}>
-                <button
-                  onClick={() => setSliderToEvent(invention)}
-                  className={`event text-white ${
-                    activeEvent === invention.id ? 'active-event' : ''
-                  }`}
-                  style={{
-                    left: `${getPositionForYear(invention.year)}vw`,
-                  }}
-                >
-                  {invention.year}
-                </button>
-              </Link>
+        {inventionIdClusters.map((cluster: number[]) =>
+          cluster.map((id: number, index: number) => {
+            const invention = getInvention(id)
+            return (
+              isFinite(invention.year) && (
+                <Link to={`/inventions/${invention.id}`} key={invention.id}>
+                  <button
+                    onClick={() => setSliderToEvent(invention)}
+                    className={`event text-white font-label font-extralight ${
+                      activeEvent === invention.id ? 'active-event' : ''
+                    }`}
+                    style={{
+                      left: `${getPositionForYearInCluster(
+                        invention.year,
+                        index,
+                        cluster.length
+                      )}vw`,
+                      marginTop: `${getOffsetForClusterPosition(
+                        index,
+                        cluster.length
+                      )}em`,
+                    }}
+                  >
+                    {invention.year}
+                  </button>
+                </Link>
+              )
             )
-          )
-        })}
+          })
+        )}
       </div>
     </>
   )

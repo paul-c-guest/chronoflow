@@ -102,7 +102,7 @@ export async function seed(knex) {
       country: 'Italy',
       known_for:
         'Italian astronomer, physicist, and mathematician; telescopic discoveries and support for heliocentrism',
-      image: '/images/galileo-galilei.png',
+      image: '/images/galilieo-galilei.png',
     },
     {
       id: 11,
