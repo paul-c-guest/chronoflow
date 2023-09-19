@@ -35,7 +35,7 @@ function CountrySelect({
 
   const countriesArray = Array.from(setOfCountries)
 
-  console.log(countriesArray)
+  // console.log(countriesArray)
 
   // TODO: update link tag
   const listOfOptions = countriesArray.map((country) => (
@@ -52,7 +52,7 @@ function CountrySelect({
       <select
         name="countries"
         id="countries"
-        value={selectedCountry}
+        value={selectedCountry || ''}
         onChange={handleChange}
         className="mt-3 bg-zinc-800"
       >

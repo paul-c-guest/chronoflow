@@ -1,14 +1,15 @@
 import { Dispatch, SetStateAction } from 'react'
+import { Category } from '../../models/Types'
 
 interface Props {
   checkboxStatus: string
-  setCheckboxStatus: Dispatch<SetStateAction<string>>
+  setCheckboxStatus: Dispatch<SetStateAction<Category>>
 }
 
 function Filters({ checkboxStatus, setCheckboxStatus }: Props) {
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     const { name } = event.target
-    setCheckboxStatus(name)
+    setCheckboxStatus(name as Category)
   }
 
   const categories = ['inventions', 'worldEvents', 'people']

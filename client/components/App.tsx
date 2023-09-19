@@ -15,6 +15,7 @@ import type { Person } from '../../models/People.ts'
 import type { Event } from '../../models/Events.ts'
 import { getAllPeople } from '../apis/api-people.ts'
 import { getAllEvents } from '../apis/api-world-events.ts'
+import { Category } from '../../models/Types.ts'
 
 function App() {
   const {
@@ -35,8 +36,8 @@ function App() {
 
   const [inventions, setInventions] = useState<Invention[]>([])
   const [people, setPeople] = useState<Person[]>([])
-  const [checkboxStatus, setCheckboxStatus] = useState('inventions')
-  const [selectedCountry, setSelectedCountry] = useState(null)
+  const [checkboxStatus, setCheckboxStatus] = useState<Category>('inventions')
+  const [selectedCountry, setSelectedCountry] = useState('')
   const [data, setData] = useState<Event[] | Invention[] | Person[]>([])
 
   useEffect(() => {
@@ -52,11 +53,11 @@ function App() {
   }, [selectedCountry, inventionsData, peopleData])
 
   useEffect(() => {
-    if (checkboxStatus === 'world-event') {
-      setData(worldEventsData)
+    if (checkboxStatus === 'worldEvents') {
+      setData(worldEventsData as Event[])
       console.log(data)
     } else if (checkboxStatus === 'inventions') {
-      setData(inventionsData)
+      setData(inventionsData as Invention[])
       console.log(data)
     }
   }, [checkboxStatus])
@@ -69,8 +70,21 @@ function App() {
     return <p>There was an error: {error?.message}</p>
   }
 
-  function filterByCountry(data, country) {
+  function filterByCountry(data, country: string) {
     return data.filter((item) => item.country === country)
+  }
+
+  function getDataForCategory(category: Category): Event[] | Invention[] {
+    switch (category) {
+      case 'inventions':
+        return inventionsData as Invention[]
+
+      case 'worldEvents':
+        return worldEventsData as Event[]
+
+      default:
+        return []
+    }
   }
 
   return (
@@ -93,7 +107,11 @@ function App() {
             <Outlet context={{ inventionsData, peopleData }} />
           </div>
         </div>
-        <Timeline inventions={inventionsData} people={peopleData} />
+        <Timeline
+          data={getDataForCategory(checkboxStatus)}
+          people={peopleData}
+          category={checkboxStatus}
+        />
       </section>
       <div className="mt-auto"></div>
       <Footer />

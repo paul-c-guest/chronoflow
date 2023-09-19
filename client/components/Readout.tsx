@@ -16,8 +16,9 @@ export default function Readout() {
 
   const { inventionsData: inventions, peopleData: people } =
     useOutletContext<Context>()
-  const dataArray = category === 'people' ? people : inventions
-  const data = dataArray[Number(id) - 1] as Invention | Person
+  const dataArray = category === 'people' ? people : inventions 
+
+  const data = dataArray.filter((item) => item.id === Number(id))[0] as Invention | Person 
 
   const [categoryData, setCategoryData] = useState({
     title: '',

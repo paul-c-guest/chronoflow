@@ -37,14 +37,6 @@
   /* justify-content: center; */
 }
 
-#events {
-  display: flex;
-  justify-content: space-between;
-  width: var(--track-width);
-  margin-top: 70px;
-  /* padding: 4em 5px; */
-}
-
 .event {
   /* note: position is further calculated in Timeline.tsx */
   position: absolute;
@@ -53,7 +45,7 @@
   /* white-space: normal; */
   padding: 0.5em 1em;
   /* min-width: 2em; */
-  transform: rotate(65deg);
+  transform: rotate(90deg);
   border-radius: 2em;
   transition: 0.25s;
   z-index: 1;
@@ -86,23 +78,27 @@
   min-height: 2.5em;
   vertical-align: bottom;
   background-color: var(--opaque-blue);
-  border-top-left-radius: 0.5em;
-  border-top-right-radius: 0.5em;
-  /* margin-top: 0.5em; */
-  padding: 0.5em 0.35em;
+  /* border-top-left-radius: 0.5em;
+  border-top-right-radius: 0.5em; */
+  margin-top: 4em;
+  padding: 0.5em 0.5em 0.5em 2em;
   text-align: center;
   z-index: 2;
-  transition: 0.25s;
+  /* transition: 0.25s; */
+  transform: rotate(-90deg);
+  transform-origin: top left;
 }
 
-.person:hover {
+.person:hover,
+.active-person {
   background-color: var(--blue);
   z-index: 3;
-  padding: 0.5em 0.75em;
+  /* padding: 0.5em 0.75em; */
+  /* transform: rotate(-90deg); */
 }
 
 .active-person {
-  background-color: var(--opaque-tan);
+  /* background-color: var(--opaque-tan); */
 }
 
 datalist {
@@ -198,7 +194,7 @@ input[type='range']::-webkit-slider-runnable-track {
   cursor: pointer;
   box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
   /* background: var(--track-colour); */
-  background: -webkit-linear-gradient(84deg, #864449, #291e77);
+  background: -webkit-linear-gradient(84deg, #864449cc, #291e77cc);
   border-radius: 1.3px;
   border: 0.2px solid #010101;
 }
