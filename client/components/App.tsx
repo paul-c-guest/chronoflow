@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 
@@ -20,14 +20,28 @@ function App() {
     isLoading,
     error,
   } = useQuery<Invention[], Error>(['inventions'], getAllInventions)
-  const [checkboxStatus, setCheckboxStatus] = useState('inventions')
-  const [selectedOption, setSelectedOption] = useState('disabledOption')
-
   const {
     data: peopleData,
     isLoading: peopleLoading,
     error: peopleError,
   } = useQuery<Person[], Error>(['people'], getAllPeople)
+
+  const [inventions, setInventions] = useState([])
+  const [people, setPeople] = useState([])
+  const [checkboxStatus, setCheckboxStatus] = useState('inventions')
+  const [selectedCountry, setSelectedCountry] = useState(null)
+
+  useEffect(() => {
+    if (inventionsData && peopleData) {
+      if (selectedCountry === null) {
+        setInventions(inventionsData)
+        setPeople(peopleData)
+      } else {
+        setInventions(filterByCountry(inventionsData, selectedCountry))
+        setPeople(filterByCountry(peopleData, selectedCountry))
+      }
+    }
+  }, [selectedCountry, inventionsData, peopleData])
 
   if (isLoading || peopleLoading) {
     return <p>Loading....</p>
@@ -35,6 +49,10 @@ function App() {
 
   if (error || peopleError) {
     return <p>There was an error: {error?.message}</p>
+  }
+
+  function filterByCountry(data, country) {
+    return data.filter((item) => item.country === country)
   }
 
   return (
@@ -51,14 +69,13 @@ function App() {
             <CountrySelect
               inventions={inventionsData}
               people={peopleData}
-              setSelectedOption={setSelectedOption}
-              selectedOption={selectedOption}
+              setSelectedCountry={setSelectedCountry}
+              selectedCountry={selectedCountry}
             />
-
             <Outlet context={{ inventionsData, peopleData }} />
           </div>
         </div>
-        <Timeline inventions={inventionsData} people={peopleData}/>
+        <Timeline inventions={inventions} people={people} />
       </section>
       <div className="mt-auto">
         <Footer />

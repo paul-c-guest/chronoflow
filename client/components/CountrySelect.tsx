@@ -7,18 +7,18 @@ import type { Person } from '../../models/People'
 interface Props {
   inventions: Invention[]
   people: Person[]
-  setSelectedOption: Dispatch<SetStateAction<string>>
-  selectedOption: string
+  setSelectedCountry: Dispatch<SetStateAction<string>>
+  selectedCountry: string | null
 }
 
 function CountrySelect({
   inventions,
   people,
-  setSelectedOption,
-  selectedOption,
+  setSelectedCountry,
+  selectedCountry,
 }: Props) {
   function handleChange(event: React.ChangeEvent<HTMLSelectElement>) {
-    setSelectedOption(event.target.value)
+    setSelectedCountry(event.target.value)
   }
 
   const listOfInventionCountries = inventions.map(
@@ -50,10 +50,11 @@ function CountrySelect({
       <select
         name="countries"
         id="countries"
-        value={selectedOption}
+        value={selectedCountry}
         onChange={handleChange}
-        className="mt-3 bg-black">
-        <option value="disabledOption" disabled></option>
+        className="mt-3 bg-black"
+      >
+        <option value="disabledOption"></option>
         {listOfOptions}
       </select>
     </div>
