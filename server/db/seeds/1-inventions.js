@@ -51,7 +51,7 @@ export async function seed(knex) {
       country: 'Germany',
       year: 1440,
       description:
-        'Historians think China may have been the first civilization to develop a magnetic compass that could be used for navigation. Chinese scientists may have developed navigational compasses as early as the 11th or 12th century. Western Europeans soon followed at the end of the 12th century.',
+        'ohannes Gutenbergs movable-type printing press, around 1440, made the mass production of books possible, greatly advancing the spread of knowledge.',
       image: '/images/printing-press.png',
     },
     {
