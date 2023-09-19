@@ -31,6 +31,7 @@
   },
   "dependencies": {
     "@devacademy/eslint-config": "^1.9.1",
+    "@emotion/react": "^11.11.1",
     "@react-three/drei": "^9.83.9",
     "@react-three/fiber": "^8.14.1",
     "express": "^4.17.2",
