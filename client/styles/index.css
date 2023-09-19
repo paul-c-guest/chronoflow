@@ -22,7 +22,7 @@ input[type='checkbox']:hover {
 }
 
 input[type='checkbox']:checked {
-  background-color: black;
+  background-color: white;
 }
 
 input[type='checkbox']:checked::after {
@@ -34,6 +34,7 @@ input[type='checkbox']:checked::after {
   color: #191b1e;
   font-size: 24px;
   font-weight: bold;
+  background-color: white;
 }
 
 select {
