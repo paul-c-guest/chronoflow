@@ -47,8 +47,10 @@
   padding: 0.5em 1em;
   /* min-width: 2em; */
   transform: rotate(90deg);
+  width: 4em;
   border-radius: 2em;
   transition: 0.25s;
+  justify-content: left;
   z-index: 1;
   /* background-color: aqua; */
 }
@@ -57,11 +59,11 @@
   content: '';
   display: block;
   position: absolute;
-  width: 30px;
-  height: 1px;
+  /* width: 30px;  */
+  height: 2px;
   top: 20px;
   right: 50px;
-  background-color: white;
+  background-color: #eeeeeedd;
 }
 
 .event:hover {

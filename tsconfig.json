@@ -3,6 +3,7 @@
     "types": ["vite/client"],
     "target": "es2020", 
     "jsx": "react-jsx",
+    "jsxImportSource": "@emotion/react",
     "module": "ES2020",
     "moduleResolution": "Bundler", 
     "noEmit": true,

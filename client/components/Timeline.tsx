@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { css } from '@emotion/react'
 
 import { Invention } from '../../models/Inventions'
 import { Person } from '../../models/People'
@@ -258,10 +259,16 @@ for (const date of dates) {
         {inventionIdClusters.map((cluster: number[]) =>
           cluster.map((id: number, index: number) => {
             const event = getEvent(id)
+            const lineLength = 17 + (cluster.length - index) * 32
             return (
               isFinite(event.year) && (
                 <Link to={`/${category}/${event.id}`} key={event.id}>
                   <button
+                    css={css`
+                      &::before {
+                        width: ${lineLength}px;
+                      }
+                    `}
                     onClick={() => setSliderToEvent(event)}
                     className={`event text-white font-label font-extralight ${
                       activeEvent === event.id ? 'active-event' : ''
