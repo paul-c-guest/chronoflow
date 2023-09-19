@@ -17,12 +17,14 @@ import {
 } from 'react'
 import ThreeGlobe from 'three-globe'
 import * as turf from '@turf/turf'
-import { getCountryCode } from '../helpers'
+import { getCountry } from '../helpers'
 
-function GlobeModel({ countryData, centroidCoordinates }) {
-  // inside globemodel add a useEffect to rotate the globe to centroid coords
+function GlobeModel({ countryData, centerCoordinates }) {
+  // TODO:
   // need to convert center co-ords to a rotation value
   // apply rotation
+
+  const [initialYRotation, setInitialYRotation] = useState<null | number>(null)
   const globe = useRef(new ThreeGlobe({ animateIn: true }))
 
   globe.current
@@ -38,18 +40,29 @@ function GlobeModel({ countryData, centroidCoordinates }) {
   }
 
   useEffect(() => {
-    console.log(centroidCoordinates)
-    if (centroidCoordinates) {
-      const phi = (90 - centroidCoordinates[0]) * (Math.PI / 180)
-      const theta = (centroidCoordinates[1] + 180) * (Math.PI / 180)
+    console.log(centerCoordinates)
+    if (centerCoordinates) {
+      // Reset the globe to its default rotation
+      globe.current.rotation.set(0, 0, 0)
+
+      // Convert geographic to spherical coordinates
+      const phi = (90 - centerCoordinates[1]) * (Math.PI / 180)
+      const theta = centerCoordinates[0] * (Math.PI / 180)
+
       globe.current.rotation.x = phi
       globe.current.rotation.y = theta
+
+      setInitialYRotation(theta)
+    } else {
+      setInitialYRotation(null)
     }
-  }, [centroidCoordinates])
+  }, [centerCoordinates])
 
   useFrame(({ clock }) => {
-    if (!centroidCoordinates) {
-      globe.current.rotation.y += clock.getElapsedTime() * 0.5
+    if (initialYRotation !== null) {
+      // globe.current.rotation.y = initialYRotation + clock.getElapsedTime() * 0.5
+    } else {
+      globe.current.rotation.y = clock.getElapsedTime() * 0.5
     }
   })
 
@@ -65,14 +78,17 @@ function GlobeModel({ countryData, centroidCoordinates }) {
 function Globe({ selectedCountry }) {
   const [countriesData, setCountriesData] = useState(null)
   const [countryCode, setCountryCode] = useState(null)
-  const [centroidCoordinates, setCentroidCoordinates] = useState<
-    null | number[]
-  >(null)
+  const [centerCoordinates, setCenterCoordinates] = useState<null | number[]>(
+    null
+  )
 
   useEffect(() => {
-    const code = getCountryCode(selectedCountry)
-    console.log(code)
-    setCountryCode(code)
+    const country = getCountry(selectedCountry)
+    if (country) {
+      console.log(country)
+      setCountryCode(country.code)
+      setCenterCoordinates(country.coords)
+    }
   }, [selectedCountry])
 
   // TODO:
@@ -87,25 +103,14 @@ function Globe({ selectedCountry }) {
         .then((response) => response.json())
         .then((data) => {
           // Find the single feature representing the selected country
-          const countryFeature = data.features.find(
+          const country = data.features.find(
             (d) => d.properties.ISO_A2 === countryCode
           )
-
-          if (countryFeature) {
-            // Find the centroid of the country's polygon
-            const centroid = turf.centroid(countryFeature)
-
-            // Set the centroid coordinates
-            setCentroidCoordinates([
-              centroid.geometry.coordinates[1],
-              centroid.geometry.coordinates[0],
-            ])
+          if (country) {
+            setCountriesData([country])
           } else {
             console.error(`Country with code ${countryCode} not found`)
           }
-
-          // Set the country data
-          setCountriesData([countryFeature])
         })
         .catch((error) => {
           console.error('Error loading GeoJSON:', error)
@@ -134,7 +139,7 @@ function Globe({ selectedCountry }) {
           <group position={[0, 0, 0]}>
             <GlobeModel
               countryData={countriesData}
-              centroidCoordinates={centroidCoordinates}
+              centerCoordinates={centerCoordinates}
             />
           </group>
         </Suspense>
