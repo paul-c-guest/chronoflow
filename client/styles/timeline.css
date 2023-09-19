@@ -41,13 +41,11 @@
 .event {
   /* note: position is further calculated in Timeline.tsx */
   position: absolute;
-  /* display: inline-block; */
-  margin-left: 6.75vw;
-  /* white-space: normal; */
+  margin-left: 6vw;
   padding: 0.5em 1em;
   /* min-width: 2em; */
   transform: rotate(90deg);
-  width: 4em;
+  width: 4.5em;
   border-radius: 2em;
   transition: 0.25s;
   justify-content: left;
