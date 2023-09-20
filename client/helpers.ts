@@ -1,4 +1,6 @@
-export function getCountry(countryName) {
+import { Country } from '../models/Globe'
+
+export function getCountry(countryName: string): Country {
   const country = [
     {
       country: 'China',

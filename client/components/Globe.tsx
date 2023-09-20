@@ -1,36 +1,24 @@
 /* eslint-disable react/no-unknown-property */
 
-// TODO: reset country data so highlight disappears when
-// TODO: incorporate the rotation animation
-
-import {
-  OrbitControls,
-  PerspectiveCamera,
-  useProgress,
-} from '@react-three/drei'
+import { OrbitControls, PerspectiveCamera } from '@react-three/drei'
 import { Canvas, useFrame } from '@react-three/fiber'
-import {
-  Suspense,
-  useRef,
-  useLayoutEffect,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react'
+import { Suspense, useRef, useEffect, useState } from 'react'
 import ThreeGlobe from 'three-globe'
 import { getCountry } from '../helpers'
+import {
+  GlobeModelProps,
+  GlobeProps,
+  GeoJSONResponse,
+  GeoJSONFeature,
+} from '../../models/Globe'
 
 function GlobeModel({
   countryData,
   centerCoordinates,
-  countryCode,
   selectedCountry,
-}) {
-  // TODO:
-  // need to convert center co-ords to a rotation value
-  // apply rotation
-
+}: GlobeModelProps) {
   const [initialYRotation, setInitialYRotation] = useState<null | number>(null)
+  // useRef means that a new globe isn't created each time the user interacts (is that bad or good idk)
   const globe = useRef(new ThreeGlobe({ animateIn: true }))
 
   globe.current
@@ -56,17 +44,14 @@ function GlobeModel({
       // const phi = (90 - centerCoordinates[1]) * (Math.PI / 180)
       const theta = centerCoordinates[0] * (Math.PI / 180)
 
-      // Set the initial globe rotation
-      // Only changing the y axis rotation as otherwise the globe sometimes goes upside down
       // globe.current.rotation.x = phi
       globe.current.rotation.y = -theta
 
-      // Store the initial y-rotation
       setInitialYRotation(-theta)
     } else {
       setInitialYRotation(null)
     }
-  }, [centerCoordinates])
+  }, [centerCoordinates, selectedCountry])
 
   useFrame(({ clock }) => {
     if (selectedCountry !== 'disabledOption' && initialYRotation !== null) {
@@ -85,9 +70,11 @@ function GlobeModel({
   )
 }
 
-function Globe({ selectedCountry }) {
-  const [countriesData, setCountriesData] = useState(null)
-  const [countryCode, setCountryCode] = useState(null)
+function Globe({ selectedCountry }: GlobeProps) {
+  const [countriesData, setCountriesData] = useState<GeoJSONFeature[] | null>(
+    null
+  )
+  const [countryCode, setCountryCode] = useState<null | string>(null)
   const [centerCoordinates, setCenterCoordinates] = useState<null | number[]>(
     null
   )
@@ -102,21 +89,16 @@ function Globe({ selectedCountry }) {
     }
   }, [selectedCountry])
 
-  // TODO:
-  // calculate center of polygon
-  // update state for center coords
-  // use these co-ords as a prop for GlobeModel
-
   useEffect(() => {
     if (countryCode !== null) {
       // Load and parse the GeoJSON file
       fetch('/assets/ne_110m_admin_0_countries.geojson')
-        .then((response) => response.json())
+        .then((response) => response.json() as Promise<GeoJSONResponse>)
         .then((data) => {
           // Find the single feature representing the selected country
           const country = data.features.find(
             (d) => d.properties.ISO_A2 === countryCode
-          )
+          ) as GeoJSONFeature | undefined
           if (country) {
             setCountriesData([country])
           } else {
@@ -151,7 +133,6 @@ function Globe({ selectedCountry }) {
             <GlobeModel
               countryData={countriesData}
               centerCoordinates={centerCoordinates}
-              countryCode={countryCode}
               selectedCountry={selectedCountry}
             />
           </group>
