@@ -314,7 +314,9 @@ for (const date of dates) {
                     `}
                     onClick={() => setSliderToEvent(event)}
                     className={`event text-white font-label font-light ${
-                      activeEvent === event.id ? 'active-event font-medium' : ''
+                      activeEvent === event.id
+                        ? 'active-event text-black font-medium'
+                        : ''
                     }`}
                     style={{
                       left: `${getPositionForYearInCluster(

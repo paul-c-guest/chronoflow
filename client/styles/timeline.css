@@ -61,16 +61,15 @@
 
 .event:hover {
   z-index: 3;
-  background-color: var(--opaque-blue);
+  color: black;
+  background-color: var(--half-opaque-blue);
 }
 
 .active-event {
   z-index: 2;
-  font-weight: 900;
-  background-image: linear-gradient(84deg, #864449, #291e77);
-
+  background-color: var(--blue);
   transition: 0.5s;
-  border-radius: 8px;
+  /* border-radius: 8px; */
 }
 
 .person-container {
@@ -112,10 +111,8 @@
 .active-person {
   background-color: var(--blue);
   z-index: 2;
-}
-
-.active-person {
-  padding: 0.5em 0.5em 0.5em 2.5em;
+  border-bottom-left-radius: 3em;
+  padding: 0.5em 0.75em 0.5em 2.5em;
   transition: 0.25s;
 }
 
