@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { redirect } from 'react-router-dom'
+import { redirect } from 'react-router-dom'
 
 import '../styles/index.css'
 import Header from './Header.tsx'
@@ -16,7 +17,7 @@ import type { Person } from '../../models/People.ts'
 import type { Event } from '../../models/Events.ts'
 import { getAllPeople } from '../apis/api-people.ts'
 import { getAllEvents } from '../apis/api-world-events.ts'
-import { Category } from '../../models/Types.ts'
+import { CategoryData } from '../../models/Types.ts'
 
 interface FilterStatus {
   event: string
@@ -79,7 +80,7 @@ function App() {
     return <p>There was an error: {error?.message}</p>
   }
 
-  function filterByCountry(data, country: string) {
+  function filterByCountry(data: CategoryData, country: string) {
     return data.filter((item) => item.country === country)
   }
 
