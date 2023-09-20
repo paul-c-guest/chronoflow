@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { css } from '@emotion/react'
 
@@ -10,9 +10,10 @@ interface Props {
   data: Invention[] | Event[]
   people: Person[]
   category: string
+  filterStatus: { event: string; people: boolean }
 }
 
-function Timeline({ data, people, category }: Props) {
+function Timeline({ data, people, category, filterStatus }: Props) {
   // some extra years to add on either side
   const buffer = 50
 
@@ -67,6 +68,10 @@ function Timeline({ data, people, category }: Props) {
   const [activeEvent, setActiveEvent] = useState(0)
   const [hoverPerson, setHoverPerson] = useState(0)
   const [activePerson, setActivePerson] = useState(0)
+
+  useEffect(() => {
+    setActiveEvent(0)
+  }, [filterStatus.event])
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTimelinePosition(Number(event.target.value))
