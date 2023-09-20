@@ -34,7 +34,7 @@ function Timeline({ data, people, filterStatus }: Props) {
             people[0].yearBorn
           )
         ) - buffer
-      : data.reduce(
+      : data.length && data.reduce(
           (earliestYear, event) =>
             (earliestYear = Math.min(event.year, earliestYear)),
           data[0].year
