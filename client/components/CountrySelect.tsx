@@ -7,7 +7,7 @@ import type { Person } from '../../models/People'
 interface Props {
   inventions: Invention[]
   people: Person[]
-  setSelectedCountry: Dispatch<SetStateAction<string>>
+  setSelectedCountry: Dispatch<SetStateAction<string | null>>
   selectedCountry: string | null
 }
 
@@ -35,7 +35,7 @@ function CountrySelect({
 
   const countriesArray = Array.from(setOfCountries)
 
-  console.log(countriesArray)
+  // console.log(countriesArray)
 
   // TODO: update link tag
   const listOfOptions = countriesArray.map((country) => (
@@ -45,16 +45,16 @@ function CountrySelect({
   ))
 
   return (
-    <div className="w-[25%] text-left border-zinc-800 border-2 bg-black text-white  py-2 h-28">
-      <label htmlFor="countries" className="text-xl uppercase bg-zinc-800 ">
+    <div className="w-[100%] text-left border-zinc-800 border-2 bg-black text-white  py-2 h-28">
+      <label htmlFor="countries" className="text-xl uppercase  bg-zinc-800">
         Filter By Country
       </label>
       <select
         name="countries"
         id="countries"
-        value={selectedCountry}
+        value={selectedCountry || ''}
         onChange={handleChange}
-        className="mt-3 bg-black"
+        className="mt-3 bg-zinc-800"
       >
         <option value="disabledOption"></option>
         {listOfOptions}

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
+import { redirect } from 'react-router-dom'
 
 import '../styles/index.css'
 import Header from './Header.tsx'
@@ -15,9 +16,19 @@ import type { Person } from '../../models/People.ts'
 import type { Event } from '../../models/Events.ts'
 import { getAllPeople } from '../apis/api-people.ts'
 import { getAllEvents } from '../apis/api-world-events.ts'
-import { category } from '../../models/Types.ts'
+import { Category } from '../../models/Types.ts'
+
+interface FilterStatus {
+  event: string
+  people: boolean
+}
 
 function App() {
+  const defaultStatus = {
+    event: 'worldEvents',
+    people: true,
+  }
+
   const {
     data: inventionsData,
     isLoading,
@@ -36,9 +47,9 @@ function App() {
 
   const [inventions, setInventions] = useState<Invention[]>([])
   const [people, setPeople] = useState<Person[]>([])
-  const [checkboxStatus, setCheckboxStatus] = useState<category>('inventions')
-  const [selectedCountry, setSelectedCountry] = useState('')
-  const [data, setData] = useState<Event[] | Invention[] | Person[]>([])
+  const [filterStatus, setFilterStatus] = useState<FilterStatus>(defaultStatus)
+  const [selectedCountry, setSelectedCountry] = useState<string | null>(null)
+  const [data, setData] = useState<Event[] | Invention[]>([])
 
   useEffect(() => {
     if (inventionsData && peopleData) {
@@ -53,14 +64,12 @@ function App() {
   }, [selectedCountry, inventionsData, peopleData])
 
   useEffect(() => {
-    if (checkboxStatus === 'worldEvents') {
-      setData(worldEventsData)
-      console.log(data)
-    } else if (checkboxStatus === 'inventions') {
-      setData(inventionsData)
-      console.log(data)
+    if (filterStatus.event === 'worldEvents') {
+      setData(worldEventsData as Event[])
+    } else if (filterStatus.event === 'inventions') {
+      setData(inventionsData as Invention[])
     }
-  }, [checkboxStatus])
+  }, [filterStatus])
 
   if (isLoading || peopleLoading || worldEventsLoading) {
     return <p>Loading....</p>
@@ -70,17 +79,17 @@ function App() {
     return <p>There was an error: {error?.message}</p>
   }
 
-  function filterByCountry(data, country) {
+  function filterByCountry(data, country: string) {
     return data.filter((item) => item.country === country)
   }
 
-  function getDataForCategory(category: category): Event[] | Invention[] {
+  function getDataForCategory(category: string): Event[] | Invention[] {
     switch (category) {
       case 'inventions':
-        return inventionsData
+        return inventionsData as Invention[]
 
       case 'worldEvents':
-        return worldEventsData
+        return worldEventsData as Event[]
 
       default:
         return []
@@ -94,23 +103,25 @@ function App() {
         <div className="flex w-screen">
           <Globe selectedCountry={selectedCountry} />
           <div className="flex w-1/2 flex-col h-[36rem]">
-            <Filters
-              setCheckboxStatus={setCheckboxStatus}
-              checkboxStatus={checkboxStatus}
-            />
-            <CountrySelect
-              inventions={inventionsData}
-              people={peopleData}
-              setSelectedCountry={setSelectedCountry}
-              selectedCountry={selectedCountry}
-            />
-            <Outlet context={{ inventionsData, peopleData }} />
+            <div className="flex flex-row">
+              <Filters
+                setFilterStatus={setFilterStatus}
+                filterStatus={filterStatus}
+              />
+              <CountrySelect
+                inventions={inventionsData}
+                people={peopleData}
+                setSelectedCountry={setSelectedCountry}
+                selectedCountry={selectedCountry}
+              />
+            </div>
+            <Outlet context={{ inventionsData, peopleData, worldEventsData }} />
           </div>
         </div>
         <Timeline
-          data={getDataForCategory(checkboxStatus)}
-          people={peopleData}
-          category={checkboxStatus}
+          data={getDataForCategory(filterStatus.event)}
+          people={filterStatus.people ? peopleData : []}
+          category={filterStatus.event}
         />
       </section>
       <div className="mt-auto"></div>
