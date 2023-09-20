@@ -54,7 +54,7 @@ function Filters({ filterStatus, setFilterStatus }: Props) {
                 className="text-white uppercase font-label"
                 htmlFor={category}
               >
-                {category}
+                {category == 'worldEvents' ? 'world events' : category}
               </label>
             </div>
           ))}
