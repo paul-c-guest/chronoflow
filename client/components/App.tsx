@@ -121,6 +121,7 @@ function App() {
           data={getDataForCategory(filterStatus.event)}
           people={filterStatus.people ? peopleData : []}
           category={filterStatus.event}
+          filterStatus={filterStatus}
         />
       </section>
       <div className="mt-auto"></div>

@@ -82,11 +82,11 @@
   /* note: position is further calculated in Timeline.tsx */
   margin: 0;
   position: absolute;
-  margin-left: 7.5vw;
+  margin-left: 8.5vw;
   min-height: 40px;
   vertical-align: bottom;
   background-color: var(--opaque-blue);
-  margin-top: 70px;
+  margin-top: 71px;
   padding: 8px 8px 8px 22px;
   /* padding: 0.5em 0.5em 0.5em 1.4em; */
   text-align: center;
@@ -123,6 +123,29 @@ datalist {
   display: none;
   margin: -4em;
   padding: 0;
+}
+
+#century-mark-container {
+  margin: 0;
+  padding: 0;
+}
+
+.century-mark {
+  padding: 0;
+  margin: 0.3em 0;
+  width: 2em;
+  position: absolute;
+  text-align: center;
+  color: #aaa;
+}
+
+.century-mark::after {
+  background-color: #ddddddcc;
+  content: '';
+  display: flex;
+  width: 1px;
+  height: 12px;
+  margin-left: 1em;
 }
 
 /*
