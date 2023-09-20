@@ -130,7 +130,7 @@ function App() {
 
       case 'worldEvents':
         return worldEvents as Event[]
-
+        p
       default:
         return []
     }
@@ -139,9 +139,9 @@ function App() {
   return (
     <div className="h-screen bg-black bg-cover flex flex-col">
       <Header />
-      <div className="flex w-screen">
+      <div className="flex w-screen mb-10 mt-[-1rem]">
         <Globe selectedCountry={selectedCountry} />
-        <div className="flex w-1/2 flex-col h-[36rem]">
+        <div className="flex w-1/2 flex-col">
           <div className="flex flex-row gap-3">
             <Filters
               setFilterStatus={setFilterStatus}
@@ -173,7 +173,7 @@ function App() {
         filterStatus={filterStatus}
       />
       <div className="mt-auto"></div>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   )
 }

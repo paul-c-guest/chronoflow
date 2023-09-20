@@ -92,7 +92,7 @@ export async function seed(knex) {
       year: 1831,
       description:
         'In 1821 Michael Faraday succeeded in producing mechanical motion by means of a permanent magnet and an electric current—an ancestor of the electric motor. Ten years later he converted magnetic force into electrical force, thus inventing the worlds first electrical generator.',
-      image: '/images/photography.png',
+      image: '/images/electricity.png',
     },
     {
       id: 10,
