@@ -100,6 +100,7 @@ function App() {
     worldEventsData,
     inventionsNZData,
     peopleNZData,
+    eventsNZData,
   ])
 
   // useEffect(() => {
