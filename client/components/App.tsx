@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
-import { redirect } from 'react-router-dom'
-import { redirect } from 'react-router-dom'
 
 import '../styles/index.css'
 import Header from './Header.tsx'
