@@ -72,6 +72,12 @@ function Timeline({ data, people, filterStatus }: Props) {
     setActiveEvent(0)
   }, [filterStatus.event])
 
+  useEffect(() => {
+    if (!filterStatus.people) {
+      setActivePerson(0)
+    }
+  }, [filterStatus.people])
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTimelinePosition(Number(event.target.value))
   }
