@@ -3,10 +3,30 @@ import * as db from '../db/functions'
 
 const router = express.Router()
 
-//GET all New Zealand info
-router.get('/', async (req, res, next) => {
+//GET New Zealand people info
+router.get('/people', async (req, res, next) => {
   try {
-    const response = await db.getAllNewZealand()
+    const response = await db.getNewZealandPeople()
+    res.json(response)
+  } catch (err) {
+    next(err)
+  }
+})
+
+//GET New Zealand inventions info
+router.get('/inventions', async (req, res, next) => {
+  try {
+    const response = await db.getNewZealandInventions()
+    res.json(response)
+  } catch (err) {
+    next(err)
+  }
+})
+
+//GET New Zealand events info
+router.get('/events', async (req, res, next) => {
+  try {
+    const response = await db.getNewZealandEvents()
     res.json(response)
   } catch (err) {
     next(err)

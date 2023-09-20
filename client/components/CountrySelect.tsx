@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import type { Invention } from '../../models/Inventions'
 import type { Person } from '../../models/People'
@@ -17,8 +17,11 @@ function CountrySelect({
   setSelectedCountry,
   selectedCountry,
 }: Props) {
+  const navigate = useNavigate()
+
   function handleChange(event: React.ChangeEvent<HTMLSelectElement>) {
     setSelectedCountry(event.target.value)
+    navigate('/')
   }
 
   const listOfInventionCountries = inventions.map(
@@ -32,6 +35,8 @@ function CountrySelect({
   ]
 
   const setOfCountries = new Set(combinedCountriesArray)
+  setOfCountries.delete('Mongol Empire')
+  setOfCountries.delete('Carolingian Empire')
 
   const countriesArray = Array.from(setOfCountries)
 
@@ -45,18 +50,19 @@ function CountrySelect({
   ))
 
   return (
-    <div className="w-[100%] text-left border-zinc-800 border-2 bg-black text-white  py-2 h-28">
-      <label htmlFor="countries" className="text-xl uppercase  bg-zinc-800">
+    <div className="text-left border-zinc-800 border-2 bg-black text-white px-4  py-2 mt-4 mb-4 flex-auto">
+      <h2 className="font-semibold font-sans bg-zinc-800 text-xl text-left text-white mb-2">
         Filter By Country
-      </label>
+      </h2>
       <select
         name="countries"
         id="countries"
         value={selectedCountry || ''}
         onChange={handleChange}
-        className="mt-3 bg-zinc-800"
+        className="mt-3 bg-zinc-800 pl-2 w-full border-gray-500 border-2"
       >
-        <option value="disabledOption"></option>
+        <option value="disabledOption">All</option>
+        <option value="New Zealand">New Zealand</option>
         {listOfOptions}
       </select>
     </div>
