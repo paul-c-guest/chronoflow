@@ -1,5 +1,8 @@
 /* eslint-disable react/no-unknown-property */
 
+// TODO: reset country data so highlight disappears when
+// TODO: incorporate the rotation animation
+
 import {
   Html,
   OrbitControls,
@@ -16,7 +19,6 @@ import {
   useState,
 } from 'react'
 import ThreeGlobe from 'three-globe'
-import * as turf from '@turf/turf'
 import { getCountry } from '../helpers'
 
 function GlobeModel({ countryData, centerCoordinates, countryCode }) {
