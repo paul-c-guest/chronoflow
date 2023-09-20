@@ -9,11 +9,10 @@ import { Event } from '../../models/Events'
 interface Props {
   data: Invention[] | Event[]
   people: Person[]
-  category: string
   filterStatus: { event: string; people: boolean }
 }
 
-function Timeline({ data, people, category, filterStatus }: Props) {
+function Timeline({ data, people, filterStatus }: Props) {
   // some extra years to add on either side
   const buffer = 50
 
@@ -305,7 +304,7 @@ for (const date of dates) {
             const lineLength = 19 + (cluster.length - index) * 32
             return (
               isFinite(event.year) && (
-                <Link to={`/${category}/${event.id}`} key={event.id}>
+                <Link to={`/${filterStatus.event}/${event.id}`} key={event.id}>
                   <button
                     css={css`
                       &::before {
