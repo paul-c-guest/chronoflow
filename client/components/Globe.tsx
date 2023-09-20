@@ -144,7 +144,7 @@ function Globe({ selectedCountry }: GlobeProps) {
             far={1000}
           />
           <OrbitControls enableZoom={false} ref={controlsRef} />
-          <ambientLight intensity={1} />
+          <ambientLight intensity={3} />
           <directionalLight color="white" position={[0, 0, 5]} />
           <group position={[0, 0, 0]}>
             <GlobeModel
