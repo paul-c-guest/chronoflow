@@ -6,12 +6,7 @@
   /* track */
   --track-colour: #efe6eb;
   --track-width: 85vw;
-  --track-height: 2em;
-
-  /* thumb */
-  --thumb-colour: white;
-  --thumb-width: 1em;
-  --thumb-height: 3em;
+  --track-height: 32px;
 
   /* people and events */
   --blue: #00ffffee;
@@ -22,7 +17,8 @@
 
 /* to position the timeline in center of provided space */
 #timeline-container {
-  margin: 2.5em 0 1.5em;
+  /* margin: 2.5em 0 1.5em; */
+  margin: 40px 0 24px;
   display: flex;
   justify-content: center;
 }
@@ -33,7 +29,7 @@
 }
 
 #event-container {
-  margin-bottom: 3em;
+  margin-bottom: 48px;
   display: inline-block;
   /* justify-content: center; */
 }
@@ -42,10 +38,11 @@
   /* note: position is further calculated in Timeline.tsx */
   position: absolute;
   margin-left: 6vw;
-  padding: 0.5em 1em;
+  /* padding: 0.5em 1em; */
+  padding: 8px 16px;
   transform: rotate(90deg);
-  width: 4.5em;
-  border-radius: 2em;
+  width: 72px;
+  border-radius: 32px;
   transition: 0.25s;
   justify-content: left;
   z-index: 1;
@@ -73,7 +70,7 @@
   background-image: linear-gradient(84deg, #864449, #291e77);
 
   transition: 0.5s;
-  border-radius: 0.5em;
+  border-radius: 8px;
 }
 
 .person-container {
@@ -83,17 +80,29 @@
 
 .person {
   /* note: position is further calculated in Timeline.tsx */
+  margin: 0;
   position: absolute;
   margin-left: 7.5vw;
-  min-height: 2.5em;
+  min-height: 40px;
   vertical-align: bottom;
   background-color: var(--opaque-blue);
-  margin-top: 4.45em;
-  padding: 0.5em 0.5em 0.5em 1.4em;
+  margin-top: 70px;
+  padding: 8px 8px 8px 22px;
+  /* padding: 0.5em 0.5em 0.5em 1.4em; */
   text-align: center;
   z-index: 1;
   transform: rotate(-90deg);
   transform-origin: top left;
+}
+
+/* mozilla firefox specific adjustments */
+@-moz-document url-prefix() {
+  .person {
+    margin-top: 65px;
+  }
+  #event-container {
+    margin-top: 4px;
+  }
 }
 
 .person:hover {
@@ -103,14 +112,11 @@
 .active-person {
   background-color: var(--blue);
   z-index: 2;
-  /* padding: 0.5em 0.75em; */
-  /* transform: rotate(-90deg); */
 }
 
 .active-person {
   padding: 0.5em 0.5em 0.5em 2.5em;
   transition: 0.25s;
-  /* background-color: var(--opaque-tan); */
 }
 
 datalist {
@@ -185,7 +191,8 @@ input[type='range']::-moz-range-thumb {
   border-radius: 3px;
   background: var(--thumb-colour);
   cursor: pointer; */
-  display: none;
+  -moz-appearance: none;
+  opacity: 0;
 }
 
 /* All the same stuff for IE */
