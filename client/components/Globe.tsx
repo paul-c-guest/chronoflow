@@ -4,7 +4,6 @@
 // TODO: incorporate the rotation animation
 
 import {
-  Html,
   OrbitControls,
   PerspectiveCamera,
   useProgress,
@@ -21,7 +20,12 @@ import {
 import ThreeGlobe from 'three-globe'
 import { getCountry } from '../helpers'
 
-function GlobeModel({ countryData, centerCoordinates, countryCode }) {
+function GlobeModel({
+  countryData,
+  centerCoordinates,
+  countryCode,
+  selectedCountry,
+}) {
   // TODO:
   // need to convert center co-ords to a rotation value
   // apply rotation
@@ -32,26 +36,29 @@ function GlobeModel({ countryData, centerCoordinates, countryCode }) {
   globe.current
     .globeImageUrl('/assets/earth-blue-marble.jpg')
     .bumpImageUrl('/assets/earth-topology.png')
-  if (countryData) {
+  if (countryData && selectedCountry !== 'disabledOption') {
     globe.current
       .polygonsData(countryData)
-      .polygonCapColor(() => 'rgba(236, 3, 252, 0.6)')
-      .polygonSideColor(() => 'rgba(236, 3, 252, 0.1)')
+      .polygonCapColor(() => '#00ffffee')
+      .polygonSideColor(() => '#00ffff66')
       .polygonStrokeColor(() => '#111')
-      .polygonAltitude(0.05)
+      .polygonAltitude(0.1)
+  } else {
+    globe.current.polygonsData([]) // reset polygon data when 'All' is selected
   }
 
   useEffect(() => {
-    if (centerCoordinates) {
+    if (centerCoordinates && selectedCountry !== 'disabledOption') {
       // Reset the globe to its default rotation
       globe.current.rotation.set(0, 0, 0)
 
       // Convert geographic coordinates to radians
-      const phi = (90 - centerCoordinates[1]) * (Math.PI / 180)
+      // const phi = (90 - centerCoordinates[1]) * (Math.PI / 180)
       const theta = centerCoordinates[0] * (Math.PI / 180)
 
       // Set the initial globe rotation
-      globe.current.rotation.x = phi
+      // Only changing the y axis rotation as otherwise the globe sometimes goes upside down
+      // globe.current.rotation.x = phi
       globe.current.rotation.y = -theta
 
       // Store the initial y-rotation
@@ -62,7 +69,7 @@ function GlobeModel({ countryData, centerCoordinates, countryCode }) {
   }, [centerCoordinates])
 
   useFrame(({ clock }) => {
-    if (initialYRotation !== null) {
+    if (selectedCountry !== 'disabledOption' && initialYRotation !== null) {
       // globe.current.rotation.y = initialYRotation + clock.getElapsedTime() * 0.5
     } else {
       globe.current.rotation.y = clock.getElapsedTime() * 0.5
@@ -86,6 +93,7 @@ function Globe({ selectedCountry }) {
   )
 
   useEffect(() => {
+    console.log('country in globe', selectedCountry)
     const country = getCountry(selectedCountry)
     if (country) {
       console.log(country)
@@ -144,6 +152,7 @@ function Globe({ selectedCountry }) {
               countryData={countriesData}
               centerCoordinates={centerCoordinates}
               countryCode={countryCode}
+              selectedCountry={selectedCountry}
             />
           </group>
         </Suspense>
