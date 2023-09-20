@@ -41,10 +41,13 @@ function GlobeModel({
       globe.current.rotation.set(0, 0, 0)
 
       // Convert geographic coordinates to radians
-      // const phi = (90 - centerCoordinates[1]) * (Math.PI / 180)
+      let phi = (90 - centerCoordinates[1]) * (Math.PI / 180)
       const theta = centerCoordinates[0] * (Math.PI / 180)
+      if (selectedCountry === 'New Zealand') {
+        phi = 0
+      }
 
-      // globe.current.rotation.x = phi
+      globe.current.rotation.x = phi
       globe.current.rotation.y = -theta
 
       setInitialYRotation(-theta)
@@ -71,6 +74,9 @@ function GlobeModel({
 }
 
 function Globe({ selectedCountry }: GlobeProps) {
+  const cameraRef = useRef()
+  const controlsRef = useRef()
+
   const [countriesData, setCountriesData] = useState<GeoJSONFeature[] | null>(
     null
   )
@@ -114,11 +120,22 @@ function Globe({ selectedCountry }: GlobeProps) {
     }
   }, [countryCode])
 
+  useEffect(() => {
+    if (centerCoordinates && selectedCountry !== 'disabledOption') {
+      if (cameraRef.current && controlsRef.current) {
+        cameraRef.current.position.set(0, 0, 40)
+        cameraRef.current.lookAt(0, 0, 0)
+        controlsRef.current.target.set(0, 0, 0)
+      }
+    }
+  }, [centerCoordinates, selectedCountry])
+
   return (
     <div className="w-[45%] h-[36rem]">
       <Canvas>
         <Suspense fallback={null}>
           <PerspectiveCamera
+            ref={cameraRef}
             makeDefault
             position={[0, 0, 40]}
             fov={75}
@@ -126,7 +143,7 @@ function Globe({ selectedCountry }: GlobeProps) {
             near={0.1}
             far={1000}
           />
-          <OrbitControls enableZoom={false} />
+          <OrbitControls enableZoom={false} ref={controlsRef} />
           <ambientLight intensity={1} />
           <directionalLight color="white" position={[0, 0, 5]} />
           <group position={[0, 0, 0]}>
