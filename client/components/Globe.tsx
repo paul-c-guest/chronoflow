@@ -121,7 +121,7 @@ function Globe({ selectedCountry }: GlobeProps) {
   }, [countryCode])
 
   useEffect(() => {
-    if (centerCoordinates && selectedCountry !== 'disabledOption') {
+    if (centerCoordinates) {
       if (cameraRef.current && controlsRef.current) {
         cameraRef.current.position.set(0, 0, 40)
         cameraRef.current.lookAt(0, 0, 0)
