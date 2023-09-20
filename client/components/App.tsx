@@ -169,7 +169,7 @@ function App() {
       <Timeline
         data={getDataForCategory(filterStatus.event)}
         people={filterStatus.people ? people : []}
-        category={filterStatus.event}
+        filterStatus={filterStatus}
       />
       <div className="mt-auto"></div>
       <Footer />
