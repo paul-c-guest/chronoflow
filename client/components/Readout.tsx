@@ -1,7 +1,9 @@
 import { useOutletContext, useParams } from 'react-router-dom'
+
 import type { Invention } from '../../models/Inventions.ts'
 import type { Person } from '../../models/People.ts'
 import type { Event } from '../../models/Events.ts'
+import Instructions from './Instructions.tsx'
 import { useEffect, useState } from 'react'
 
 interface Context {
@@ -12,28 +14,25 @@ interface Context {
 
 export default function Readout() {
   const { id, category } = useParams()
-
   const {
     inventionsData: inventions,
     peopleData: people,
     worldEventsData: worldEvents,
   } = useOutletContext<Context>()
+  const [data, setData] = useState<Event | Person | Invention | null>(null)
 
-  
+  useEffect(() => {
+    let currentData: Event | Person | Invention | null = null
+    if (category === 'people') {
+      currentData = people.find((item) => item.id === Number(id))
+    } else if (category === 'inventions') {
+      currentData = inventions.find((item) => item.id === Number(id))
+    } else {
+      currentData = worldEvents.find((item) => item.id === Number(id))
+    }
 
-  console.log('worldstuff', worldEvents)
-
-  const dataArray =
-    category === 'people'
-      ? people
-      : category === 'inventions'
-      ? inventions
-      : worldEvents
-
-  const data = dataArray.filter((item) => item.id === Number(id))[0] as
-    | Invention
-    | Person
-    | Event
+    setData(currentData)
+  }, [id, category, people, inventions, worldEvents])
 
   const [categoryData, setCategoryData] = useState({
     title: '',
@@ -45,6 +44,7 @@ export default function Readout() {
   })
 
   useEffect(() => {
+    if (!data) return
     if (category === 'people') {
       const personData = data as Person
       setCategoryData({
@@ -66,20 +66,20 @@ export default function Readout() {
         inventor: inventionData.inventor || null,
       })
     } else {
-      const worldEventsData = data as Event
+      const worldEventData = data as Event
       setCategoryData({
-        title: worldEventsData.name,
+        title: worldEventData.name,
         yearLabel: 'Year: ',
-        year: `${worldEventsData.year}`,
-        description: worldEventsData.description,
-        altText: worldEventsData.name,
+        year: `${worldEventData.year}`,
+        description: worldEventData.description,
+        altText: worldEventData.name,
         inventor: null,
       })
     }
-  }, [category, data]) // Based on what the category is
+  }, [category, data])
 
-  return (
-    <div className=" max-h-[20rem] flex mt-4 mb-12 bg-black p-4 border-zinc-800 border-2">
+  return data ? (
+    <div className=" max-h-[28rem] flex mt-12 bg-black p-4 border-zinc-800 border-2">
       <div className="max-w-lg ml-4 self-start">
         <h2 className="my-2 text-5xl font-sans text-white bg-zinc-800">
           {categoryData.title}
@@ -111,8 +111,10 @@ export default function Readout() {
       <img
         src={data.image}
         alt={categoryData.altText}
-        className=" shadow-md mt-4 ml-16  h-1/2 self-center"
+        className="shadow-md m-4 h-1/2 self-center"
       />
     </div>
+  ) : (
+    <Instructions />
   )
 }
