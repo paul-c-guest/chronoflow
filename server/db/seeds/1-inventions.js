@@ -51,7 +51,7 @@ export async function seed(knex) {
       country: 'Germany',
       year: 1440,
       description:
-        'ohannes Gutenbergs movable-type printing press, around 1440, made the mass production of books possible, greatly advancing the spread of knowledge.',
+        'Johannes Gutenbergs movable-type printing press, around 1440, made the mass production of books possible, greatly advancing the spread of knowledge.',
       image: '/images/printing-press.png',
     },
     {

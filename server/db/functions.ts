@@ -25,14 +25,35 @@ export async function getAllWorldEvents() {
 }
 
 //GET all New Zealand
-export async function getAllNewZealand() {
-  return await db('new_zealand').select(
+export async function getNewZealandPeople() {
+  return await db('new_zealand').where('identifier', 'people').select(
     'id',
-    'identifier', //event, invention or person
-    'name_one as nameOne', //name of person, name of event or name of invention
-    'name_two as nameTwo', //name of inventor - null if not invention
-    'year_one as yearOne', //birth year, year of event or year of invention
-    'year_two as yearTwo', //year of death - null if not person
+    'name_one as name', //name of person, name of event or name of invention
+    'year_one as yearBorn', //birth year, year of event or year of invention
+    'year_two as yearDied', //year of death - null if not person
+    'description as knownFor', //known for person, description for event & invention
+    'image' //image of person or event or invention
+  )
+}
+
+//GET all New Zealand
+export async function getNewZealandInventions() {
+  return await db('new_zealand').where('identifier', 'invention').select(
+    'id',
+    'name_one as invention', //name of person, name of event or name of invention
+    'name_two as inventor', //name of inventor - null if not invention
+    'year_one as year', //birth year, year of event or year of invention
+    'description', //known for person, description for event & invention
+    'image' //image of person or event or invention
+  )
+}
+
+//GET all New Zealand
+export async function getNewZealandEvents() {
+  return await db('new_zealand').where('identifier', 'event').select(
+    'id',
+    'name_one as name', //name of person, name of event or name of invention
+    'year_one as year', //birth year, year of event or year of invention
     'description', //known for person, description for event & invention
     'image' //image of person or event or invention
   )

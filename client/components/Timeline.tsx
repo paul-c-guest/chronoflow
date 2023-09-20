@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { css } from '@emotion/react'
 
@@ -9,10 +9,10 @@ import { Event } from '../../models/Events'
 interface Props {
   data: Invention[] | Event[]
   people: Person[]
-  category: string
+  filterStatus: { event: string; people: boolean }
 }
 
-function Timeline({ data, people, category }: Props) {
+function Timeline({ data, people, filterStatus }: Props) {
   // some extra years to add on either side
   const buffer = 50
 
@@ -67,6 +67,10 @@ function Timeline({ data, people, category }: Props) {
   const [activeEvent, setActiveEvent] = useState(0)
   const [hoverPerson, setHoverPerson] = useState(0)
   const [activePerson, setActivePerson] = useState(0)
+
+  useEffect(() => {
+    setActiveEvent(0)
+  }, [filterStatus.event])
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTimelinePosition(Number(event.target.value))
@@ -197,8 +201,46 @@ for (const date of dates) {
     return data.find((event) => event.id === id) as Invention | Event
   }
 
+  const getSwedishCentury = (year: number): number => {
+    if (year % 100 === 0) {
+      return year
+    }
+
+    const lowerCentury = Math.floor(year / 100) * 100
+    const higherCentury = lowerCentury + 100
+
+    if (year - lowerCentury < higherCentury - year) {
+      return lowerCentury
+    } else {
+      return higherCentury
+    }
+  }
+
+  const centuryMarks = []
+  for (
+    let i = getSwedishCentury(rangeMin);
+    i < getSwedishCentury(rangeMax);
+    i = i + 100
+  ) {
+    centuryMarks.push(i)
+  }
+
   return (
     <>
+      <div id="century-mark-container">
+        {centuryMarks.map((mark) => (
+          <span
+            key={mark}
+            className="century-mark"
+            style={{
+              left: `${7.25 + getPositionForYearInCluster(mark, 0, 1)}vw`,
+            }}
+          >
+            {mark}
+          </span>
+        ))}
+      </div>
+
       <div id="person-container">
         {personIdClusters.map((cluster: number[]) =>
           cluster.map((id: number, index: number) => {
@@ -262,7 +304,7 @@ for (const date of dates) {
             const lineLength = 19 + (cluster.length - index) * 32
             return (
               isFinite(event.year) && (
-                <Link to={`/${category}/${event.id}`} key={event.id}>
+                <Link to={`/${filterStatus.event}/${event.id}`} key={event.id}>
                   <button
                     css={css`
                       &::before {
@@ -270,8 +312,10 @@ for (const date of dates) {
                       }
                     `}
                     onClick={() => setSliderToEvent(event)}
-                    className={`event text-white font-label font-extralight ${
-                      activeEvent === event.id ? 'active-event' : ''
+                    className={`event text-white font-label font-light ${
+                      activeEvent === event.id
+                        ? 'active-event text-black font-medium'
+                        : ''
                     }`}
                     style={{
                       left: `${getPositionForYearInCluster(

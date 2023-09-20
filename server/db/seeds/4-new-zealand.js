@@ -159,7 +159,7 @@ export async function seed(knex) {
     {
       id: 16,
       identifier: 'people',
-      name_one: 'Kate Shepgerd',
+      name_one: 'Kate Shepherd',
       name_two: null,
       year_one: 1847,
       year_two: 1934,
