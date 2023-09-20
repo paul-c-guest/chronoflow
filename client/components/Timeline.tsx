@@ -72,6 +72,12 @@ function Timeline({ data, people, filterStatus }: Props) {
     setActiveEvent(0)
   }, [filterStatus.event])
 
+  useEffect(() => {
+    if (!filterStatus.people) {
+      setActivePerson(0)
+    }
+  }, [filterStatus.people])
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTimelinePosition(Number(event.target.value))
   }
@@ -312,7 +318,7 @@ for (const date of dates) {
                       }
                     `}
                     onClick={() => setSliderToEvent(event)}
-                    className={`event text-white font-label font-light ${
+                    className={`event font-label font-light ${
                       activeEvent === event.id
                         ? 'active-event text-black font-medium'
                         : ''

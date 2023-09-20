@@ -40,6 +40,7 @@
   margin-left: 6vw;
   /* padding: 0.5em 1em; */
   padding: 8px 16px;
+  color: white;
   transform: rotate(90deg);
   width: 72px;
   border-radius: 32px;
@@ -66,10 +67,10 @@
 }
 
 .active-event {
+  color: black;
   z-index: 2;
   background-color: var(--blue);
   transition: 0.5s;
-  /* border-radius: 8px; */
 }
 
 .person-container {
@@ -92,16 +93,6 @@
   z-index: 1;
   transform: rotate(-90deg);
   transform-origin: top left;
-}
-
-/* mozilla firefox specific adjustments */
-@-moz-document url-prefix() {
-  .person {
-    margin-top: 65px;
-  }
-  #event-container {
-    margin-top: 4px;
-  }
 }
 
 .person:hover {
@@ -143,6 +134,26 @@ datalist {
   width: 1px;
   height: 12px;
   margin-left: 1em;
+}
+
+/* firefox-specific adjustments */
+@-moz-document url-prefix() {
+  .person {
+    padding: 8px 10px 8px 22px;
+    margin-top: 66px;
+  }
+
+  .active-person {
+    padding: 0.5em 0.75em 0.5em 2.5em;
+  }
+
+  #event-container {
+    margin-top: 4px;
+  }
+
+  .century-mark {
+    margin: -0.1em 0;
+  }
 }
 
 /*
