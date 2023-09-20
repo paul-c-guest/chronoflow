@@ -28,7 +28,7 @@ export interface GeoJSONFeature {
     ISO_A2: string
     [key: string]: any
   }
-  geometry?: {
+  geometry: {
     type: string
     coordinates: number[][][]
   }
