@@ -19,7 +19,7 @@ import ThreeGlobe from 'three-globe'
 import * as turf from '@turf/turf'
 import { getCountry } from '../helpers'
 
-function GlobeModel({ countryData, centerCoordinates }) {
+function GlobeModel({ countryData, centerCoordinates, countryCode }) {
   // TODO:
   // need to convert center co-ords to a rotation value
   // apply rotation
@@ -40,19 +40,20 @@ function GlobeModel({ countryData, centerCoordinates }) {
   }
 
   useEffect(() => {
-    console.log(centerCoordinates)
     if (centerCoordinates) {
       // Reset the globe to its default rotation
       globe.current.rotation.set(0, 0, 0)
 
-      // Convert geographic to spherical coordinates
+      // Convert geographic coordinates to radians
       const phi = (90 - centerCoordinates[1]) * (Math.PI / 180)
       const theta = centerCoordinates[0] * (Math.PI / 180)
 
+      // Set the initial globe rotation
       globe.current.rotation.x = phi
-      globe.current.rotation.y = theta
+      globe.current.rotation.y = -theta
 
-      setInitialYRotation(theta)
+      // Store the initial y-rotation
+      setInitialYRotation(-theta)
     } else {
       setInitialYRotation(null)
     }
@@ -140,6 +141,7 @@ function Globe({ selectedCountry }) {
             <GlobeModel
               countryData={countriesData}
               centerCoordinates={centerCoordinates}
+              countryCode={countryCode}
             />
           </group>
         </Suspense>

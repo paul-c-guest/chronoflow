@@ -50,6 +50,11 @@ export function getCountry(countryName) {
       code: 'PL',
       coords: [19.145136, 51.919438],
     },
+    {
+      country: 'New Zealand',
+      code: 'NZ',
+      coords: [174.886, -40.9006],
+    },
   ]
   return country.filter((item) => item.country === countryName)[0]
 }
