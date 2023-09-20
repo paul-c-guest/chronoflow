@@ -13,7 +13,7 @@ export async function seed(knex) {
       year_two: null,
       description:
         'In the 13th century the ancestors of the Māori people arrived in New Zealand from Polynesia, marking the beginning of human settlement in the islands.',
-      image: '',
+      image: '/images/polynesian-settlement.png',
     },
     {
       id: 2,
@@ -24,7 +24,7 @@ export async function seed(knex) {
       year_two: null,
       description:
         'Dutch explorer Abel Tasman was the first European to reach New Zealand and map part of its coastline',
-      image: '',
+      image: '/images/abel-tasman.png',
     },
     {
       id: 3,
@@ -34,7 +34,7 @@ export async function seed(knex) {
       year_one: 1769,
       year_two: null,
       description: `Captain James Cook's exploration and mapping of New Zealand's coastline significantly contributed to European knowledge of the islands`,
-      image: '',
+      image: '/images/james-cook.png',
     },
     {
       id: 4,
@@ -44,7 +44,7 @@ export async function seed(knex) {
       year_one: 1840,
       year_two: null,
       description: `The Treaty of Waitangi, signed between Māori chiefs and the British Crown, is a foundational document for New Zealand, establishing British sovereignty and Māori rights`,
-      image: '',
+      image: '/images/tiriti-o-waitangi.png',
     },
     {
       id: 5,
@@ -54,7 +54,7 @@ export async function seed(knex) {
       year_one: 1860,
       year_two: null,
       description: `Gold discoveries in Otago and the West Coast attracted settlers and significantly influenced New Zealand's economy and society`,
-      image: '',
+      image: '/images/gold-rush.png',
     },
     {
       id: 6,
@@ -64,7 +64,7 @@ export async function seed(knex) {
       year_one: 1893,
       year_two: null,
       description: `New Zealand was the first self-governing country to grant women the right to vote in parliamentary elections.`,
-      image: '',
+      image: '/images/women-votes.png',
     },
     {
       id: 7,
@@ -74,7 +74,7 @@ export async function seed(knex) {
       year_one: 1953,
       year_two: null,
       description: `Sir Edmund Hillary, a New Zealander, and Tenzing Norgay became the first climbers to reach the summit of Mount Everest`,
-      image: '',
+      image: '/images/mt-everest.png',
     },
     {
       id: 8,
@@ -84,7 +84,7 @@ export async function seed(knex) {
       year_one: 2001,
       year_two: null,
       description: `Sir Peter Jackson started the Lord of the Rings franchise that would become a boon for tourism and the mobie industry in New Zealand`,
-      image: '',
+      image: '/images/lord-of-the-rings.png',
     },
     {
       id: 9,
@@ -94,7 +94,7 @@ export async function seed(knex) {
       year_one: 1911,
       year_two: null,
       description: `Renowned physicist Ernest Rutherford, born in New Zealand, developed the Rutherford model of the atom, contributing to our understanding of atomic structure.`,
-      image: '',
+      image: '/images/atomic-model.png',
     },
     {
       id: 10,
@@ -104,7 +104,7 @@ export async function seed(knex) {
       year_one: 1926,
       year_two: null,
       description: `While incorrectly attributed to Australian chef Bert Sachse, the pavlova has been agreed on by the Oxford English Dictionary as having been first documented in New Zealand, named for Anna Pavlova and her first visit there`,
-      image: '',
+      image: '/images/pavlova.png',
     },
     {
       id: 11,
@@ -114,7 +114,7 @@ export async function seed(knex) {
       year_one: 1930,
       year_two: null,
       description: `New Zealander Bill Gallagher refined and improved the concept of the electric fence for animal containment in the 1930s`,
-      image: '',
+      image: '/images/electric-fence.png',
     },
     {
       id: 12,
@@ -124,7 +124,7 @@ export async function seed(knex) {
       year_one: 1950,
       year_two: null,
       description: `New Zealander Sir William Hamilton invented the jet boat propulsion system, which revolutionized river navigation`,
-      image: '',
+      image: '/images/jet-boat.png',
     },
     {
       id: 13,
@@ -134,7 +134,7 @@ export async function seed(knex) {
       year_one: 1970,
       year_two: null,
       description: `Dr. John Sullivan, a New Zealand anesthetist, developed one of the earliest CPAP devices in the 1970s, leading to a standard treatment for sleep apnea`,
-      image: '',
+      image: '/images/cpapd.png',
     },
     {
       id: 14,
@@ -144,7 +144,7 @@ export async function seed(knex) {
       year_one: 1980,
       year_two: null,
       description: `Sistema Plastics, a New Zealand-based company, began designing innovative plastic food storage containers in the 1980s, which are now sold internationally`,
-      image: '',
+      image: '/images/sistema.png',
     },
     {
       id: 15,
@@ -154,7 +154,7 @@ export async function seed(knex) {
       year_one: 1994,
       year_two: null,
       description: `The Zorb, or the giant inflatable ball, was invented in New Zealand. It allows individuals to roll downhill inside a large transparent sphere, creating a unique recreational activity.`,
-      image: '',
+      image: '/images/zorb.png',
     },
     {
       id: 16,
@@ -164,7 +164,7 @@ export async function seed(knex) {
       year_one: 1847,
       year_two: 1934,
       description: `Suffragette who played a pivotal role in New Zealand granting women the right to vote, making it the first self-governing country to do so.`,
-      image: '',
+      image: '/images/kate-sheppard.png',
     },
     {
       id: 17,
@@ -174,7 +174,7 @@ export async function seed(knex) {
       year_one: 1871,
       year_two: 1937,
       description: `Nobel Prize-winning physicist known for his pioneering work in atomic science and the development of the Rutherford model of the atom.`,
-      image: '',
+      image: '/images/ernest-rutherford.png',
     },
     {
       id: 18,
@@ -184,7 +184,7 @@ export async function seed(knex) {
       year_one: 1888,
       year_two: 1923,
       description: `Renowned writer of short stories and modernist literature, known for works like "The Garden Party."`,
-      image: '',
+      image: '/images/katherine-mansfield.png',
     },
     {
       id: 19,
@@ -194,7 +194,7 @@ export async function seed(knex) {
       year_one: 1919,
       year_two: 2008,
       description: `Renowned mountaineer and explorer who, along with Tenzing Norgay, was the first to reach the summit of Mount Everest in 1953.`,
-      image: '',
+      image: '/images/edmund-hillary.png',
     },
     {
       id: 20,
@@ -204,57 +204,47 @@ export async function seed(knex) {
       year_one: 1937,
       year_two: 1970,
       description: `Racing driver and founder of the McLaren Formula One team, which has achieved numerous successes in motorsport`,
-      image: '',
+      image: '/images/bruce-maclaran.png',
     },
     {
       id: 21,
-      identifier: 'people',
-      name_one: 'Bruce McLaren',
-      name_two: null,
-      year_one: 1937,
-      year_two: 1970,
-      description: `Racing driver and founder of the McLaren Formula One team, which has achieved numerous successes in motorsport`,
-      image: '',
-    },
-    {
-      id: 22,
       identifier: 'people',
       name_one: 'Sir Peter Jackson',
       name_two: null,
       year_one: 1961,
       year_two: 2023,
       description: `Acclaimed filmmaker known for directing "The Lord of the Rings" film trilogy, which earned multiple Academy Awards.`,
-      image: '',
+      image: '/images/peter-jackson.png',
     },
     {
-      id: 23,
+      id: 22,
       identifier: 'people',
       name_one: 'Russel Crowe',
       name_two: null,
       year_one: 1964,
       year_two: 2023,
       description: `Oscar-winning actor known for his roles in films such as "Gladiator" and "A Beautiful Mind.`,
-      image: '',
+      image: '/images/russell-crowe.png',
     },
     {
-      id: 24,
+      id: 23,
       identifier: 'people',
       name_one: 'Taika Waititi',
       name_two: null,
       year_one: 1975,
       year_two: 2023,
       description: `Award-winning filmmaker, actor, and comedian known for directing films like "Thor: Ragnarok" and "Jojo Rabbit."`,
-      image: '',
+      image: '/images/taika-waititi.png',
     },
     {
-      id: 25,
+      id: 24,
       identifier: 'people',
       name_one: 'Dan Carter',
       name_two: null,
       year_one: 1982,
       year_two: 2023,
       description: `Legendary rugby player widely considered one of the greatest fly-halves in the history of rugby.`,
-      image: '',
+      image: '/images/dan-carter.png',
     },
   ])
 }

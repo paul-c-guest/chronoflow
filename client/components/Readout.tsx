@@ -112,28 +112,28 @@ export default function Readout() {
   }, [category, data])
 
   return data ? (
-    <div className=" max-h-[26rem] flex mt-2 bg-black p-4 border-zinc-800 border-2">
-      <div className="max-w-lg ml-4 self-start">
+    <div className="h-[24rem] flex bg-black p-4 border-zinc-800 border-2">
+      <div className="max-w-lg ml-4 self-start grow-1">
         <h2 className="my-2 text-5xl font-sans text-white bg-zinc-800">
           {categoryData.title}
         </h2>
         {categoryData.inventor ? (
-          <p className="font-sans text-white">
+          <p className="font-sans text-white text-lg">
             Credited to:{' '}
-            <span className="font-label font-thin text-white text-lg">
+            <span className="font-label font-thin text-white text-lg pl-2">
               {categoryData.inventor}
             </span>
           </p>
         ) : null}
-        <p className="font-sans text-white mb-2">
+        <p className="font-sans text-white mb-2 text-lg">
           {categoryData.yearLabel}
-          <span className="font-label font-thin text-white text-lg">
+          <span className="font-label font-thin text-white text-lg pl-2">
             {categoryData.year}
           </span>
         </p>
-        <p className="mb-2 font-sans text-white">
+        <p className="mb-2 font-sans text-white text-lg">
           Country:{' '}
-          <span className="font-label font-thin text-white text-lg">
+          <span className="font-label font-thin text-white text-lg pl-2">
             {data.country ? data.country : 'New Zealand'}
           </span>
         </p>
@@ -144,7 +144,7 @@ export default function Readout() {
       <img
         src={data.image}
         alt={categoryData.altText}
-        className="shadow-md m-4 h-1/2 self-center"
+        className="shadow-md mx-auto h-1/2 self-center"
       />
     </div>
   ) : (

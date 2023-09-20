@@ -32,7 +32,7 @@ export async function seed(knex) {
       country: 'England',
       known_for:
         'Conquered England in 1066 at the Battle of Hastings, becoming King of England and initiating Norman rule.',
-      image: '/images/william-the-conqueror.png',
+      image: '/images/William-the-conqueror.png',
     },
     {
       id: 4,
