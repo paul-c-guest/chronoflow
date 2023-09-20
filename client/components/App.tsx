@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
-import { redirect } from 'react-router-dom'
 
 import '../styles/index.css'
 import Header from './Header.tsx'
@@ -66,12 +65,8 @@ function App() {
   useEffect(() => {
     if (filterStatus.event === 'worldEvents') {
       setData(worldEventsData as Event[])
-      redirect('/')
-      console.log(data)
     } else if (filterStatus.event === 'inventions') {
       setData(inventionsData as Invention[])
-      redirect('/')
-      console.log(data)
     }
   }, [filterStatus])
 
@@ -124,7 +119,7 @@ function App() {
         </div>
         <Timeline
           data={getDataForCategory(filterStatus.event)}
-          people={filterStatus.people ? peopleData : null}
+          people={filterStatus.people ? peopleData : []}
           category={filterStatus.event}
         />
       </section>

@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction } from 'react'
 import { Category } from '../../models/Types'
+import { useNavigate } from 'react-router-dom'
 
 interface Props {
   filterStatus: filterStatus
@@ -12,9 +13,12 @@ interface filterStatus {
 }
 
 function Filters({ filterStatus, setFilterStatus }: Props) {
+  const navigate = useNavigate()
+
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     const { name } = event.target
     setFilterStatus({ ...filterStatus, event: name })
+    navigate('/')
   }
 
   function handlePeopleChange(event: React.ChangeEvent<HTMLInputElement>) {
