@@ -202,8 +202,46 @@ for (const date of dates) {
     return data.find((event) => event.id === id) as Invention | Event
   }
 
+  const getSwedishCentury = (year: number): number => {
+    if (year % 100 === 0) {
+      return year
+    }
+
+    const lowerCentury = Math.floor(year / 100) * 100
+    const higherCentury = lowerCentury + 100
+
+    if (year - lowerCentury < higherCentury - year) {
+      return lowerCentury
+    } else {
+      return higherCentury
+    }
+  }
+
+  const centuryMarks = []
+  for (
+    let i = getSwedishCentury(rangeMin);
+    i < getSwedishCentury(rangeMax);
+    i = i + 100
+  ) {
+    centuryMarks.push(i)
+  }
+
   return (
     <>
+      <div id="century-mark-container">
+        {centuryMarks.map((mark) => (
+          <span
+            key={mark}
+            className="century-mark"
+            style={{
+              left: `${7.25 + getPositionForYearInCluster(mark, 0, 1)}vw`,
+            }}
+          >
+            {mark}
+          </span>
+        ))}
+      </div>
+
       <div id="person-container">
         {personIdClusters.map((cluster: number[]) =>
           cluster.map((id: number, index: number) => {
@@ -275,8 +313,8 @@ for (const date of dates) {
                       }
                     `}
                     onClick={() => setSliderToEvent(event)}
-                    className={`event text-white font-label font-extralight ${
-                      activeEvent === event.id ? 'active-event' : ''
+                    className={`event text-white font-label font-light ${
+                      activeEvent === event.id ? 'active-event font-medium' : ''
                     }`}
                     style={{
                       left: `${getPositionForYearInCluster(
