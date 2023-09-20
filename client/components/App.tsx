@@ -125,7 +125,7 @@ function App() {
         />
       </section>
       <div className="mt-auto"></div>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   )
 }
