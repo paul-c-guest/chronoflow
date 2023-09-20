@@ -21,20 +21,24 @@ function Timeline({ data, people, filterStatus }: Props) {
 
   // setup some global values for the timeline elements
   const rangeMin =
-    Math.min(
-      data.length &&
-        data.reduce(
+    people.length && data.length
+      ? Math.min(
+          data.reduce(
+            (earliestYear, event) =>
+              (earliestYear = Math.min(event.year, earliestYear)),
+            data[0].year
+          ),
+          people.reduce(
+            (earliestBorn, person) =>
+              (earliestBorn = Math.min(earliestBorn, person.yearBorn)),
+            people[0].yearBorn
+          )
+        ) - buffer
+      : data.reduce(
           (earliestYear, event) =>
             (earliestYear = Math.min(event.year, earliestYear)),
           data[0].year
-        ),
-      people.length &&
-        people.reduce(
-          (earliestBorn, person) =>
-            (earliestBorn = Math.min(earliestBorn, person.yearBorn)),
-          people[0].yearBorn
-        )
-    ) - buffer
+        ) - buffer
 
   // get the latest year from all events / people
   const rangeMax =
@@ -208,24 +212,15 @@ for (const date of dates) {
   }
 
   const getSwedishCentury = (year: number): number => {
-    if (year % 100 === 0) {
-      return year
-    }
-
-    const lowerCentury = Math.floor(year / 100) * 100
-    const higherCentury = lowerCentury + 100
-
-    if (year - lowerCentury < higherCentury - year) {
-      return lowerCentury
-    } else {
-      return higherCentury
-    }
+    return year % 100 > 49
+      ? Math.ceil(year / 100) * 100
+      : Math.floor(year / 100) * 100
   }
 
   const centuryMarks = []
   for (
-    let i = getSwedishCentury(rangeMin);
-    i < getSwedishCentury(rangeMax);
+    let i = getSwedishCentury(rangeMin + 50);
+    i < getSwedishCentury(rangeMax + 50);
     i = i + 100
   ) {
     centuryMarks.push(i)
