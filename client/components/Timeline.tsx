@@ -90,7 +90,7 @@ for (const date of dates) {
   */
 
   // the magic elbow space value
-  const threshold = 35
+  const threshold = 20
 
   // use gerard's algorithm with the year values to find the clusters, but make an id array at the same time. the id array will get used to make the onscreen items.
   const personIdClusters: number[][] = []
